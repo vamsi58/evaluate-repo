@@ -1,0 +1,43 @@
+body,html {
+  /*background: url('../../assets/background7.jpg') no-repeat ;*/
+  background-size: cover;
+  background-repeat: no-repeat;
+
+ }
+
+ .container  {
+
+
+    /* width: 50%;
+    height: 50%; */
+
+    padding-top: 10%;
+    padding-left: 8%;
+}
+
+.panel{
+  height: 370px;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 400px;
+
+  border-color: #337ab7;
+  border: 2px 3px 4px 5px;
+
+  background-color: #6d7fcc !important;
+  /* background-color: rgba(0,0,0,0.5) !important; */
+
+  }
+
+  .panel-heading{
+    font-size: 30px;
+    text-align: center;
+
+  }
+
+
+
+ .form-group.last {
+  margin-bottom:0px;
+ }
+
