@@ -69,7 +69,7 @@ export class AuthService {
       }, error => {
         this.authStatusListener.next(false);
       });
-  }
+  } 
 
   autoAuthUser() {
     const authInformation = this.getAuthData();
@@ -94,7 +94,7 @@ export class AuthService {
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
-    this.router.navigate(["/"]);
+    this.router.navigate(["/login"]);
   }
 
   private setAuthTimer(duration: number) {
