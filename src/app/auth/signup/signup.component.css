@@ -1,7 +1,38 @@
-mat-form-field {
-  width: 100%;
+* {
+  /* box-sizing: border-box; */
 }
 
-mat-spinner {
-  margin: auto;
+.column {
+  float: left;
+  width: 50%;
+  padding: 5px;
+  background-color: beige;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+  }
+
+.panel{
+  border:solid; 
+  border-color: #0ea5e6;
+  background-color: white;
+    margin-top: auto;
+  margin-bottom: auto;
+}
+
+
+a:-webkit-any-link {
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.panel-heading{
+  font-size: 30px;
+  text-align: center;
+
 }
