@@ -1,11 +1,16 @@
 /*
     CUSTOM STYLES DEFINITION
 */
+html { height: 100%; } 
+
+
 
 
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
+    padding-bottom: 20px;
+    min-height: 100%;
 }
 
 p {

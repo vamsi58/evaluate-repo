@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const postsRoutes = require("./routes/posts");
 const userRoutes = require("./routes/user");
 
-const server = 'localhost:27017'; // Localhost:Default Port
+const server = '192.168.194.130:27017'; // Localhost:Default Port
 const database = 'test-db';      // Test Database Name 
 
 const app = express();
