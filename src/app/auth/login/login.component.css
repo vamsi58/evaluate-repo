@@ -1,11 +1,10 @@
-
+/* 
  .container  {
-    /* width: 100%;
-    height: 100%;  */
+  
     
     padding-top: 10%;
     padding-left: 8%;
-    /* background: url('../../../assets/background3.jpg') ;  */
+   
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -32,7 +31,7 @@
   border-color: #0ea5e6;
   border-style: solid; 
 
-  /* background-color: #6d7fcc !important; */
+  
   background-color: rgba(256, 256, 256 ) !important;
 
   }
@@ -48,4 +47,25 @@
  .form-group.last {
   margin-bottom:0px;
  }
+ */
 
+
+ .row .col-sm-6, left-panel-img { 
+  height: 100vh;
+  overflow: auto; 
+   }
+ 
+ .left-panel-img, .card{
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+ }
+ .card-header{
+   background-color: #4caaad;
+   color: white;
+ }
+
+ .login-title{
+   font-size: 30px;
+ }
