@@ -2,6 +2,7 @@
 .row .col-sm-6, left-panel-img { 
   height: 100vh;
   overflow: auto; 
+  /* overflow-y: scroll; overflow-x:hidden; */
    }
  
  .left-panel-img, .card{
@@ -11,7 +12,9 @@
   margin: 0;
  }
  .card-header{
-   background-color: #4caaad;
+   background-color: #76D7C4;
+   
+   /* #4caaad; */
    color: white;
  }
 
