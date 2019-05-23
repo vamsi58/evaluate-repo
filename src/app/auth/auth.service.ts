@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 
 import { AuthData } from "./auth-data.model";
+import { LoginData } from "./auth-data.model";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -31,8 +32,8 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  createUser(email: string, password: string) {
-    const authData: AuthData = { email: email, password: password };
+  createUser(fname: string, lname: string, dob: Date, gender: string, email: string, password: string) {
+    const authData: AuthData = { fname: fname, lname: lname, dob: dob, gender: gender, email: email, password: password };
     this.http
       .post("http://localhost:3000/api/user/signup", authData)
       .subscribe(() => {
@@ -43,11 +44,11 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const authData: AuthData = { email: email, password: password };
+    const loginData: LoginData = { email: email, password: password };
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(
         "http://localhost:3000/api/user/login",
-        authData
+        loginData
       )
       .subscribe(response => {
         const token = response.token;

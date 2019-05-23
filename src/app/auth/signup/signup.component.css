@@ -1,38 +1,22 @@
-* {
-  /* box-sizing: border-box; */
-}
 
-.column {
-  float: left;
-  width: 50%;
-  padding: 5px;
-  background-color: beige;
-}
+.row .col-sm-6, left-panel-img { 
+  height: 100vh;
+  overflow: auto; 
+   }
+ 
+ .left-panel-img, .card{
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+ }
+ .card-header{
+   background-color: #4caaad;
+   color: white;
+ }
 
-/* Clearfix (clear floats) */
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-  }
+ .signup-title{
+   font-size: 30px;
+ }
 
-.panel{
-  border:solid; 
-  border-color: #0ea5e6;
-  background-color: white;
-    margin-top: auto;
-  margin-bottom: auto;
-}
-
-
-a:-webkit-any-link {
-  color: -webkit-link;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.panel-heading{
-  font-size: 30px;
-  text-align: center;
-
-}
+ 
