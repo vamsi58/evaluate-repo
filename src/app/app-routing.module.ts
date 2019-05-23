@@ -3,7 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { PostListComponent } from "./posts/post-list/post-list.component";
 import { HomeComponent } from "./home/home.component";
-import { EditorComponent } from "./editor/editor.component";
+import { CreateQuestionComponent } from "./questions/create-question/create-question.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { PostCreateComponent } from "./posts/post-create/post-create.component";
 import { LoginComponent } from "./auth/login/login.component";
@@ -18,7 +18,7 @@ const routes: Routes = [
 },
 
   { path: "create", component: PostCreateComponent, canActivate: [AuthGuard] },
-  { path: "editor", component: EditorComponent },
+  { path: "create-question", component: CreateQuestionComponent },
   { path: "edit/:postId", component: PostCreateComponent, canActivate: [AuthGuard] },
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignupComponent },

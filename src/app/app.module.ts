@@ -26,6 +26,7 @@ import { ErrorInterceptor } from "./error-interceptor";
 import { ErrorComponent } from "./error/error.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditorComponent } from './editor/editor.component';
+import { CreateQuestionComponent } from './questions/create-question/create-question.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { EditorComponent } from './editor/editor.component';
     SignupComponent,
     ErrorComponent,
     DashboardComponent,
-    EditorComponent
+    EditorComponent,
+    CreateQuestionComponent
   ],
   imports: [
     BrowserModule,
