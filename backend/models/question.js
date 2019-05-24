@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-import { AnswerOptionSchema } from './answer-option-schema';
+// import { AnswerOptionSchema } from './answer-option-schema';
+import { AnswerOptionSchema } from './answer';
 const uniqueValidator = require("mongoose-unique-validator");
 
 export const QuestionSchema = mongoose.Schema({
