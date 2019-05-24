@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const postsRoutes = require("./routes/posts");
 const userRoutes = require("./routes/user");
+const questionRoutes = require("./routes/question");
 
 const server = '192.168.194.130:27017'; // Localhost:Default Port
 const database = 'test-db';      // Test Database Name 
@@ -41,5 +42,6 @@ app.use((req, res, next) => {
 
 app.use("/api/posts", postsRoutes);
 app.use("/api/user", userRoutes);
+app.use("api/question", questionRoutes);
 
 module.exports = app;

@@ -11,7 +11,7 @@ export class CreateQuestionComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit() {
-    this.oDoc = document.getElementById('textBox');
+    this.oDoc = document.getElementById('questionBox');
     this.sDefTxt = this.oDoc.innerHTML;
   }
 
