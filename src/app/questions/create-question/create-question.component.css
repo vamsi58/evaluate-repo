@@ -14,4 +14,28 @@ img.intLink { border: 0; }
   min-width: 498px;
   min-height: 200px;
 }
-#editMode label { cursor: pointer; }
+#editMode label { cursor: pointer; 
+}
+.answer {
+	border: 2px solid #ffffff ;
+	border-radius: 8px 8px 8px 8px ;
+	display: flex ;
+	margin-bottom: 10px ;
+	padding: 5px 5px 5px 5px ;
+	width: 600px ;
+}
+.remove {
+		align-self: center ;
+		cursor: pointer ;
+		font-family: monospace ;
+		font-size: 25px ;
+		line-height: 25px ;
+		margin-left: auto ;
+	}
+
+  .actions a {
+		color: #42cef4; 
+		cursor: pointer ;
+		text-decoration: underline ;
+		user-select: none ;
+}

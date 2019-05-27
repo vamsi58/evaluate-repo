@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 
 import { Question}  from "./question.model";
-import { Answers } from './answers.model';
+import { Answer } from './answer.model';
 
 
 
@@ -23,7 +23,7 @@ export class QuestionService {
     return this.authStatusListener.asObservable();
   }
 
-  createQuestion (quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answers[]) {
+  createQuestion (quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[]) {
     const Question: Question = { quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers };
     
     this.http

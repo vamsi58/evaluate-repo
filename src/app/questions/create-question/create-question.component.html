@@ -17,7 +17,7 @@
         <form class="form-horizontal" (submit)="onConvertToHtml(questionForm)" #questionForm="ngForm" role="form">
           <div class="form-group">
             <label>Question Type</label>
-            <select>
+            <select (change)="onSelectQuestType($event.target.value)">
              <option [ngValue]="questionTypes" [value] = questionType.id *ngFor="let questionType of questionTypes">{{questionType.name}}</option>
             </select>
           </div>
@@ -39,7 +39,7 @@
 
           </div>
           <div class="form-group">
-            <label>Question</label>
+            <label>Question:</label>
             <div class="card">
               <div class="card-header">
                 <div id="toolBar1">
@@ -125,22 +125,52 @@
                   <img class="intLink" title="Paste" (click)="onFormatDoc('paste');" src="data:image/gif;base64,R0lGODlhFgAWAIQUAD04KTRLY2tXQF9vj414WZWIbXmOrpqbmpGjudClFaezxsa0cb/I1+3YitHa7PrkIPHvbuPs+/fvrvv8/f///////////////////////////////////////////////yH5BAEAAB8ALAAAAAAWABYAAAWN4CeOZGmeaKqubGsusPvBSyFJjVDs6nJLB0khR4AkBCmfsCGBQAoCwjF5gwquVykSFbwZE+AwIBV0GhFog2EwIDchjwRiQo9E2Fx4XD5R+B0DDAEnBXBhBhN2DgwDAQFjJYVhCQYRfgoIDGiQJAWTCQMRiwwMfgicnVcAAAMOaK+bLAOrtLUyt7i5uiUhADs="
                   />
                 </div>
-
               </div>
-
               <div id="questionBox" name="question" contenteditable="true">
                 <p>Lorem ipsum</p>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label>Answer</label>
-            <div class="card">
-              <div id="answerBox" name="question" contenteditable="true">
+            <label>Answer:</label>
+            <div class="card" *ngIf = "objectiveQuestion">
+              <ng-template ngFor let-answer [ngForOf]="form.answers" let-index="index" let-isLast="last">
+                <div class="answer">
+                  <label for="{{ index+1 }}">
+                     {{ index+1 }}
+                  </label>
+
+                  <input #nameControl="ngModel" type="text" name="{{ index+1 }}_answer" ngModel required autofocus placeholder="Answer..."
+                  />
+
+                  <label for="{{ index+1 }}_isAnswer">
+                   <input
+                    type="checkbox"
+                    id="{{ index+1 }}_isAnswer"
+                    name="{{ index+1 }}_isAnswer"
+                    ngModel
+                    (keydown.tab)="( ( isLast && addAnswer(index+1) ) || true )"
+                   />
+                   Is Correct Answer?
+                  </label>
+
+                  <a (click)="removeAnswer( index )" title="Remove Answer" class="remove"> &times; </a>
+                </div>
+              </ng-template>
+              <p class="actions">
+                <a (click)="addAnswer(index+1)">Add Another Answer</a>
+              </p>
+              <label> Reason for the answer</label>
+            </div>
+             <div class="card">
+               <div id="answerBox" name="answerDesc" contenteditable="true">
                 <p>Lorem ipsum</p>
               </div>
             </div>
           </div>
+          
+           
+
           <div class="form-group">
             <button type="submit" class="btn btn-primary  btn-sm mr-3">Create</button>
             <button type="reset" class="btn btn-secondary btn-sm">Cancel</button>
@@ -148,7 +178,6 @@
         </form>
       </div>
       <div class="card-footer">
-
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import {Answers} from './answers.model';
+import {Answer} from './answer.model';
 
 export interface Question {
   quesid: string;
@@ -7,6 +7,6 @@ export interface Question {
   quesSubCat: string;
   question: string;
   quesFormatted: string;
-  quesAnswers: Answers[];
+  quesAnswers: Answer[];
 }
 
