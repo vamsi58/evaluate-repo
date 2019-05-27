@@ -3,7 +3,7 @@
 //const AnswerOptionSchema = require('mongoose').model('E:/Evaluate/backend/models/answer').schema;
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
-const AnswerOptionSchema = require("E:/Evaluate/backend/models/answer");
+const AnswerOptionSchema = require("./answer");
 
 const QuestionSchema = mongoose.Schema({
   quesid:         { type: String},

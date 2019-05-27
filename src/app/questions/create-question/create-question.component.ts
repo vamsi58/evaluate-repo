@@ -16,7 +16,9 @@ import { QuestionService } from "../question.service";
 export class CreateQuestionComponent implements AfterViewInit, OnInit {
   oDoc;
   sDefTxt;
-  optionNumber;
+  selectedType; 
+  selectedCat;
+  selectedSubCat;
   objectiveQuestion = true;
   selectedCategory: Category = new Category(2, 'IBM i');
   categories: Category[];
@@ -30,11 +32,15 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
 
     
   constructor(private selectService: SelectService, private questionService: QuestionService) {
-      this.optionNumber = 0;
+    
       this.answers = [];
             
         // Add an initial answer form-entry.
         this.addAnswer();
+        this.selectedType = 1;
+        this.selectedCat = 0;
+        this.selectedSubCat = 0;
+
    }
 
   ngOnInit(){
@@ -63,7 +69,6 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
   onConvertToHtml() {
     var oContent;
     oContent = document.createTextNode(this.oDoc.innerHTML);
-    console.log(oContent);
   }
 
   onSelectedStyle(event: any, style: string) {
@@ -80,9 +85,8 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
 
   // add an answer
   public addAnswer() : void {
-        this.optionNumber  = this.optionNumber + 1;
         this.answers.push({
-           optionNumber:this.optionNumber,
+           optionNumber:this.answers.length+1,
            answerBody: " ",
            isCorrectAnswer: false
         });
@@ -91,18 +95,21 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
      // remove the answer
     public removeAnswer( index: number ) : void {
         this.answers.splice( index, 1 );
-        this.optionNumber  = this.optionNumber - 1;
+        for (var idx = 0;  idx < this.answers.length; idx++)
+        {
+         this.answers[idx].optionNumber = idx+1;
+        
+        }
     }
 
     // based on question type display subsequent fields
-    onSelectQuestType(optionId:number)
+    onSelectQuestType(optionId:string)
     {  
-      if (optionId == 1){
+      if (optionId == "1"){
         this.objectiveQuestion = true;
       }
       else{
         this.objectiveQuestion = false;
-         console.log("Change executed in subjective"+this.objectiveQuestion);
       }
     }
 
@@ -110,13 +117,13 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
       if (form.invalid) {
         return;
       }
-      //this.isLoading = true;
-      //console.log(form.value.gendergroup);
-      // var quesFormatted;
-      // quesFormatted = document.createTextNode(form.value.question);
-
-      // this.questionService.createQuestion('1', form.value.questype,  form.value.quesCat, form.value.quesSubCat , form.value.question, quesFormatted, form.value.quesAnswers );
-      console.log(this.answers);
-    }
+      let questionType = this.questionTypes.find(i => i.id === form.value.questype).name;
+      let category;
+      category = this.categories.find(i => i.id === form.value.quesCat).name;
+      const quesFormatted:string = (document.createTextNode(this.oDoc.innerHTML)).toString();
+      console.log(category);
+      //this.questionService.createQuestion('QTN0001', form.value.questype,  form.value.quesCat, form.value.quesSubCat , form.value.question, quesFormatted, this.answers );
+    
+  }
 
 }

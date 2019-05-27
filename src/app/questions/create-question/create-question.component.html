@@ -17,24 +17,25 @@
         <form class="form-horizontal" (submit)="onSubmit(questionForm)" #questionForm="ngForm" role="form">
           <div class="form-group">
             <label>Question Type</label>
-            <select (change)="onSelectQuestType($event.target.value)">
-             <option [ngValue]="questionTypes" [value] = questionType.id *ngFor="let questionType of questionTypes" name="questype">{{questionType.name}}</option>
+            <select (change)="onSelectQuestType($event.target.value)" [(ngModel)] = "selectedType" name="questype">
+             <option value="0">--Select--</option>
+             <option *ngFor="let questionType of questionTypes" value= {{questionType.id}}>{{questionType.name}}</option>
             </select>
           </div>
 
 
           <div class="form-group">
             <label>Category </label>
-            <select (change)="onSelect($event.target.value)">
+            <select (change)="onSelect($event.target.value)" name="quesCat" [(ngModel)] = "selectedCat">
             <option value="0">--Select--</option>
-             <option *ngFor="let category of categories" value= {{category.id}} name="quesCat">{{category.name}}</option>
+             <option *ngFor="let category of categories" value= {{category.id}} >{{category.name}}</option>
             </select>
           </div>
           <div class="form-group">
             <label>Sub-category </label>
-            <select>
+            <select name="quesSubCat" [(ngModel)] = "selectedSubCat"> 
                <option value="0">--Select--</option>
-               <option *ngFor="let subcategory of subCategories " value= {{subcategory.id}} name="quesSubCat">{{subcategory.name}}</option>
+               <option *ngFor="let subcategory of subCategories " value= {{subcategory.id}} >{{subcategory.name}}</option>
             </select>
 
           </div>
