@@ -14,11 +14,11 @@
       </div>
 
       <div class="card-body">
-        <form class="form-horizontal" (submit)="onConvertToHtml(questionForm)" #questionForm="ngForm" role="form">
+        <form class="form-horizontal" (submit)="onSubmit(questionForm)" #questionForm="ngForm" role="form">
           <div class="form-group">
             <label>Question Type</label>
             <select (change)="onSelectQuestType($event.target.value)">
-             <option [ngValue]="questionTypes" [value] = questionType.id *ngFor="let questionType of questionTypes">{{questionType.name}}</option>
+             <option [ngValue]="questionTypes" [value] = questionType.id *ngFor="let questionType of questionTypes" name="questype">{{questionType.name}}</option>
             </select>
           </div>
 
@@ -27,14 +27,14 @@
             <label>Category </label>
             <select (change)="onSelect($event.target.value)">
             <option value="0">--Select--</option>
-             <option *ngFor="let category of categories" value= {{category.id}}>{{category.name}}</option>
+             <option *ngFor="let category of categories" value= {{category.id}} name="quesCat">{{category.name}}</option>
             </select>
           </div>
           <div class="form-group">
             <label>Sub-category </label>
             <select>
                <option value="0">--Select--</option>
-               <option *ngFor="let subcategory of subCategories " value= {{subcategory.id}}>{{subcategory.name}}</option>
+               <option *ngFor="let subcategory of subCategories " value= {{subcategory.id}} name="quesSubCat">{{subcategory.name}}</option>
             </select>
 
           </div>
@@ -134,13 +134,14 @@
           <div class="form-group">
             <label>Answer:</label>
             <div class="card" *ngIf = "objectiveQuestion">
-              <ng-template ngFor let-answer [ngForOf]="form.answers" let-index="index" let-isLast="last">
+              <ng-template ngFor let-answer [ngForOf]="answers" let-index="index" let-isLast="last">
                 <div class="answer">
-                  <label for="{{ index+1 }}">
-                     {{ index+1 }}
-                  </label>
+                  <!-- <input for="{{ index+1 }}" >
+                     {{ index+1 }}  
+                  </label> -->
+                  <input type="text" name="{{ index+1 }}_option" [value]="index+1" required  disabled/>
 
-                  <input #nameControl="ngModel" type="text" name="{{ index+1 }}_answer" ngModel required autofocus placeholder="Answer..."
+                  <input #nameControl="ngModel" type="text" name="{{ index+1 }}_answer" [(ngModel)] = "answer.answerBody" required placeholder="Answer..."
                   />
 
                   <label for="{{ index+1 }}_isAnswer">
@@ -148,8 +149,8 @@
                     type="checkbox"
                     id="{{ index+1 }}_isAnswer"
                     name="{{ index+1 }}_isAnswer"
-                    ngModel
-                    (keydown.tab)="( ( isLast && addAnswer(index+1) ) || true )"
+                    [(ngModel)] = "answer.isCorrectAnswer"
+                    (keydown.tab)="( ( isLast && addAnswer() ) || true )"
                    />
                    Is Correct Answer?
                   </label>
@@ -158,8 +159,9 @@
                 </div>
               </ng-template>
               <p class="actions">
-                <a (click)="addAnswer(index+1)">Add Another Answer</a>
-              </p>
+                <a (click)="addAnswer()">Add Another Answer</a>
+              </p>  
+             
               <label> Reason for the answer</label>
             </div>
              <div class="card">
@@ -169,7 +171,6 @@
             </div>
           </div>
           
-           
 
           <div class="form-group">
             <button type="submit" class="btn btn-primary  btn-sm mr-3">Create</button>

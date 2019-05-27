@@ -4,6 +4,8 @@ import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
 import { SelectService } from '../select.service';
 import {Answer} from '../answer.model';
+import { NgForm } from "@angular/forms";
+import { QuestionService } from "../question.service";
 
 
 @Component({
@@ -14,6 +16,7 @@ import {Answer} from '../answer.model';
 export class CreateQuestionComponent implements AfterViewInit, OnInit {
   oDoc;
   sDefTxt;
+  optionNumber;
   objectiveQuestion = true;
   selectedCategory: Category = new Category(2, 'IBM i');
   categories: Category[];
@@ -21,18 +24,17 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
   questionTypes: QuestionType[];
 
 
-  public form: {
-        answers: Answer[];
-    };
+  
+      answers: Answer[];
+   
 
-  constructor(private selectService: SelectService) {
-      const optionNumber = 1;
-      this.form = {
-            answers: []
-        };
-
+    
+  constructor(private selectService: SelectService, private questionService: QuestionService) {
+      this.optionNumber = 0;
+      this.answers = [];
+            
         // Add an initial answer form-entry.
-        this.addAnswer(optionNumber);
+        this.addAnswer();
    }
 
   ngOnInit(){
@@ -77,9 +79,10 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
   }
 
   // add an answer
-  public addAnswer(index: number) : void {
-        this.form.answers.push({
-           optionNumber:index,
+  public addAnswer() : void {
+        this.optionNumber  = this.optionNumber + 1;
+        this.answers.push({
+           optionNumber:this.optionNumber,
            answerBody: " ",
            isCorrectAnswer: false
         });
@@ -87,7 +90,8 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
 
      // remove the answer
     public removeAnswer( index: number ) : void {
-        this.form.answers.splice( index, 1 );
+        this.answers.splice( index, 1 );
+        this.optionNumber  = this.optionNumber - 1;
     }
 
     // based on question type display subsequent fields
@@ -100,6 +104,19 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
         this.objectiveQuestion = false;
          console.log("Change executed in subjective"+this.objectiveQuestion);
       }
+    }
+
+    onSubmit(form: NgForm) {
+      if (form.invalid) {
+        return;
+      }
+      //this.isLoading = true;
+      //console.log(form.value.gendergroup);
+      // var quesFormatted;
+      // quesFormatted = document.createTextNode(form.value.question);
+
+      // this.questionService.createQuestion('1', form.value.questype,  form.value.quesCat, form.value.quesSubCat , form.value.question, quesFormatted, form.value.quesAnswers );
+      console.log(this.answers);
     }
 
 }

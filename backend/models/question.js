@@ -1,9 +1,11 @@
-const mongoose = require("mongoose");
-// import { AnswerOptionSchema } from './answer-option-schema';
-import { AnswerOptionSchema } from './answer';
-const uniqueValidator = require("mongoose-unique-validator");
 
-export const QuestionSchema = mongoose.Schema({
+//import { AnswerOptionSchema } from 'E:/Evaluate/backend/models/answer';
+//const AnswerOptionSchema = require('mongoose').model('E:/Evaluate/backend/models/answer').schema;
+const mongoose = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
+const AnswerOptionSchema = require("E:/Evaluate/backend/models/answer");
+
+const QuestionSchema = mongoose.Schema({
   quesid:         { type: String},
   questype:       { type: String},
   quesCat:        { type: String},
@@ -20,4 +22,4 @@ export const QuestionSchema = mongoose.Schema({
   timestamps: true
 });
 
-export const Question = mongoose.model('Question', QuestionSchema);
+module.exports = mongoose.model('Question', QuestionSchema);

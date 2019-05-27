@@ -14,14 +14,14 @@ import { Answer } from './answer.model';
 })
 export class QuestionService {
 
-  private authStatusListener = new Subject<boolean>();
+  //private authStatusListener = new Subject<boolean>();
 
   
   constructor(private http: HttpClient, private router: Router) { }
 
-  getAuthStatusListener() {
-    return this.authStatusListener.asObservable();
-  }
+  // getAuthStatusListener() {
+  //   return this.authStatusListener.asObservable();
+  // }
 
   createQuestion (quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[]) {
     const Question: Question = { quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers };
@@ -31,7 +31,7 @@ export class QuestionService {
       .subscribe(() => {
         this.router.navigate(["/"]);
       }, error => {
-        this.authStatusListener.next(false);
+        //this.authStatusListener.next(false);
       });
   }
 }

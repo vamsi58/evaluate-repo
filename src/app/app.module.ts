@@ -27,6 +27,8 @@ import { ErrorComponent } from "./error/error.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditorComponent } from './editor/editor.component';
 import { CreateQuestionComponent } from './questions/create-question/create-question.component';
+import { ViewallQuestionsComponent } from './questions/viewall-questions/viewall-questions.component';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { CreateQuestionComponent } from './questions/create-question/create-ques
     ErrorComponent,
     DashboardComponent,
     EditorComponent,
-    CreateQuestionComponent
+    CreateQuestionComponent,
+    ViewallQuestionsComponent
+  
   ],
   imports: [
     BrowserModule,
