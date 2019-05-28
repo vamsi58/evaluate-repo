@@ -15,40 +15,30 @@ import { QuestionService } from "../question.service";
 })
 export class CreateQuestionComponent implements AfterViewInit, OnInit {
   oDoc;
+  aDoc;
   sDefTxt;
-  selectedType; 
-  selectedCat;
-  selectedSubCat;
   objectiveQuestion = true;
   selectedCategory: Category = new Category(2, 'IBM i');
   categories: Category[];
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
 
+  answers: Answer[];
+  selectedType:QuestionType = new QuestionType(1, "Objective");
+  selectedCat:Category = new Category(1, "Technical");  
+  selectedSubCat:SubCategory = new SubCategory(1,1, "IBM i");
 
-  
-      answers: Answer[];
-   
-
-    
+ 
   constructor(private selectService: SelectService, private questionService: QuestionService) {
     
-      this.answers = [];
-            
-        // Add an initial answer form-entry.
-        this.addAnswer();
-        this.selectedType = 1;
-        this.selectedCat = 0;
-        this.selectedSubCat = 0;
-
+      this.answers = [];  
+      this.addAnswer();
    }
 
   ngOnInit(){
     this.categories = this.selectService.getCategory();
     this.questionTypes = this.selectService.getQuestionType();
-    this.onSelect(this.selectedCategory.id);
-
-    
+    this.onSelect(this.selectedCat.id);
   }
 
  onSelect(categoryid) {
@@ -58,6 +48,7 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     this.oDoc = document.getElementById('questionBox');
+    this.aDoc  = document.getElementById('answerBox');
     this.sDefTxt = this.oDoc.innerHTML;
   }
 
@@ -113,17 +104,30 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
       }
     }
 
-    onSubmit(form: NgForm) {
+    onSubmit(form: NgForm, even:Event) {
       if (form.invalid) {
         return;
       }
-      let questionType = this.questionTypes.find(i => i.id === form.value.questype).name;
-      let category;
-      category = this.categories.find(i => i.id === form.value.quesCat).name;
-      const quesFormatted:string = (document.createTextNode(this.oDoc.innerHTML)).toString();
-      console.log(category);
-      //this.questionService.createQuestion('QTN0001', form.value.questype,  form.value.quesCat, form.value.quesSubCat , form.value.question, quesFormatted, this.answers );
-    
+      event.preventDefault();
+     
+      const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
+      const category = this.selectService.getCategory().filter((item) => item.id == form.value.questype)[0].name;
+      const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.questype)[0].name;
+      var quesFormatted = (document.createTextNode(this.oDoc.innerHTML)).toString();
+      const question = this.oDoc.textContent;
+      const answer   = this.aDoc.textContent;
+     
+      this.questionService.createQuestion('QTN0001', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
+
   }
+
+  escapeHtml(text) {
+  return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+}
 
 }

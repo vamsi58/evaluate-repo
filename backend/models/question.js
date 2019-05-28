@@ -1,6 +1,3 @@
-
-//import { AnswerOptionSchema } from 'E:/Evaluate/backend/models/answer';
-//const AnswerOptionSchema = require('mongoose').model('E:/Evaluate/backend/models/answer').schema;
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 const AnswerOptionSchema = require("./answer");
@@ -15,8 +12,8 @@ const QuestionSchema = mongoose.Schema({
   answerOptions:  { type: [AnswerOptionSchema], default: undefined,
                     validate: { validator: function(value) {return value && value.length === 4;},
                     message: 'Answer options should be 4.'}
-                  },
-  Reason:         { type: String},
+                  }, 
+  reason:         { type: String},
   },
 {
   timestamps: true

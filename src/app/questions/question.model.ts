@@ -8,5 +8,6 @@ export interface Question {
   question: string;
   quesFormatted: string;
   quesAnswers: Answer[];
+  quesReason: string;
 }
 
