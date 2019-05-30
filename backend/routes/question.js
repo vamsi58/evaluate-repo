@@ -34,9 +34,9 @@ router.post("/add", (req, res, next) => {
   
 });
 
-router.post("/view", (req, res, next) => {
+router.post("/view", (req, res, next ) => {
   let fetchedQuestion;
-  Question.findOne({ quesid: req.body.quesid })
+   Question.find({ })
     .then(question => {
       if (!question) {
         return res.status(401).json({
@@ -44,6 +44,7 @@ router.post("/view", (req, res, next) => {
         });
       }
       fetchedQuestion = question;
+      console.log(fetchedQuestion);
       })
     .then(result => {
       if (!result) {

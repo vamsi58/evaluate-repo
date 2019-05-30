@@ -16,12 +16,15 @@ const routes: Routes = [
   { path: "", redirectTo: 'dashboard', pathMatch: 'full' },
   { path: "dashboard", component: DashboardComponent, canActivate: [AuthGuard],
      children: [
-    { path: '', component: HomeComponent}]
+    { path: '', component: HomeComponent}, 
+    {path: "viewall-questions", component: ViewallQuestionsComponent},
+    { path: "create-question", component: CreateQuestionComponent },
+  ]
 },
 
   { path: "create", component: PostCreateComponent, canActivate: [AuthGuard] },
-  { path: "create-question", component: CreateQuestionComponent },
-  { path: "viewall-questions", component: ViewallQuestionsComponent },
+  //{ path: "create-question", component: CreateQuestionComponent },
+  //{ path: "viewall-questions", component: ViewallQuestionsComponent },
   { path: "edit/:postId", component: PostCreateComponent, canActivate: [AuthGuard] },
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignupComponent },

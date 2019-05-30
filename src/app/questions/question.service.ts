@@ -15,6 +15,7 @@ import { Answer } from './answer.model';
 export class QuestionService {
 
   private authStatusListener = new Subject<boolean>();
+  
 
   
   constructor(private http: HttpClient, private router: Router) { }
@@ -33,6 +34,11 @@ export class QuestionService {
       }, error => {
         this.authStatusListener.next(false);
       });
+  }
+
+  viewQuestion(){
+    //const Question: Question = { quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers };
+    return this.http.get("http://localhost:3000/api/question/view");
   }
 }
 

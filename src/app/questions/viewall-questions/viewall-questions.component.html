@@ -1,73 +1,75 @@
-<div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
-  <div class="card">
-      <h5 class="card-header">Recent Orders</h5>
-      <div class="card-body p-0">
-          <div class="table-responsive">
-              <table class="table">
-                  <thead class="bg-light">
-                      <tr class="border-0">
-                          <th class="border-0">#</th>
-                          <th class="border-0">Category</th>
-                          <th class="border-0">Sub Category</th>
-                          <th class="border-0">Question</th>
-                         
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>1</td>
-                         
-                          <td>Technical </td>
-                          <td>AS400 </td>
-                          <td>What is As400</td>
-                          
-                          <td><span class="badge-dot badge-brand mr-1"></span>InTransit </td>
-                      </tr>
-                      <tr>
-                          <td>2</td>
-                          <td>
-                              <div class="m-r-10"><img src="assets/images/product-pic-2.jpg" alt="user" class="rounded" width="45"></div>
-                          </td>
-                          <td>Product #2 </td>
-                          <td>id000002 </td>
-                          <td>12</td>
-                          <td>$180.00</td>
-                          <td>25-08-2018 21:12:56</td>
-                          <td>Rachel J. Wicker </td>
-                          <td><span class="badge-dot badge-success mr-1"></span>Delivered </td>
-                      </tr>
-                      <tr>
-                          <td>3</td>
-                          <td>
-                              <div class="m-r-10"><img src="assets/images/product-pic-3.jpg" alt="user" class="rounded" width="45"></div>
-                          </td>
-                          <td>Product #3 </td>
-                          <td>id000003 </td>
-                          <td>23</td>
-                          <td>$820.00</td>
-                          <td>24-08-2018 14:12:77</td>
-                          <td>Michael K. Ledford </td>
-                          <td><span class="badge-dot badge-success mr-1"></span>Delivered </td>
-                      </tr>
-                      <tr>
-                          <td>4</td>
-                          <td>
-                              <div class="m-r-10"><img src="assets/images/product-pic-4.jpg" alt="user" class="rounded" width="45"></div>
-                          </td>
-                          <td>Product #4 </td>
-                          <td>id000004 </td>
-                          <td>34</td>
-                          <td>$340.00</td>
-                          <td>23-08-2018 09:12:35</td>
-                          <td>Michael K. Ledford </td>
-                          <td><span class="badge-dot badge-success mr-1"></span>Delivered </td>
-                      </tr>
-                      <tr>
-                          <td colspan="9"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
-      </div>
-  </div>
+<div class="row">
+
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header text-left">
+                <nav aria-label="breadcrumb">
+                    View Question
+                    <hr>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">Questions</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">ViewQuestions</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-light">
+                            <tr class="border-0">
+                                <th class="border-0">
+                                    <select (change)="onSelectQuestType($event.target.value)" [(ngModel)]="selectedType" name="questype">
+                                        <option value="0">--Question Type--</option>
+                                        <option *ngFor="let questionType of questionTypes" value={ {questionType.id}}>{{questionType.name}}</option>
+                                    </select>
+                                </th>
+                                <th class="border-0">
+                                    <select (change)="onSelect($event.target.value)" name="quesCat" [(ngModel)]="selectedCat">
+                                        <option value="0">--Category--</option>
+                                        <option *ngFor="let category of categories" value={ {category.id}}>{{category.name}}</option>
+                                    </select>
+
+                                </th>
+                                <th class="border-0">
+                                    <select name="quesSubCat" [(ngModel)]="selectedSubCat">
+                                        <option value="0">--Sub category--</option>
+                                        <option *ngFor="let subcategory of subCategories " value={ {subcategory.id}}>{{subcategory.name}}</option>
+                                    </select>
+                                </th>
+                                <th class="border-0">Question</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr name="Questionrow" *ngFor="let question of questions">
+                                <td>1</td>
+
+                                <td>Technical </td>
+                                <td>AS400 </td>
+                                <td value={ {question.id}}>{{question.name}}</td>
+                                <td>
+                                    <button type="edit" class="btn  btn-light btn-sm">
+                                        Edit </button>
+                                    <button type="view" class="btn btn-light btn-sm">View</button>
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+                                <td colspan="9">
+                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
