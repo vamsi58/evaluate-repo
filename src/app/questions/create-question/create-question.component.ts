@@ -113,21 +113,12 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
       const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
       const category = this.selectService.getCategory().filter((item) => item.id == form.value.questype)[0].name;
       const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.questype)[0].name;
-      var quesFormatted = (document.createTextNode(this.oDoc.innerHTML)).toString();
+      var quesFormatted = this.oDoc.innerHTML;
       const question = this.oDoc.textContent;
       const answer   = this.aDoc.textContent;
-     
+      console.log(quesFormatted);
       this.questionService.createQuestion('QTN0001', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
 
   }
-
-  escapeHtml(text) {
-  return text
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-}
 
 }
