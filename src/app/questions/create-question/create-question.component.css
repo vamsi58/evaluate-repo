@@ -4,9 +4,12 @@ img.intLink { border: 0; }
 #questionBox, #answerBox {
   width: 100%;
   height: 200px;
-  border: 1px #000000 solid;
   padding: 12px;
   overflow: scroll; 
+}
+#questionBox:hover, #answerBox:hover
+{
+	border: 1px #42cef4 solid;
 }
 #questionBox #sourceText {
   padding: 0;
@@ -38,4 +41,9 @@ img.intLink { border: 0; }
 		cursor: pointer ;
 		text-decoration: underline ;
 		user-select: none ;
+}
+
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
 }
