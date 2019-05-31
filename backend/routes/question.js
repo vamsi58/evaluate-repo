@@ -8,7 +8,6 @@ const Question = require("../models/question");
 const router = express.Router();
 
 router.post("/add", (req, res, next) => {
- 
     const question = new Question({
         quesid: req.body.quesid,
         questype: req.body.questype,
@@ -16,7 +15,8 @@ router.post("/add", (req, res, next) => {
         quesSubCat: req.body.quesSubCat,
         question: req.body.question,
         quesFormatted: req.body.quesFormatted,
-      quesAnswers: req.body.quesAnswersAnswers
+        answerOptions: req.body.quesAnswers,
+        reason: req.body.reason
     });
     question
       .save()
@@ -28,7 +28,7 @@ router.post("/add", (req, res, next) => {
       })
       .catch(err => {
         res.status(500).json({
-          message: "Invalid !"+err
+          message: "Invalid Here!"+err
         });
       });
   
