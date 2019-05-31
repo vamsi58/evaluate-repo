@@ -34,38 +34,29 @@ router.post("/add", (req, res, next) => {
   
 });
 
-router.post("/view", (req, res, next ) => {
-  let fetchedQuestion;
-   Question.find({ })
-    .then(question => {
-      if (!question) {
-        return res.status(401).json({
-          message: "Question not found"+question
-        });
-      }
-      fetchedQuestion = question;
-      console.log(fetchedQuestion);
-      })
-    .then(result => {
-      if (!result) {
-        return res.status(401).json({
-          message: "failed"
-        });
-      }
-    //   const token = jwt.sign(
-    //     { quesid: fetchedQuestion.quesid, userId: fetchedUser._id },
-    //     "secret_this_should_be_longer",
-    //     { expiresIn: "1h" }
-    //   );
-    //   res.status(200).json({
-    //     token: token,
-    //     expiresIn: 3600,
-    //     userId: fetchedUser._id
-    //   });
+router.get("/view", (req, res, next ) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const quesQuery = Question.find();
+  let fetchedQuestions;
+  if (pageSize && currentPage) {
+    quesQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+  }
+  quesQuery
+    .then(documents => {
+      fetchedQuestions = documents;
+      return Question.count();
     })
-    .catch(err => {
-      return res.status(401).json({
-        message: "Invalid authentication credentials!"
+    .then(count => {
+      res.status(200).json({
+        message: "Questions fetched successfully!",
+        questions: fetchedQuestions,
+        maxPosts: count
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching questions failed!"
       });
     });
 });

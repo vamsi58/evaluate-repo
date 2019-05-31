@@ -25,7 +25,11 @@ export class ViewallQuestionsComponent implements OnInit {
   categories: Category[];
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
-  questions: Question[];
+  questions: Question[] = [];
+  totalQuestions = 0;
+  questionsPerPage = 2;
+  currentPage = 1;
+  pageSizeOptions = [1, 2, 5, 10];
 
   constructor(private selectService: SelectService, private questionService: QuestionService) { }
 
@@ -35,9 +39,17 @@ export class ViewallQuestionsComponent implements OnInit {
     this.questionTypes = this.selectService.getQuestionType();
     this.onSelect(this.selectedCategory.id);
 
-    this.questionService.viewQuestion().subscribe((data: Question[])=> {
-      this.questions = data;
-    })
+    // this.questionService.viewQuestion().subscribe((data: Question[])=> {
+    //   this.questions = data;
+    //})
+
+    this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
+    // this.questionsSub = this.questionService
+    //   .getquestionUpdateListener()
+    //   .subscribe((postData: { posts: Post[]; postCount: number }) => {
+    //     this.isLoading = false;
+    //     this.totalPosts = postData.postCount;
+    //     this.posts = postData.posts;
       
        
   }
