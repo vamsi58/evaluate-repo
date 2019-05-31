@@ -25,20 +25,20 @@
                                 <th class="border-0">
                                     <select (change)="onSelectQuestType($event.target.value)" [(ngModel)]="selectedType" name="questype">
                                         <option value="0">--Question Type--</option>
-                                        <option *ngFor="let questionType of questionTypes" value={ {questionType.id}}>{{questionType.name}}</option>
+                                        <option *ngFor="let questionType of questionTypes" value={{questionType.id}}>{{questionType.name}}</option>
                                     </select>
                                 </th>
                                 <th class="border-0">
                                     <select (change)="onSelect($event.target.value)" name="quesCat" [(ngModel)]="selectedCat">
                                         <option value="0">--Category--</option>
-                                        <option *ngFor="let category of categories" value={ {category.id}}>{{category.name}}</option>
+                                        <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
                                     </select>
 
                                 </th>
                                 <th class="border-0">
                                     <select name="quesSubCat" [(ngModel)]="selectedSubCat">
                                         <option value="0">--Sub category--</option>
-                                        <option *ngFor="let subcategory of subCategories " value={ {subcategory.id}}>{{subcategory.name}}</option>
+                                        <option *ngFor="let subcategory of subCategories " value={{subcategory.id}}>{{subcategory.name}}</option>
                                     </select>
                                 </th>
                                 <th class="border-0">Question</th>
@@ -51,7 +51,7 @@
 
                                 <td>Technical </td>
                                 <td>AS400 </td>
-                                <td value={ {question.id}}>{{question.name}}</td>
+                                <td>{{question.question}}</td>
                                 <td>
                                     <button type="edit" class="btn  btn-light btn-sm">
                                         Edit </button>

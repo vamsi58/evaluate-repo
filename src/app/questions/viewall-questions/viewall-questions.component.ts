@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from "rxjs";
 import { Category } from '../category.model';
 import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
@@ -26,10 +27,13 @@ export class ViewallQuestionsComponent implements OnInit {
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
   questions: Question[] = [];
+  isLoading = false;
   totalQuestions = 0;
   questionsPerPage = 2;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
+  private questionsSub: Subscription;
+  
 
   constructor(private selectService: SelectService, private questionService: QuestionService) { }
 
@@ -39,17 +43,19 @@ export class ViewallQuestionsComponent implements OnInit {
     this.questionTypes = this.selectService.getQuestionType();
     this.onSelect(this.selectedCategory.id);
 
+
     // this.questionService.viewQuestion().subscribe((data: Question[])=> {
     //   this.questions = data;
     //})
 
     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
-    // this.questionsSub = this.questionService
-    //   .getquestionUpdateListener()
-    //   .subscribe((postData: { posts: Post[]; postCount: number }) => {
-    //     this.isLoading = false;
-    //     this.totalPosts = postData.postCount;
-    //     this.posts = postData.posts;
+    this.questionsSub = this.questionService
+      .getQuestionUpdateListener()
+      .subscribe((questionData: { questions: Question[]; questionCount: number }) => {
+        this.isLoading = false;
+        this.totalQuestions = questionData.questionCount;
+        this.questions = questionData.questions;
+      });
       
        
   }
