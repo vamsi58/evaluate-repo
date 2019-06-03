@@ -11,7 +11,7 @@ import { Answer } from './answer.model';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 export class QuestionService {
 
@@ -43,16 +43,18 @@ export class QuestionService {
     const queryParams = `?pagesize=${questionsperpage}&page=${currentPage}`;
     this.http
       .get<{ message: string; questions: any; maxQuestions: number }>(
-        "http://localhost:3000/api/posts" + queryParams
+        "http://localhost:3000/api/question/view" + queryParams
       )
       .pipe(
         map(questionData => {
           return {
             questions: questionData.questions.map(question => {
               return {
+                questype: question.questype,
+                quesCat: question.quesCat,
+                quesSubCat: question.quesSubCat,
                 question: question.question,
                 quesFormatted: question.quesFormatted
-              
               };
             }),
             maxQuestions: questionData.maxQuestions

@@ -51,7 +51,7 @@ router.get("/view", (req, res, next ) => {
       res.status(200).json({
         message: "Questions fetched successfully!",
         questions: fetchedQuestions,
-        maxPosts: count
+        maxQuestions: count
       });
     })
     .catch(error => {

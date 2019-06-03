@@ -6,6 +6,7 @@ import { QuestionType } from '../question-type.model';
 import { SelectService } from '../select.service';
 import {Answer} from '../answer.model';
 import { NgForm } from "@angular/forms";
+import { PageEvent } from "@angular/material";
 import { QuestionService } from "../question.service";
 import { Question } from '../question.model';
 
@@ -29,7 +30,7 @@ export class ViewallQuestionsComponent implements OnInit {
   questions: Question[] = [];
   isLoading = false;
   totalQuestions = 0;
-  questionsPerPage = 2;
+  questionsPerPage = 4;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   private questionsSub: Subscription;
@@ -52,7 +53,6 @@ export class ViewallQuestionsComponent implements OnInit {
     this.questionsSub = this.questionService
       .getQuestionUpdateListener()
       .subscribe((questionData: { questions: Question[]; questionCount: number }) => {
-        this.isLoading = false;
         this.totalQuestions = questionData.questionCount;
         this.questions = questionData.questions;
       });
@@ -73,6 +73,13 @@ export class ViewallQuestionsComponent implements OnInit {
     else{
       this.objectiveQuestion = false;
     }
+  }
+
+  onChangedPage(pageData: PageEvent) {
+    this.isLoading = true;
+    this.currentPage = pageData.pageIndex + 1;
+    this.questionsPerPage = pageData.pageSize;
+    this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
   }
 
 }
