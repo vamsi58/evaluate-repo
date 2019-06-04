@@ -1,9 +1,20 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { Subject } from "rxjs";
-import { map } from "rxjs/operators";
+import { Subject, pipe } from "rxjs";
+//import { map } from "rxjs/operators";
+//import {map} from "rxjs/add/operator";
+
+//import '...rxjs/add/operator/map';
+//import './node_modules/rxjs/add/operator/map.js'
+
+import {
+  map,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  tap
+} from "rxjs/operators";
 
 import { Question}  from "./question.model";
 import { Answer } from './answer.model';
@@ -41,14 +52,14 @@ export class QuestionService {
   viewQuestion(questionsperpage :number, currentPage: number ){
   
     const queryParams = `?pagesize=${questionsperpage}&page=${currentPage}`;
-    this.http
+   return  this.http
       .get<{ message: string; questions: any; maxQuestions: number }>(
         "http://localhost:3000/api/posts" + queryParams
       )
       .pipe(
         map(questionData => {
           return {
-            questions: questionData.questions.map(question => {
+            questions: questionData.questions.map (question => {
               return {
                 question: question.question,
                 quesFormatted: question.quesFormatted
@@ -66,7 +77,8 @@ export class QuestionService {
           questionCount: transformedQuestionData.maxQuestions
         });
       });
-  }
+      
+    }
 
   getQuestionUpdateListener() {
     return this.questionsUpdated.asObservable();
