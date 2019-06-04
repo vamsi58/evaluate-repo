@@ -5,7 +5,7 @@
             <div class="card-header text-left">
                 <nav aria-label="breadcrumb">
                     View Question
-                    <hr>
+                    <hr> 
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="#">Home</a>
@@ -33,7 +33,6 @@
                                         <option value="0">--Category--</option>
                                         <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
                                     </select>
-
                                 </th>
                                 <th class="border-0">
                                     <select name="quesSubCat" [(ngModel)]="selectedSubCat">
@@ -42,32 +41,30 @@
                                     </select>
                                 </th>
                                 <th class="border-0">Question</th>
-
                             </tr>
                         </thead>
                         <tbody>
                             <tr name="Questionrow" *ngFor="let question of questions">
-                                <td>1</td>
-
-                                <td>Technical </td>
-                                <td>AS400 </td>
+                                <td>{{question.questype}}</td>
+                                <td>{{question.quesCat}} </td>
+                                <td>{{question.quesSubCat}}</td> 
                                 <td>{{question.question}}</td>
                                 <td>
                                     <button type="edit" class="btn  btn-light btn-sm">
                                         Edit </button>
                                     <button type="view" class="btn btn-light btn-sm">View</button>
                                 </td>
-
-
                             </tr>
 
                             <tr>
                                 <td colspan="9">
-                                    
+                                   
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <mat-paginator [length]="totalQuestions" [pageSize]="questionsPerPage"  [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
+                   *ngIf="questions.length > 0"></mat-paginator>
                 </div>
             </div>
         </div>
