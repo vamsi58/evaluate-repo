@@ -70,3 +70,9 @@
  .login-title{
    font-size: 30px;
  }
+ input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid #76D7C4;
+}
