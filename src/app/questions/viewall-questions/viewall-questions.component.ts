@@ -19,14 +19,12 @@ export class ViewallQuestionsComponent implements OnInit {
 
   oDoc;
   sDefTxt;
-  selectedType; 
-  selectedCat;
-  selectedSubCat;
   objectiveQuestion = true;
-  selectedCategory: Category = new Category(2, 'IBM i');
+  //selectedCategory: Category = new Category(2, 'IBM i');
   categories: Category[];
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
+  selectedCategory: Category = new Category(2, 'IBM i');
   questions: Question[] = [];
   isLoading = false;
   totalQuestions = 0;
@@ -34,6 +32,10 @@ export class ViewallQuestionsComponent implements OnInit {
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   private questionsSub: Subscription;
+
+  selectedType:QuestionType = new QuestionType(0, "Objective");
+  selectedCat:Category = new Category(0, "All");  
+  selectedSubCat:SubCategory = new SubCategory(0,0, "IBM i");
   
 
   constructor(private selectService: SelectService, private questionService: QuestionService) { }
@@ -42,7 +44,7 @@ export class ViewallQuestionsComponent implements OnInit {
   ngOnInit(){
     this.categories = this.selectService.getCategory();
     this.questionTypes = this.selectService.getQuestionType();
-    this.onSelect(this.selectedCategory.id);
+    this.onSelect(this.selectedCat.id);
 
 
     // this.questionService.viewQuestion().subscribe((data: Question[])=> {
@@ -80,6 +82,16 @@ export class ViewallQuestionsComponent implements OnInit {
     this.currentPage = pageData.pageIndex + 1;
     this.questionsPerPage = pageData.pageSize;
     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
+  }
+
+  onDelete(quesid: string) {
+    console.log(quesid);
+    this.isLoading = true;
+    this.questionService.deleteQuestion(quesid).subscribe(() => {
+      this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
+    }, () => {
+      //this.isLoading = false;
+    });
   }
 
 }

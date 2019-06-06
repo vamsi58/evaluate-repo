@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
+const checkAuth = require("../middleware/check-auth");
 const Question = require("../models/question");
 
 const router = express.Router();
@@ -56,7 +56,26 @@ router.get("/view", (req, res, next ) => {
     })
     .catch(error => {
       res.status(500).json({
-        message: "Fetching questions failed!"
+        message: "Fetching questions failed!" 
+      });
+    });
+});
+
+router.delete("/delete/:quesid", checkAuth, (req, res, next) => {
+  Question.deleteOne({ quesid: req.params.quesid })
+    .then(result => {
+      console.log(result);
+      if (result.n > 0) {
+        res.status(200).json({ message: "Deletion successful!" });
+      } else {
+        res.status(401).json({ message: "Not authorized!" });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        message: "Fetching posts failed!"
+      
       });
     });
 });

@@ -39,7 +39,7 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
     this.categories = this.selectService.getCategory();
     this.questionTypes = this.selectService.getQuestionType();
     this.onSelect(this.selectedCat.id);
-  }
+  } 
 
  onSelect(categoryid) {
     this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == categoryid);
@@ -117,7 +117,7 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
       const question = this.oDoc.textContent;
       const answer   = this.aDoc.textContent;
       console.log(quesFormatted);
-      this.questionService.createQuestion('QTN0001', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
+      this.questionService.createQuestion('QTN0004', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
 
   }
 

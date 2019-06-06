@@ -61,6 +61,7 @@ export class QuestionService {
           return {
             questions: questionData.questions.map (question => {
               return {
+                quesid: question.quesid,
                 questype: question.questype,
                 quesCat: question.quesCat,
                 quesSubCat: question.quesSubCat,
@@ -84,6 +85,10 @@ export class QuestionService {
 
   getQuestionUpdateListener() {
     return this.questionsUpdated.asObservable();
+  }
+
+  deleteQuestion(quesid: string) {
+    return this.http.delete("http://localhost:3000/api/question/delete/" + quesid);
   }
 
   }
