@@ -46,11 +46,11 @@ a, a:hover, a:focus {
     SIDEBAR STYLE
 ----------------------------------------------------- */
 
-.wrapper {
+.wrapper{
     display: flex;
     width: 100%;
     align-items: stretch;
-    perspective: 1500px;
+    background-color: #fff;
 }
 
 

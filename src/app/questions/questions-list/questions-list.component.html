@@ -1,26 +1,9 @@
 <div class="row">
-        <a href="#" class="btn btn-outline-success btn-sm">
-                <i class="fa fa-plus"></i>
-                <span><strong>Add Question</strong></span>
-            </a>
-</div>
-<div class="row">
-
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header text-left">
                 <nav aria-label="breadcrumb">
-                    View Question
-                    <hr>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="#">Home</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="#">Questions</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">ViewQuestions</li>
-                    </ol>
+                    Questions
                 </nav>
             </div>
             <div class="card-body p-0">
@@ -40,21 +23,20 @@
                                 <th class="border-0">
                                     <select (change)="onSelectQuestType($event.target.value)" [(ngModel)]="selectedType.id" name="questype">
                                         <option value="0">All</option>
-                                        <option *ngFor="let questionType of questionTypes" value= {{questionType.id}}>{{questionType.name}}</option>
-                                       </select>
+                                        <option *ngFor="let questionType of questionTypes" value={{questionType.id}}>{{questionType.name}}</option>
+                                    </select>
                                 </th>
                                 <th class="border-0">
                                     <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCat.id" name="quesCat">
                                         <option value="0">All</option>
-                                         <option *ngFor="let category of categories" value= {{category.id}} >{{category.name}}</option>
-                                        </select>
+                                        <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
+                                    </select>
                                 </th>
                                 <th class="border-0">
-                                    
-                                    <select name="quesSubCat" [(ngModel)]="selectedSubCat.id"> 
+                                    <select name="quesSubCat" [(ngModel)]="selectedSubCat.id">
                                         <option value="0">All</option>
-                                        <option *ngFor="let subcategory of subCategories " value= {{subcategory.id}} >{{subcategory.name}}</option>
-                                     </select>
+                                        <option *ngFor="let subcategory of subCategories " value={{subcategory.id}}>{{subcategory.name}}</option>
+                                    </select>
                                 </th>
                                 <th class="border-0">
                                     <form class="navbar-form" role="search">
@@ -69,7 +51,12 @@
                                     </form>
                                 </th>
                                 <th>
-                                    
+                                    <a role = "button" data-toggle="modal" data-target="#create-question" class="btn btn-outline-success btn-sm">
+                                        <i class="fa fa-plus"></i>
+                                        <span>
+                                            <strong> Add Question</strong>
+                                        </span>
+                                    </a>
                                 </th>
                             </tr>
                         </thead>
@@ -78,27 +65,24 @@
                                 <td>{{question.questype}}</td>
                                 <td>{{question.quesCat}} </td>
                                 <td>{{question.quesSubCat}}</td>
-                                <td><label class="sr-only" >{{question.quesid}}</label> {{question.question}}</td>
+                                <td>
+                                    <label class="sr-only">{{question.quesid}}</label> {{question.question}}</td>
                                 <!-- <td> {{question.question}}</td> -->
                                 <td>
                                     <a href="#" class="btn btn-default a-btn-slide-text">
                                         <i class="fa fa-edit"></i>
 
                                     </a>
-                                    <a href="#" class="btn btn-default a-btn-slide-text">
+                                    <a href="#" class="btn btn-default a-btn-slide-text" role = "button" data-toggle="modal" data-target="#view-question">
                                         <i class="fa fa-eye"></i>
-
                                     </a>
-                                    <a  class="btn btn-default a-btn-slide-text" (click)="onDelete(question.quesid)">
+                                    <a class="btn btn-default a-btn-slide-text" (click)="onDelete(question.quesid)">
                                         <i class="fa fa-trash"></i>
-
                                     </a>
                                 </td>
                             </tr>
-
                             <tr>
                                 <td colspan="9">
-
                                 </td>
                             </tr>
                         </tbody>
@@ -110,3 +94,6 @@
         </div>
     </div>
 </div>
+
+<app-question-view></app-question-view>
+<app-question-create></app-question-create>

@@ -4,39 +4,24 @@
     <div class="sidebar-header">
       <h3>EvalAt</h3>
     </div>
-
     <ul class="list-unstyled components">
-      <p>Admin</p>
-      <li class="active">
-        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Tests</a>
-        <ul class="collapse list-unstyled" id="homeSubmenu">
-          <li>
-            <a href="#">Create Tests</a>
-          </li>
-          <li>
-            <a href="#">View Tests</a>
-          </li>
-          <li>
-            <a href="#">View Test Results</a>
-          </li>
-        </ul>
+      <p>
+        <a routerLink="/home">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          Dashboard
+        </a>
+      </p>
+      <li>
+        <a routerLink="/tests">
+          <i class="fa fa-book"></i>
+          Tests
+        </a>
       </li>
       <li>
-        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Questions</a>
-        <ul class="collapse list-unstyled" id="pageSubmenu">
-          <li>
-            <a href="#" routerLink="create-question">Add a Questions</a>
-          </li>
-          <li>
-            <a href="#" >Update Questions</a>
-          </li>
-          <li>
-            <a href="#" routerLink = "viewall-questions">View Questions</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">Pages</a>
+        <a routerLink="/questions">
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
+          Questions
+        </a>
       </li>
       <li>
         <a href="#">Portfolio</a>
@@ -45,16 +30,12 @@
         <a href="#">Contact</a>
       </li>
     </ul>
-
-
-  </nav>
+  </nav> 
 
   <!-- Page Content Holder -->
   <div id="content">
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-
         <button type="button" id="sidebarCollapse" class="navbar-btn">
           <span></span>
           <span></span>
@@ -64,7 +45,6 @@
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-align-justify"></i>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="nav navbar-nav ml-auto">
             <li>
@@ -113,8 +93,7 @@
     <main>
       <router-outlet></router-outlet>
     </main>
-
-
   </div>
-</div>  
+</div> 
+
 

@@ -2,11 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Subject, pipe } from "rxjs";
-//import { map } from "rxjs/operators";
-//import {map} from "rxjs/add/operator";
-
-//import '...rxjs/add/operator/map';
-//import './node_modules/rxjs/add/operator/map.js'
 
 import {
   map,
