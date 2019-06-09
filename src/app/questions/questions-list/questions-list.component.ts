@@ -24,12 +24,28 @@ export class QuestionsListComponent implements OnInit {
   questionTypes: QuestionType[];
   selectedCategory: Category = new Category(2, 'IBM i');
   questions: Question[] = [];
+  filteredQuestions: Question[] = [];
   isLoading = false;
   totalQuestions = 0;
   questionsPerPage = 4;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   private questionsSub: Subscription;
+  private _filterQuestion:string;
+
+  get filterQuestion():string{
+    return this._filterQuestion;
+  }
+
+  set filterQuestion(value:string){
+    this._filterQuestion=value;
+    this.filteredQuestions = this.filterQuestions(value);
+  }
+
+  filterQuestions(searchTerm:string){
+    return this.questions.filter(question =>
+    question.question.toLowerCase().indexOf(searchTerm.toLowerCase())!== -1);
+  }
 
   selectedType:QuestionType = new QuestionType(0, "Objective");
   selectedCat:Category = new Category(0, "All");  
@@ -46,7 +62,9 @@ export class QuestionsListComponent implements OnInit {
       .subscribe((questionData: { questions: Question[]; questionCount: number }) => {
         this.totalQuestions = questionData.questionCount;
         this.questions = questionData.questions;
+        this.filteredQuestions = this.questions;
       });      
+    
   }
 
  onSelect(categoryid) {

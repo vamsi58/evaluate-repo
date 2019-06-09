@@ -44,9 +44,9 @@
                                     </select>
                                 </th>
                                 <th class="border-0">
-                                    <form class="navbar-form" role="search">
+                                    <form class="filter-form" role="search">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search" name="q">
+                                            <input type="text" class="form-control" placeholder="Search" name="search-question" [(ngModel)] = "filterQuestion">
                                             <div class="input-group-btn">
                                                 <button class="btn btn-default" type="submit">
                                                     <i class="glyphicon glyphicon-search"></i>
@@ -56,8 +56,12 @@
                                     </form>
                                 </th>
                                 <th>
+<<<<<<< HEAD
                                     <a role="button" data-toggle="modal" data-target="#create-question"
                                         class="btn btn-outline-success btn-sm">
+=======
+                                    <a role="button" data-toggle="modal" data-target="#create-question" class="btn btn-outline-success btn-sm">
+>>>>>>> 93d375d0c89aba10b64da6d382ae9cc621c3c83f
                                         <i class="fa fa-plus"></i>
                                         <span>
                                             <strong> Add Question</strong>
@@ -67,7 +71,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr name="Questionrow" *ngFor="let question of questions">
+                            <tr name="Questionrow" *ngFor="let question of filteredQuestions">
                                 <td>{{question.questype}}</td>
                                 <td>{{question.quesCat}} </td>
                                 <td>{{question.quesSubCat}}</td>
@@ -79,8 +83,12 @@
                                         <i class="fa fa-edit"></i>
 
                                     </a>
+<<<<<<< HEAD
                                     <a href="#" class="btn btn-default a-btn-slide-text" role="button"
                                         data-toggle="modal" data-target="#view-question">
+=======
+                                    <a href="#" class="btn btn-default a-btn-slide-text" role="button" data-toggle="modal" data-target="#view-question">
+>>>>>>> 93d375d0c89aba10b64da6d382ae9cc621c3c83f
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     <a class="btn btn-default a-btn-slide-text" (click)="onDelete(question.quesid)">
