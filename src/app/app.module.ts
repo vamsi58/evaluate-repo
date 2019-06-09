@@ -30,6 +30,8 @@ import { CreateQuestionComponent } from './questions/create-question/create-ques
 import { QuestionsListComponent } from './questions/questions-list/questions-list.component';
 import { QuestionViewComponent } from './questions/question-view/question-view.component';
 import { QuestionCreateComponent } from './questions/question-create/question-create.component';
+import { QuestionEditComponent } from './questions/question-edit/question-edit.component';
+import { EditQuestionComponent } from './questions/edit-question/edit-question.component';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { QuestionCreateComponent } from './questions/question-create/question-cr
     CreateQuestionComponent,
     QuestionsListComponent,
     QuestionViewComponent,
-    QuestionCreateComponent
+    QuestionCreateComponent,
+    QuestionEditComponent,
+    EditQuestionComponent
   
   ],
   imports: [

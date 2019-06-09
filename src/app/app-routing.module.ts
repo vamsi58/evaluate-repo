@@ -11,6 +11,8 @@ import { LoginComponent } from "./auth/login/login.component";
 import { SignupComponent } from "./auth/signup/signup.component";
 import { AuthGuard } from "./auth/auth.guard";
 import { QuestionViewComponent } from "./questions/question-view/question-view.component";
+import {EditQuestionComponent}  from "./questions/edit-question/edit-question.component"
+//import { QuestionEditComponent } from "./questions/question-edit/question-edit.component";
 
 const routes: Routes = [
   
@@ -36,6 +38,11 @@ const routes: Routes = [
       path: "create-question", 
       component: CreateQuestionComponent 
     },
+    
+    { 
+      path: "edit-question", 
+      component: EditQuestionComponent 
+    },
   ]
 },
   { 
@@ -50,6 +57,7 @@ const routes: Routes = [
     path: "test", 
     component: QuestionViewComponent 
   },
+  
 ];
 
 @NgModule({

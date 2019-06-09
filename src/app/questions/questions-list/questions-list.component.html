@@ -21,21 +21,26 @@
                             </tr>
                             <tr class="border-0">
                                 <th class="border-0">
-                                    <select (change)="onSelectQuestType($event.target.value)" [(ngModel)]="selectedType.id" name="questype">
+                                    <select (change)="onSelectQuestType($event.target.value)"
+                                        [(ngModel)]="selectedType.id" name="questype">
                                         <option value="0">All</option>
-                                        <option *ngFor="let questionType of questionTypes" value={{questionType.id}}>{{questionType.name}}</option>
+                                        <option *ngFor="let questionType of questionTypes" value={{questionType.id}}>
+                                            {{questionType.name}}</option>
                                     </select>
                                 </th>
                                 <th class="border-0">
-                                    <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCat.id" name="quesCat">
+                                    <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCat.id"
+                                        name="quesCat">
                                         <option value="0">All</option>
-                                        <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
+                                        <option *ngFor="let category of categories" value={{category.id}}>
+                                            {{category.name}}</option>
                                     </select>
                                 </th>
                                 <th class="border-0">
                                     <select name="quesSubCat" [(ngModel)]="selectedSubCat.id">
                                         <option value="0">All</option>
-                                        <option *ngFor="let subcategory of subCategories " value={{subcategory.id}}>{{subcategory.name}}</option>
+                                        <option *ngFor="let subcategory of subCategories " value={{subcategory.id}}>
+                                            {{subcategory.name}}</option>
                                     </select>
                                 </th>
                                 <th class="border-0">
@@ -51,7 +56,8 @@
                                     </form>
                                 </th>
                                 <th>
-                                    <a role = "button" data-toggle="modal" data-target="#create-question" class="btn btn-outline-success btn-sm">
+                                    <a role="button" data-toggle="modal" data-target="#create-question"
+                                        class="btn btn-outline-success btn-sm">
                                         <i class="fa fa-plus"></i>
                                         <span>
                                             <strong> Add Question</strong>
@@ -69,11 +75,12 @@
                                     <label class="sr-only">{{question.quesid}}</label> {{question.question}}</td>
                                 <!-- <td> {{question.question}}</td> -->
                                 <td>
-                                    <a href="#" class="btn btn-default a-btn-slide-text">
+                                    <a href="#" class="btn btn-default a-btn-slide-text" role="button" routerLink="/edit-question">
                                         <i class="fa fa-edit"></i>
 
                                     </a>
-                                    <a href="#" class="btn btn-default a-btn-slide-text" role = "button" data-toggle="modal" data-target="#view-question">
+                                    <a href="#" class="btn btn-default a-btn-slide-text" role="button"
+                                        data-toggle="modal" data-target="#view-question">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     <a class="btn btn-default a-btn-slide-text" (click)="onDelete(question.quesid)">
@@ -87,8 +94,9 @@
                             </tr>
                         </tbody>
                     </table>
-                    <mat-paginator [length]="totalQuestions" [pageSize]="questionsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"
-                        *ngIf="questions.length > 0"></mat-paginator>
+                    <mat-paginator [length]="totalQuestions" [pageSize]="questionsPerPage"
+                        [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="questions.length > 0">
+                    </mat-paginator>
                 </div>
             </div>
         </div>

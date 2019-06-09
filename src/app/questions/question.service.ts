@@ -82,6 +82,15 @@ export class QuestionService {
     return this.questionsUpdated.asObservable();
   }
 
+  updateQuestion(quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason:string) {
+    const Question: Question = { quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason:quesReason };
+        this.http
+      .put("http://localhost:3000/api/question/update" + quesid, Question)
+      .subscribe(response => {
+        this.router.navigate(["/"]);
+      });
+  }
+
   deleteQuestion(quesid: string) {
     return this.http.delete("http://localhost:3000/api/question/delete/" + quesid);
   }
