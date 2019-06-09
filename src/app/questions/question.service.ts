@@ -25,8 +25,6 @@ export class QuestionService {
   private questions: Question[] = [];
   private questionsUpdated = new Subject<{ questions: Question[]; questionCount: number }>();
   
-
-  
   constructor(private http: HttpClient, private router: Router) { }
 
   getAuthStatusListener() {
@@ -38,7 +36,7 @@ export class QuestionService {
     this.http
       .post("http://localhost:3000/api/question/add", Question)
       .subscribe(() => {
-        this.router.navigate(["/"]);
+        this.router.navigate(["/question"]);
       }, error => {
         this.authStatusListener.next(false);
       });

@@ -3,13 +3,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalCenterTitle">Create Question</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeBtn>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <form class="form-horizontal" (submit)="onSubmit(questionForm, $event)" #questionForm="ngForm" role="form">
-
           <div class="form-group required">
             <label class="control-label">Question Type</label>
             <select (change)="onSelectQuestType($event.target.value)" [(ngModel)]="selectedType.id" name="questype">
@@ -147,7 +146,7 @@
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary  btn-sm mr-3">Create</button>
-            <button type="reset" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-secondary btn-sm" (click) = "closeModal()">Cancel</button>
           </div>
         </form>
       </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild,ElementRef  } from '@angular/core';
 import { Category } from '../category.model';
 import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
@@ -14,7 +14,7 @@ import { QuestionService } from "../question.service";
   styleUrls: ['./question-create.component.css']
 })
 export class QuestionCreateComponent implements OnInit {
-
+  @ViewChild('closeBtn') closeBtn: ElementRef;
   oDoc;
   aDoc;
   sDefTxt;
@@ -109,8 +109,6 @@ export class QuestionCreateComponent implements OnInit {
       if (form.invalid) {
         return;
       }
-      event.preventDefault();
-     
       const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
       const category = this.selectService.getCategory().filter((item) => item.id == form.value.questype)[0].name;
       const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.questype)[0].name;
@@ -119,7 +117,12 @@ export class QuestionCreateComponent implements OnInit {
       const answer   = this.aDoc.textContent;
       console.log(quesFormatted);
       this.questionService.createQuestion('QTN0004', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
-
+      // close the modal
+      this.closeModal();
   }
+
+  closeModal(): void {
+    this.closeBtn.nativeElement.click();
+}
  
 }
