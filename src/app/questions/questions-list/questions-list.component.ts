@@ -1,37 +1,51 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from "@angular/forms";
+import { PageEvent } from "@angular/material";
 import { Subscription } from "rxjs";
 import { Category } from '../category.model';
 import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
 import { SelectService } from '../select.service';
-import {Answer} from '../answer.model';
-import { NgForm } from "@angular/forms";
-import { PageEvent } from "@angular/material";
+import { Answer} from '../answer.model';
 import { QuestionService } from "../question.service";
 import { Question } from '../question.model';
 
 @Component({
-  selector: 'app-viewall-questions',
-  templateUrl: './viewall-questions.component.html',
-  styleUrls: ['./viewall-questions.component.css']
+  selector: 'app-questions-list',
+  templateUrl: './questions-list.component.html',
+  styleUrls: ['./questions-list.component.css']
 })
-export class ViewallQuestionsComponent implements OnInit {
-
+export class QuestionsListComponent implements OnInit {
   oDoc;
   sDefTxt;
   objectiveQuestion = true;
-  //selectedCategory: Category = new Category(2, 'IBM i');
   categories: Category[];
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
   selectedCategory: Category = new Category(2, 'IBM i');
   questions: Question[] = [];
+  filteredQuestions: Question[] = [];
   isLoading = false;
   totalQuestions = 0;
   questionsPerPage = 4;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   private questionsSub: Subscription;
+  private _filterQuestion:string;
+
+  get filterQuestion():string{
+    return this._filterQuestion;
+  }
+
+  set filterQuestion(value:string){
+    this._filterQuestion=value;
+    this.filteredQuestions = this.filterQuestions(value);
+  }
+
+  filterQuestions(searchTerm:string){
+    return this.questions.filter(question =>
+    question.question.toLowerCase().indexOf(searchTerm.toLowerCase())!== -1);
+  }
 
   selectedType:QuestionType = new QuestionType(1, "Objective");
   selectedCat:Category = new Category(1, "All");  
@@ -39,27 +53,20 @@ export class ViewallQuestionsComponent implements OnInit {
   
 
   constructor(private selectService: SelectService, private questionService: QuestionService) { }
-
   
   ngOnInit(){
     this.categories = this.selectService.getCategory();
     this.questionTypes = this.selectService.getQuestionType();
     this.onSelect(this.selectedCat.id);
-
-
-    // this.questionService.viewQuestion().subscribe((data: Question[])=> {
-    //   this.questions = data;
-    //})
-
     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
     this.questionsSub = this.questionService
       .getQuestionUpdateListener()
       .subscribe((questionData: { questions: Question[]; questionCount: number }) => {
         this.totalQuestions = questionData.questionCount;
         this.questions = questionData.questions;
-      });
-      
-       
+        this.filteredQuestions = this.questions;
+      });      
+    
   }
 
  onSelect(categoryid) {
@@ -89,9 +96,6 @@ export class ViewallQuestionsComponent implements OnInit {
     this.isLoading = true;
     this.questionService.deleteQuestion(quesid).subscribe(() => {
       this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
-    }, () => {
-      //this.isLoading = false;
     });
   }
-
 }

@@ -2,11 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Subject, pipe } from "rxjs";
-//import { map } from "rxjs/operators";
-//import {map} from "rxjs/add/operator";
-
-//import '...rxjs/add/operator/map';
-//import './node_modules/rxjs/add/operator/map.js'
 
 import {
   map,
@@ -30,8 +25,6 @@ export class QuestionService {
   private questions: Question[] = [];
   private questionsUpdated = new Subject<{ questions: Question[]; questionCount: number }>();
   
-
-  
   constructor(private http: HttpClient, private router: Router) { }
 
   getAuthStatusListener() {
@@ -43,7 +36,7 @@ export class QuestionService {
     this.http
       .post("http://localhost:3000/api/question/add", Question)
       .subscribe(() => {
-        this.router.navigate(["/"]);
+        this.router.navigate(["/question"]);
       }, error => {
         this.authStatusListener.next(false);
       });
@@ -85,6 +78,28 @@ export class QuestionService {
 
   getQuestionUpdateListener() {
     return this.questionsUpdated.asObservable();
+  }
+
+  getQuestion(quesid: string) {
+    return this.http.get<{
+      quesid: string;
+      questype: string;
+      quesCat: string; 
+      quesSubCat: string;
+      question: string;
+      quesFormatted: string;
+      quesAnswers: Answer[];
+      quesReason:string;
+      
+    }>("http://localhost:3000/api/question/update" + quesid);
+  }
+  updateQuestion(quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason:string) {
+    const Question: Question = { quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason:quesReason };
+        this.http
+      .put("http://localhost:3000/api/question/update" + quesid, Question)
+      .subscribe(response => {
+        this.router.navigate(["/"]);
+      });
   }
 
   deleteQuestion(quesid: string) {

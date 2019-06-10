@@ -27,7 +27,11 @@ import { ErrorComponent } from "./error/error.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditorComponent } from './editor/editor.component';
 import { CreateQuestionComponent } from './questions/create-question/create-question.component';
-import { ViewallQuestionsComponent } from './questions/viewall-questions/viewall-questions.component';
+import { QuestionsListComponent } from './questions/questions-list/questions-list.component';
+import { QuestionViewComponent } from './questions/question-view/question-view.component';
+import { QuestionCreateComponent } from './questions/question-create/question-create.component';
+import { QuestionEditComponent } from './questions/question-edit/question-edit.component';
+import { EditQuestionComponent } from './questions/edit-question/edit-question.component';
 
 
 @NgModule({
@@ -42,7 +46,11 @@ import { ViewallQuestionsComponent } from './questions/viewall-questions/viewall
     DashboardComponent,
     EditorComponent,
     CreateQuestionComponent,
-    ViewallQuestionsComponent
+    QuestionsListComponent,
+    QuestionViewComponent,
+    QuestionCreateComponent,
+    QuestionEditComponent,
+    EditQuestionComponent
   
   ],
   imports: [

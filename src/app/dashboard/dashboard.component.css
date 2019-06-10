@@ -3,8 +3,8 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
-}
+    background: #76D7C4;
+} 
 
 p {
     font-family: 'Poppins', sans-serif;
@@ -19,7 +19,9 @@ a, a:hover, a:focus {
     text-decoration: none;
     transition: all 0.3s;
 }
-
+.bg-light {
+    background-color: #51AD9B!important;
+}
 .navbar {
     padding: 15px 10px;
     background: #fff;
@@ -46,11 +48,11 @@ a, a:hover, a:focus {
     SIDEBAR STYLE
 ----------------------------------------------------- */
 
-.wrapper {
+.wrapper{
     display: flex;
     width: 100%;
     align-items: stretch;
-    perspective: 1500px;
+    background-color: #fff;
 }
 
 
