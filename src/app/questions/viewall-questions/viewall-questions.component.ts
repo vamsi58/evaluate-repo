@@ -33,9 +33,9 @@ export class ViewallQuestionsComponent implements OnInit {
   pageSizeOptions = [1, 2, 5, 10];
   private questionsSub: Subscription;
 
-  selectedType:QuestionType = new QuestionType(0, "Objective");
-  selectedCat:Category = new Category(0, "All");  
-  selectedSubCat:SubCategory = new SubCategory(0,0, "IBM i");
+  selectedType:QuestionType = new QuestionType(1, "Objective");
+  selectedCat:Category = new Category(1, "All");  
+  selectedSubCat:SubCategory = new SubCategory(1,1, "All");
   
 
   constructor(private selectService: SelectService, private questionService: QuestionService) { }
