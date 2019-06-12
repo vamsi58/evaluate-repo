@@ -32,6 +32,7 @@ import { QuestionViewComponent } from './questions/question-view/question-view.c
 import { QuestionCreateComponent } from './questions/question-create/question-create.component';
 import { QuestionEditComponent } from './questions/question-edit/question-edit.component';
 import { EditQuestionComponent } from './questions/edit-question/edit-question.component';
+import { QuestionDeleteComponent } from './questions/question-delete/question-delete.component';
 
 
 @NgModule({
@@ -50,7 +51,9 @@ import { EditQuestionComponent } from './questions/edit-question/edit-question.c
     QuestionViewComponent,
     QuestionCreateComponent,
     QuestionEditComponent,
-    EditQuestionComponent
+    EditQuestionComponent,
+    QuestionDeleteComponent,
+
   
   ],
   imports: [
@@ -74,6 +77,7 @@ import { EditQuestionComponent } from './questions/edit-question/edit-question.c
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorComponent]
+  entryComponents: [ErrorComponent, QuestionDeleteComponent]
+
 })
 export class AppModule {}

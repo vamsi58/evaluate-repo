@@ -9,6 +9,8 @@ import { SelectService } from '../select.service';
 import { Answer} from '../answer.model';
 import { QuestionService } from "../question.service";
 import { Question } from '../question.model';
+import {QuestionDeleteComponent} from '../question-delete/question-delete.component';
+import { MatDialog } from '@angular/material'; 
 
 @Component({
   selector: 'app-questions-list',
@@ -52,8 +54,12 @@ export class QuestionsListComponent implements OnInit {
   selectedSubCat:SubCategory = new SubCategory(1,1, "All");
   
 
-  constructor(private selectService: SelectService, private questionService: QuestionService) { }
+  constructor(
+    private selectService: SelectService, 
+    private questionService: QuestionService, 
+    private dialog: MatDialog ) {}
   
+
   ngOnInit(){
     this.categories = this.selectService.getCategory();
     this.questionTypes = this.selectService.getQuestionType();
@@ -91,11 +97,33 @@ export class QuestionsListComponent implements OnInit {
     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
   }
 
-  onDelete(quesid: string) {
-    console.log(quesid);
+  private deleteQuestion(quesid: string) {
+    //console.log(quesid);
     this.isLoading = true;
     this.questionService.deleteQuestion(quesid).subscribe(() => {
       this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
     });
   }
+
+  onDelete(question) {  
+    //console.log(post.userId);  
+    //Open MatDialog and load component dynamically  
+    const dialogRef = this.dialog.open(QuestionDeleteComponent, {               //Pass data object as a second parameter  
+      data: {  
+        question_name: question.question  
+      }  
+    });  
+    //Need to subscribe afterClosed event of MatDialog  
+    dialogRef.afterClosed().subscribe(confirmresult => {  
+      console.log(confirmresult);  
+      if (confirmresult) {  
+        //if dialog result is yes, delete post  
+        this.deleteQuestion(question.quesid);  
+        console.log("Delete confirm is approved by user.");  
+      } else {  
+        //if dialog result is no, DO NOT delete post  
+        console.log("Delete confirm is cancelled by user.");  
+      }  
+    });  
+  }  
 }
