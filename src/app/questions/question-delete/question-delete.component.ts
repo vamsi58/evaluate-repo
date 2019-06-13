@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject  } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';  
+import { QuestionService } from "../question.service";
+import { SelectService } from '../select.service';
 
 @Component({
   selector: 'app-question-delete',
@@ -8,9 +10,22 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 })
 export class QuestionDeleteComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data:any) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data:any,
+    private selectService: SelectService, 
+    private questionService: QuestionService
+  ) { }
 
   ngOnInit() {
   }
 
+  onSubmit(quesid: string) {
+    //console.log(quesid);
+    //this.isLoading = true;
+    this.questionService.deleteQuestion(quesid).subscribe(() => {
+      
+    });
+  }
 }
+
+

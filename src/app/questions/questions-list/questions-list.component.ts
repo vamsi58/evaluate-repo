@@ -6,11 +6,12 @@ import { Category } from '../category.model';
 import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
 import { SelectService } from '../select.service';
-import { Answer} from '../answer.model';
+import { Answer } from '../answer.model';
 import { QuestionService } from "../question.service";
 import { Question } from '../question.model';
-import {QuestionDeleteComponent} from '../question-delete/question-delete.component';
-import { MatDialog } from '@angular/material'; 
+import { QuestionDeleteComponent } from '../question-delete/question-delete.component';
+import { QuestionEditComponent } from '../question-edit/question-edit.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-questions-list',
@@ -19,6 +20,7 @@ import { MatDialog } from '@angular/material';
 })
 export class QuestionsListComponent implements OnInit {
   oDoc;
+  aDoc;
   sDefTxt;
   objectiveQuestion = true;
   categories: Category[];
@@ -26,6 +28,7 @@ export class QuestionsListComponent implements OnInit {
   questionTypes: QuestionType[];
   selectedCategory: Category = new Category(2, 'IBM i');
   questions: Question[] = [];
+  answers: Answer[];
   filteredQuestions: Question[] = [];
   isLoading = false;
   totalQuestions = 0;
@@ -33,34 +36,34 @@ export class QuestionsListComponent implements OnInit {
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   private questionsSub: Subscription;
-  private _filterQuestion:string;
+  private _filterQuestion: string;
 
-  get filterQuestion():string{
+  get filterQuestion(): string {
     return this._filterQuestion;
   }
 
-  set filterQuestion(value:string){
-    this._filterQuestion=value;
+  set filterQuestion(value: string) {
+    this._filterQuestion = value;
     this.filteredQuestions = this.filterQuestions(value);
   }
 
-  filterQuestions(searchTerm:string){
+  filterQuestions(searchTerm: string) {
     return this.questions.filter(question =>
-    question.question.toLowerCase().indexOf(searchTerm.toLowerCase())!== -1);
+      question.question.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
   }
 
-  selectedType:QuestionType = new QuestionType(1, "Objective");
-  selectedCat:Category = new Category(1, "All");  
-  selectedSubCat:SubCategory = new SubCategory(1,1, "All");
-  
+  selectedType: QuestionType = new QuestionType(1, "Objective");
+  selectedCat: Category = new Category(1, "All");
+  selectedSubCat: SubCategory = new SubCategory(1, 1, "All");
+
 
   constructor(
-    private selectService: SelectService, 
-    private questionService: QuestionService, 
-    private dialog: MatDialog ) {}
-  
+    private selectService: SelectService,
+    private questionService: QuestionService,
+    private dialog: MatDialog) { }
 
-  ngOnInit(){
+
+  ngOnInit() {
     this.categories = this.selectService.getCategory();
     this.questionTypes = this.selectService.getQuestionType();
     this.onSelect(this.selectedCat.id);
@@ -71,21 +74,20 @@ export class QuestionsListComponent implements OnInit {
         this.totalQuestions = questionData.questionCount;
         this.questions = questionData.questions;
         this.filteredQuestions = this.questions;
-      });      
-    
+      });
+
   }
 
- onSelect(categoryid) {
+  onSelect(categoryid) {
     this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == categoryid);
   }
 
   // based on question type display subsequent fields
-  onSelectQuestType(optionId:string)
-  {  
-    if (optionId == "1"){
+  onSelectQuestType(optionId: string) {
+    if (optionId == "1") {
       this.objectiveQuestion = true;
     }
-    else{
+    else {
       this.objectiveQuestion = false;
     }
   }
@@ -97,33 +99,48 @@ export class QuestionsListComponent implements OnInit {
     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
   }
 
-  private deleteQuestion(quesid: string) {
-    //console.log(quesid);
-    this.isLoading = true;
-    this.questionService.deleteQuestion(quesid).subscribe(() => {
-      this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
-    });
-  }
+  // private deleteQuestion(quesid: string) {
+  //   //console.log(quesid);
+  //   this.isLoading = true;
+  //   this.questionService.deleteQuestion(quesid).subscribe(() => {
+  //     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
+  //   });
+  // }
 
-  onDelete(question) {  
+  onDelete(question) {
     //console.log(post.userId);  
     //Open MatDialog and load component dynamically  
     const dialogRef = this.dialog.open(QuestionDeleteComponent, {               //Pass data object as a second parameter  
-      data: {  
-        question_name: question.question  
-      }  
-    });  
+      data: {
+        question: question
+      }
+    });
+  }
     //Need to subscribe afterClosed event of MatDialog  
-    dialogRef.afterClosed().subscribe(confirmresult => {  
-      console.log(confirmresult);  
-      if (confirmresult) {  
-        //if dialog result is yes, delete post  
-        this.deleteQuestion(question.quesid);  
-        console.log("Delete confirm is approved by user.");  
-      } else {  
-        //if dialog result is no, DO NOT delete post  
-        console.log("Delete confirm is cancelled by user.");  
-      }  
-    });  
-  }  
+  //   dialogRef.afterClosed().subscribe(confirmresult => {
+  //     console.log(confirmresult);
+  //     if (confirmresult) {
+  //       //if dialog result is yes, delete post  
+  //       this.deleteQuestion(question.quesid);
+  //       console.log("Delete confirm is approved by user.");
+  //     } else {
+  //       //if dialog result is no, DO NOT delete post  
+  //       console.log("Delete confirm is cancelled by user.");
+  //     }
+  //   });
+  // }
+
+
+  //onEdit(form: NgForm, even: Event, question) {
+    onEdit(question) {
+    //console.log(post.userId);  
+    //Open MatDialog and load component dynamically  
+    const dialogRef = this.dialog.open(QuestionEditComponent, {               //Pass data object as a second parameter  
+      data: {
+        question: question
+      }
+    });
+  }
+    
+  
 }

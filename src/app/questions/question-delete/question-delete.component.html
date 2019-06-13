@@ -1,7 +1,9 @@
 <h1 mat-dialog-title>Do you want to delete?</h1>  
-        <mat-dialog-content>Question is {{data.question_name}}.</mat-dialog-content>      
+        <mat-dialog-content>Question is {{data.question.question}},
+            {{data.question.quesid}}
+        </mat-dialog-content>      
         <mat-dialog-actions>  
-            <button mat-raised-button [mat-dialog-close]="true">YES</button>  
+            <button mat-raised-button [mat-dialog-close]="true" (click)="onSubmit(data.question.quesid)">YES</button>  
             <button mat-raised-button [mat-dialog-close]="false">NO</button>  
         </mat-dialog-actions> 
 
