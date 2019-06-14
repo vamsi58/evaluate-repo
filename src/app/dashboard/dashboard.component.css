@@ -23,7 +23,7 @@ a, a:hover, a:focus {
     background-color: #51AD9B!important;
 }
 .navbar {
-    padding: 15px 10px;
+    /* padding: 15px 10px; */
     background: #fff;
     border: none;
     border-radius: 0;

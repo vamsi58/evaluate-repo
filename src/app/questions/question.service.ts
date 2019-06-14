@@ -36,7 +36,7 @@ export class QuestionService {
     this.http
       .post("http://localhost:3000/api/question/add", Question)
       .subscribe(() => {
-        this.router.navigate(["/question"]);
+        this.router.navigate(["/questions"]);
       }, error => {
         this.authStatusListener.next(false);
       });
@@ -54,12 +54,15 @@ export class QuestionService {
           return {
             questions: questionData.questions.map (question => {
               return {
+                _id:question.id,
                 quesid: question.quesid,
                 questype: question.questype,
                 quesCat: question.quesCat,
                 quesSubCat: question.quesSubCat,
                 question: question.question,
-                quesFormatted: question.quesFormatted
+                quesFormatted: question.quesFormatted,
+                quesAnswers: question.answerOptions,
+                quesReason:question.reason
               };
             }),
             maxQuestions: questionData.maxQuestions
@@ -80,23 +83,23 @@ export class QuestionService {
     return this.questionsUpdated.asObservable();
   }
 
-  getQuestion(quesid: string) {
-    return this.http.get<{
-      quesid: string;
-      questype: string;
-      quesCat: string; 
-      quesSubCat: string;
-      question: string;
-      quesFormatted: string;
-      quesAnswers: Answer[];
-      quesReason:string;
+  // getQuestion(quesid: string) {
+  //   return this.http.get<{
+  //     quesid: string;
+  //     questype: string;
+  //     quesCat: string; 
+  //     quesSubCat: string;
+  //     question: string;
+  //     quesFormatted: string;
+  //     quesAnswers: Answer[];
+  //     quesReason:string;
       
-    }>("http://localhost:3000/api/question/update" + quesid);
-  }
+  //   }>("http://localhost:3000/api/question/update" + quesid);
+  // }
   updateQuestion(quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason:string) {
     const Question: Question = { quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason:quesReason };
         this.http
-      .put("http://localhost:3000/api/question/update" + quesid, Question)
+      .put("http://localhost:3000/api/question/update/" + quesid, Question)
       .subscribe(response => {
         this.router.navigate(["/"]);
       });

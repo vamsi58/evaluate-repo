@@ -44,24 +44,82 @@ export class QuestionEditComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-
+    this.objectiveQuestion = true;
     }
 
+     // add an answer
+  public addAnswer() : void {
+    this.answers.push({
+       optionNumber:this.answers.length+1,
+       answerBody: " ",
+       isCorrectAnswer: false
+    });
+}
+
+ // remove the answer
+public removeAnswer( index: number ) : void {
+    this.answers.splice( index, 1 );
+    for (var idx = 0;  idx < this.answers.length; idx++)
+    {
+     this.answers[idx].optionNumber = idx+1;
+    
+    }
+}
+
+ngAfterViewInit() {
+  this.oDoc = document.getElementById('questionBox');
+  this.aDoc  = document.getElementById('answerBox');
+  this.sDefTxt = this.oDoc.innerHTML;
+}
+
+onFormatDoc(sCmd, sValue) {
+    document.execCommand(sCmd, false, sValue);
+    this.oDoc.focus();
+}
+
+onConvertToHtml() {
+  var oContent;
+  oContent = document.createTextNode(this.oDoc.innerHTML);
+}
+
+onSelectedStyle(event: any, style: string) {
+  var selectedValue = event.target.value;
+  this.onFormatDoc(style, selectedValue);
+}
+
+onHlink() {
+  var sLnk = prompt('Write the URL here', 'http:\/\/');
+  if (sLnk && sLnk != '' && sLnk != 'http://') {
+    this.onFormatDoc('createlink', sLnk)
+  }
+}
+
   onSubmit(form: NgForm, even:Event) {
+      console.log("Test");
     if (form.invalid) {
+      console.log("Invalid Form");
       return;
     } 
     
+    console.log(this.aDoc.textContent);
+    //console.log(this.data.quesid);
+  
     event.preventDefault();
-    const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
-        const category = this.selectService.getCategory().filter((item) => item.id == form.value.questype)[0].name;
-        const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.questype)[0].name;
+    // const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
+    //     const category = this.selectService.getCategory().filter((item) => item.id == form.value.questype)[0].name;
+    //     const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.questype)[0].name;
+    const questionType = this.data.questionType;
+    const category = this.data.quesCat;
+    const subcategory = this.data.quesSubCat;
+
         var quesFormatted = this.oDoc.innerHTML;
         const question = this.oDoc.textContent;
         const answer   = this.aDoc.textContent;
+        //const quesid1 = form.value.quesid; 
+        //const quesid1 = this.data.quesid;
   
     
-      this.questionService.updateQuestion('QTN0004', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
+      this.questionService.updateQuestion("QTN0004", questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
     form.reset();
   }
 

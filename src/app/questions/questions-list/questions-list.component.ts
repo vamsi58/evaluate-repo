@@ -56,24 +56,31 @@ export class QuestionsListComponent implements OnInit {
   selectedCat: Category = new Category(1, "All");
   selectedSubCat: SubCategory = new SubCategory(1, 1, "All");
 
+  constructor( private selectService: SelectService,
+              private questionService: QuestionService,
+              private dialog: MatDialog) 
+        { 
 
-  constructor(
-    private selectService: SelectService,
-    private questionService: QuestionService,
-    private dialog: MatDialog) { }
+      this.answers = []; 
+      
+    }
 
 
   ngOnInit() {
+    //this.objectiveQuestion = true;
     this.categories = this.selectService.getCategory();
     this.questionTypes = this.selectService.getQuestionType();
     this.onSelect(this.selectedCat.id);
     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
     this.questionsSub = this.questionService
       .getQuestionUpdateListener()
-      .subscribe((questionData: { questions: Question[]; questionCount: number }) => {
+      .subscribe((questionData: { questions: Question[];  questionCount: number }) => {
         this.totalQuestions = questionData.questionCount;
         this.questions = questionData.questions;
         this.filteredQuestions = this.questions;
+              //this.answers = questionData.answers;
+        console.log(questionData);
+        //console.log(questionData.answers);
       });
 
   }
@@ -107,12 +114,12 @@ export class QuestionsListComponent implements OnInit {
   //   });
   // }
 
-  onDelete(question) {
+  onDelete(questiondata) {
     //console.log(post.userId);  
     //Open MatDialog and load component dynamically  
     const dialogRef = this.dialog.open(QuestionDeleteComponent, {               //Pass data object as a second parameter  
       data: {
-        question: question
+        question: questiondata
       }
     });
   }
@@ -132,12 +139,16 @@ export class QuestionsListComponent implements OnInit {
 
 
   //onEdit(form: NgForm, even: Event, question) {
-    onEdit(question) {
+    onEdit(questiondata) {
     //console.log(post.userId);  
+    console.log(questiondata);
     //Open MatDialog and load component dynamically  
     const dialogRef = this.dialog.open(QuestionEditComponent, {               //Pass data object as a second parameter  
       data: {
-        question: question
+        question: questiondata
+        
+
+       
       }
     });
   }

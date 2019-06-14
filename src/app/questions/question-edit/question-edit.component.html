@@ -1,18 +1,19 @@
 <h1 mat-dialog-title>Edit Question</h1>  
         <mat-dialog-content> 
 
+            <!-- <form class="form-horizontal" (submit)="onSubmit(questionForm, $event)" #questionForm="ngForm" role="form"> -->
             <form class="form-horizontal" (submit)="onSubmit(questionForm, $event)" #questionForm="ngForm" role="form">
               
                         <div class="form-group required">
-                          <label class="control-label">Question Type</label>
-                          <select  disabled>
+                          <label class="control-label">Question Type </label>
+                          <select  name="questype" disabled>
                             <option >{{data.question.questype}}</option>
                             <!-- <option *ngFor="let questionType of questionTypes" value={{questionType.id}}>{{questionType.name}}</option> -->
                           </select>
                         </div>
                         <div class="form-group required">
                           <label class=" control-label">Category</label>
-                          <select disabled>
+                          <select name="quesCat" disabled>
                             <option value="0">{{data.question.quesCat}}</option>
                             <!-- <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option> -->
                           </select>
@@ -112,16 +113,18 @@
                         </div>
                           <div id="questionBox" class="form-control" name="question" contenteditable="true">
                             <p> {{data.question.question}} </p>
+                            <label id = "quesid" class="sr-only">{{data.question.quesid}}</label> 
                           </div>
                         </div>
                         <div class="form-group required">
-                          <label class="control-label">Answer:</label>
-                          <div *ngIf="objectiveQuestion">
-                            <ng-template ngFor let-answer [ngForOf]="answers" let-index="index" let-isLast="last">
-                              <div class="answer">
+                          <label class="control-label">Answer: </label>
+                          <div>
+                             
+                            <ng-template ngFor let-answer [ngForOf]="data.question.quesAnswers" let-index="index" let-isLast="last">
+                              <div class="answer" >
                                 <input type="text" name="{{ index+1 }}_option" [value]="index+1" class="input-sm optNum" required disabled/>
                                 <input type="text" name="{{ index+1 }}_answer" class="input-sm mr-5" #nameControl="ngModel" [(ngModel)]="answer.answerBody" required
-                                  placeholder="Answer..." />
+                                  placeholder="Answer..." value="{{answer.answerBody}}" />
                                 <label for="{{ index+1 }}_isAnswer">
                                   <input type="checkbox" id="{{ index+1 }}_isAnswer" name="{{ index+1 }}_isAnswer" [(ngModel)]="answer.isCorrectAnswer" (keydown.tab)="( ( isLast && addAnswer() ) || true )"
                                   /> Is Correct Answer?
@@ -129,6 +132,7 @@
                                 <a (click)="removeAnswer( index )" title="Remove Answer" class="remove ml-4"> &times; </a>
                               </div>
                             </ng-template>
+                            
                             <p class="actions">
                               <a (click)="addAnswer()">Add Another Answer</a>
                             </p>
@@ -138,20 +142,22 @@
                             <p> </p>
                           </div>
                         </div>
+
+                <div class="form-group">
+                <!-- <button type="submit" mat-raised-button [mat-dialog-close]="true" >Save</button>  
+                <button mat-raised-button [mat-dialog-close]="false">Cancel</button> -->
+                <button type="submit"  mat-raised-button >Save</button>
+                <button type="reset"  mat-raised-button  [mat-dialog-close]="false">Cancel</button>
+              </div> 
                        
                       </form>
                
            </mat-dialog-content>      
-        <mat-dialog-actions> 
+        <!-- <mat-dialog-actions> 
             
-            <div class="form-group">
-                <button class="btn btn-primary" mat-raised-button [mat-dialog-close]="true">Save</button>  
-                <button mat-raised-button [mat-dialog-close]="false">Cancel</button>
-                <!-- <button type="submit" class="btn btn-primary  btn-sm mr-3">Edit</button>
-                <button type="reset" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button> -->
-              </div> 
+            
           
-        </mat-dialog-actions> 
+        </mat-dialog-actions>  -->
 
 
 

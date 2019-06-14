@@ -16,7 +16,7 @@ router.post("/add", (req, res, next) => {
         question: req.body.question,
         quesFormatted: req.body.quesFormatted,
         answerOptions: req.body.quesAnswers,
-        reason: req.body.reason
+        reason: req.body.quesReason
     });
     question
       .save()
@@ -98,7 +98,7 @@ router.get("/getQuestion/:quesid", (req, res, next) => {
 
 router.put("/update/:quesid", checkAuth, (req, res, next) => {
   const question = new Question({
-      quesid: req.body.quesid,
+      //quesid: req.body.quesid,
       questype: req.body.questype,
       quesCat: req.body.quesCat,
       quesSubCat: req.body.quesSubCat,
@@ -110,14 +110,17 @@ router.put("/update/:quesid", checkAuth, (req, res, next) => {
     question.updateOne({ quesid: req.params.quesid}, question)
       .then(result => {
         if (result.nModified > 0) {
+          console.log(quesid);
           res.status(200).json({ message: "Update successful!" });
         } else {
+          console.log(quesid);
           res.status(401).json({ message: "Not authorized!" });
         }
       })
       .catch(error => {
+        console.log(quesid);
         res.status(500).json({
-          message: "Couldn't udpate post!"
+          message: "Couldn't udpate post!"+error
         });
       });
   }

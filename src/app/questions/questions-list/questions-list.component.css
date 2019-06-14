@@ -19,3 +19,12 @@ a.btn {
     transform: scale(0.8);
   
 }
+
+.card-header{
+    background-color: #2075B0;
+}
+
+/* .header{
+
+    background-color: #53A3BC;
+} */
