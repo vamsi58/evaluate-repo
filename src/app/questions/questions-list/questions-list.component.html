@@ -56,8 +56,12 @@
                                     </form>
                                 </th>
                                 <th>
+<<<<<<< HEAD
                                     <a role="button" data-toggle="modal" data-target="#create-question" 
                                     class="btn btn-outline-success btn-sm">
+=======
+                                    <a role="button" data-toggle="modal" data-target="#create-question" class="btn btn-outline-success btn-sm">
+>>>>>>> de4b022a6d87dfcb433f4327136571a31e060263
                                         <i class="fa fa-plus"></i>
                                         <span>
                                             <strong> Add Question</strong>
@@ -75,15 +79,13 @@
                                     <label class="sr-only">{{question.quesid}}</label> {{question.question}}</td>
                                 <!-- <td> {{question.question}}</td> -->
                                 <td>
-                                    <a href="#" class="btn btn-default a-btn-slide-text" role="button" 
-                                    routerLink="/edit-question">
+                                    <a  class="btn btn-default a-btn-slide-text" (click)="onEdit(question)">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn btn-default a-btn-slide-text" role="button"
-                                        data-toggle="modal" data-target="#view-question">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                    <a class="btn btn-default a-btn-slide-text" (click)="onDelete(question.quesid)">
+                                    <a class="btn btn-default a-btn-slide-text" (click)="onDelete(question)">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
@@ -105,3 +107,4 @@
 
 <app-question-view></app-question-view>
 <app-question-create></app-question-create>
+<!-- <app-question-edit></app-question-edit> -->

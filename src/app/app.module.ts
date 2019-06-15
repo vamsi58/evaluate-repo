@@ -11,8 +11,13 @@ import {
   MatExpansionModule,
   MatProgressSpinnerModule,
   MatPaginatorModule,
-  MatDialogModule
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+  MatDialogRef
 } from "@angular/material";
+
+//import {MAT_DIALOG_DATA} from '@angular/material'; 
+//import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 import { AppComponent } from "./app.component";
 import { PostCreateComponent } from "./posts/post-create/post-create.component";
@@ -32,6 +37,7 @@ import { QuestionViewComponent } from './questions/question-view/question-view.c
 import { QuestionCreateComponent } from './questions/question-create/question-create.component';
 import { QuestionEditComponent } from './questions/question-edit/question-edit.component';
 import { EditQuestionComponent } from './questions/edit-question/edit-question.component';
+import { QuestionDeleteComponent } from './questions/question-delete/question-delete.component';
 
 
 @NgModule({
@@ -46,11 +52,13 @@ import { EditQuestionComponent } from './questions/edit-question/edit-question.c
     DashboardComponent,
     EditorComponent,
     CreateQuestionComponent,
+    EditQuestionComponent,
     QuestionsListComponent,
     QuestionViewComponent,
     QuestionCreateComponent,
     QuestionEditComponent,
-    EditQuestionComponent
+    QuestionDeleteComponent
+
   
   ],
   imports: [
@@ -72,8 +80,10 @@ import { EditQuestionComponent } from './questions/edit-question/edit-question.c
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorComponent]
+  entryComponents: [ErrorComponent, QuestionDeleteComponent, QuestionEditComponent]
+
 })
 export class AppModule {}

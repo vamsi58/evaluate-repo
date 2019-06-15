@@ -116,7 +116,7 @@ export class QuestionCreateComponent implements OnInit {
       const question = this.oDoc.textContent;
       const answer   = this.aDoc.textContent;
       console.log(quesFormatted);
-      this.questionService.createQuestion('QTN0004', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
+      this.questionService.createQuestion('QTN0003', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
       // close the modal
       this.closeModal();
   }

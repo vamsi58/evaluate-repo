@@ -55,9 +55,9 @@ public removeAnswer( index: number ) : void {
 }
 
 onSubmit(form: NgForm, even:Event) {
-  // if (this.form.invalid) {
-  //   return;
-  // } 
+  if (form.invalid) {
+    return;
+  } 
   
   event.preventDefault();
   const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
@@ -67,9 +67,9 @@ onSubmit(form: NgForm, even:Event) {
       const question = this.oDoc.textContent;
       const answer   = this.aDoc.textContent;
 
-  //this.isLoading = true;
+  
     this.questionService.updateQuestion('QTN0004', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
- // this.form.reset();
+  form.reset();
 }
 
 }

@@ -6,9 +6,12 @@ import { Category } from '../category.model';
 import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
 import { SelectService } from '../select.service';
-import { Answer} from '../answer.model';
+import { Answer } from '../answer.model';
 import { QuestionService } from "../question.service";
 import { Question } from '../question.model';
+import { QuestionDeleteComponent } from '../question-delete/question-delete.component';
+import { QuestionEditComponent } from '../question-edit/question-edit.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-questions-list',
@@ -17,6 +20,7 @@ import { Question } from '../question.model';
 })
 export class QuestionsListComponent implements OnInit {
   oDoc;
+  aDoc;
   sDefTxt;
   objectiveQuestion = true;
   categories: Category[];
@@ -24,6 +28,7 @@ export class QuestionsListComponent implements OnInit {
   questionTypes: QuestionType[];
   selectedCategory: Category = new Category(2, 'IBM i');
   questions: Question[] = [];
+  answers: Answer[];
   filteredQuestions: Question[] = [];
   isLoading = false;
   totalQuestions = 0;
@@ -31,53 +36,65 @@ export class QuestionsListComponent implements OnInit {
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   private questionsSub: Subscription;
-  private _filterQuestion:string;
+  private _filterQuestion: string;
 
-  get filterQuestion():string{
+  get filterQuestion(): string {
     return this._filterQuestion;
   }
 
-  set filterQuestion(value:string){
-    this._filterQuestion=value;
+  set filterQuestion(value: string) {
+    this._filterQuestion = value;
     this.filteredQuestions = this.filterQuestions(value);
   }
 
-  filterQuestions(searchTerm:string){
+  filterQuestions(searchTerm: string) {
     return this.questions.filter(question =>
-    question.question.toLowerCase().indexOf(searchTerm.toLowerCase())!== -1);
+      question.question.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
   }
 
-  selectedType:QuestionType = new QuestionType(0, "Objective");
-  selectedCat:Category = new Category(0, "All");  
-  selectedSubCat:SubCategory = new SubCategory(0,0, "IBM i");
-  constructor(private selectService: SelectService, private questionService: QuestionService) { }
-  
-  ngOnInit(){
+  selectedType: QuestionType = new QuestionType(1, "Objective");
+  selectedCat: Category = new Category(1, "All");
+  selectedSubCat: SubCategory = new SubCategory(1, 1, "All");
+
+  constructor( private selectService: SelectService,
+              private questionService: QuestionService,
+              private dialog: MatDialog) 
+        { 
+
+      this.answers = []; 
+      
+    }
+
+
+  ngOnInit() {
+    //this.objectiveQuestion = true;
     this.categories = this.selectService.getCategory();
     this.questionTypes = this.selectService.getQuestionType();
     this.onSelect(this.selectedCat.id);
     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
     this.questionsSub = this.questionService
       .getQuestionUpdateListener()
-      .subscribe((questionData: { questions: Question[]; questionCount: number }) => {
+      .subscribe((questionData: { questions: Question[];  questionCount: number }) => {
         this.totalQuestions = questionData.questionCount;
         this.questions = questionData.questions;
         this.filteredQuestions = this.questions;
-      });      
-    
+              //this.answers = questionData.answers;
+        console.log(questionData);
+        //console.log(questionData.answers);
+      });
+
   }
 
- onSelect(categoryid) {
+  onSelect(categoryid) {
     this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == categoryid);
   }
 
   // based on question type display subsequent fields
-  onSelectQuestType(optionId:string)
-  {  
-    if (optionId == "1"){
+  onSelectQuestType(optionId: string) {
+    if (optionId == "1") {
       this.objectiveQuestion = true;
     }
-    else{
+    else {
       this.objectiveQuestion = false;
     }
   }
@@ -89,11 +106,52 @@ export class QuestionsListComponent implements OnInit {
     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
   }
 
-  onDelete(quesid: string) {
-    console.log(quesid);
-    this.isLoading = true;
-    this.questionService.deleteQuestion(quesid).subscribe(() => {
-      this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
+  // private deleteQuestion(quesid: string) {
+  //   //console.log(quesid);
+  //   this.isLoading = true;
+  //   this.questionService.deleteQuestion(quesid).subscribe(() => {
+  //     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
+  //   });
+  // }
+
+  onDelete(questiondata) {
+    //console.log(post.userId);  
+    //Open MatDialog and load component dynamically  
+    const dialogRef = this.dialog.open(QuestionDeleteComponent, {               //Pass data object as a second parameter  
+      data: {
+        question: questiondata
+      }
     });
   }
+    //Need to subscribe afterClosed event of MatDialog  
+  //   dialogRef.afterClosed().subscribe(confirmresult => {
+  //     console.log(confirmresult);
+  //     if (confirmresult) {
+  //       //if dialog result is yes, delete post  
+  //       this.deleteQuestion(question.quesid);
+  //       console.log("Delete confirm is approved by user.");
+  //     } else {
+  //       //if dialog result is no, DO NOT delete post  
+  //       console.log("Delete confirm is cancelled by user.");
+  //     }
+  //   });
+  // }
+
+
+  //onEdit(form: NgForm, even: Event, question) {
+    onEdit(questiondata) {
+    //console.log(post.userId);  
+    console.log(questiondata);
+    //Open MatDialog and load component dynamically  
+    const dialogRef = this.dialog.open(QuestionEditComponent, {               //Pass data object as a second parameter  
+      data: {
+        question: questiondata
+        
+
+       
+      }
+    });
+  }
+    
+  
 }
