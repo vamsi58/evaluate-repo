@@ -11,6 +11,7 @@ import { QuestionService } from "../question.service";
 import { Question } from '../question.model';
 import { QuestionDeleteComponent } from '../question-delete/question-delete.component';
 import { QuestionEditComponent } from '../question-edit/question-edit.component';
+import { QuestionViewComponent } from '../question-view/question-view.component';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -146,12 +147,23 @@ export class QuestionsListComponent implements OnInit {
     const dialogRef = this.dialog.open(QuestionEditComponent, {               //Pass data object as a second parameter  
       data: {
         question: questiondata
-        
-
-       
+               
       }
     });
   }
+
+   
+  onView(questiondata) {
+      //console.log(post.userId);  
+      console.log(questiondata);
+      //Open MatDialog and load component dynamically  
+      const dialogRef = this.dialog.open(QuestionViewComponent, {               //Pass data object as a second parameter  
+        data: {
+          question: questiondata
+                 
+        }
+      });
+    }
     
   
 }

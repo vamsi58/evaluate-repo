@@ -83,7 +83,7 @@ import { QuestionDeleteComponent } from './questions/question-delete/question-de
   
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorComponent, QuestionDeleteComponent, QuestionEditComponent]
+  entryComponents: [ErrorComponent, QuestionDeleteComponent, QuestionEditComponent,QuestionViewComponent]
 
 })
 export class AppModule {}
