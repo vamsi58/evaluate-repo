@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Inject, Optional } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Inject, ElementRef } from '@angular/core';
 import { Category } from '../category.model';
 import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
@@ -16,7 +16,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./question-edit.component.css']
 })
 export class QuestionEditComponent implements OnInit {
-
+  @ViewChild('closeBtn') closeBtn: ElementRef;
   oDoc;
   aDoc;
   sDefTxt;
@@ -37,19 +37,24 @@ export class QuestionEditComponent implements OnInit {
   quesid1 = "QTN0004";
 
   constructor(
-    @Optional() @Inject(MAT_DIALOG_DATA) public data:any,
+     @Inject(MAT_DIALOG_DATA) public data:any,
     private selectService: SelectService, 
     private questionService: QuestionService,
     private dialog: MatDialog
-    ) { }
+    ) { 
+      
+      this.answers = data.question.quesAnswers;
+      this.addAnswer();
+    }
 
   ngOnInit() {
     this.objectiveQuestion = true;
+    console.log(this.data.question);
     }
 
      // add an answer
   public addAnswer() : void {
-    this.answers.push({
+      this.answers.push({
        optionNumber:this.answers.length+1,
        answerBody: " ",
        isCorrectAnswer: false
@@ -67,8 +72,8 @@ public removeAnswer( index: number ) : void {
 }
 
 ngAfterViewInit() {
-  this.oDoc = document.getElementById('questionBox');
-  this.aDoc  = document.getElementById('answerBox');
+  this.oDoc = document.getElementById('questionBoxEdit');
+  this.aDoc  = document.getElementById('answerBoxEdit');
   this.sDefTxt = this.oDoc.innerHTML;
 }
 
@@ -95,32 +100,28 @@ onHlink() {
 }
 
   onSubmit(form: NgForm, even:Event) {
-      console.log("Test");
-    if (form.invalid) {
-      console.log("Invalid Form");
+      
+    if (form.invalid) {   
       return;
     } 
-    
-    console.log(this.aDoc.textContent);
-    //console.log(this.data.quesid);
-  
+     
     event.preventDefault();
-    // const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
-    //     const category = this.selectService.getCategory().filter((item) => item.id == form.value.questype)[0].name;
-    //     const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.questype)[0].name;
-    const questionType = this.data.questionType;
-    const category = this.data.quesCat;
-    const subcategory = this.data.quesSubCat;
-
-        var quesFormatted = this.oDoc.innerHTML;
-        const question = this.oDoc.textContent;
-        const answer   = this.aDoc.textContent;
-        //const quesid1 = form.value.quesid; 
-        //const quesid1 = this.data.quesid;
-  
+ 
+    const id = this.data.question.id;
+    const quesid = this.data.question.quesid;
+    const questionType = this.data.question.questype;
+    const category = this.data.question.quesCat;
+    const subcategory = this.data.question.quesSubCat;
     
-      this.questionService.updateQuestion("QTN0004", questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
-    form.reset();
+    
+
+    var quesFormatted = this.oDoc.innerHTML;
+    const questionName = this.oDoc.textContent;
+    const answer   = this.aDoc.textContent;
+
+    this.questionService.updateQuestion(id, quesid, questionType,  category, subcategory, questionName, quesFormatted, this.answers, answer);
+   
+  
   }
 
 }

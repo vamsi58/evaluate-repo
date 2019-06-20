@@ -10,18 +10,18 @@ img.intLink {
 .toolBars {
 	background-color: rgb(243, 241, 241);
 }
-#questionBox, #answerBox {
+#questionBoxEdit, #answerBoxEdit {
   width: 100%;
   height: 100px;
   padding: 12px;
 	overflow: scroll; 
 	border: 1px #c4e5ee solid;
 }
-#questionBox:hover, #answerBox:hover
+#questionBoxEdit:hover, #answerBoxEdit:hover
 {
 	border: 1px #42cef4 solid;
 }
-#questionBox #sourceText {
+#questionBoxEdit #sourceText {
   padding: 0;
   margin: 0;
   min-width: 498px;

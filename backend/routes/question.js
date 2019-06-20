@@ -68,7 +68,9 @@ router.delete("/delete/:quesid", checkAuth, (req, res, next) => {
       if (result.n > 0) {
         res.status(200).json({ message: "Deletion successful!" });
       } else {
+        Console.log(result.error);
         res.status(401).json({ message: "Not authorized!" });
+        
       }
     })
     .catch(error => {
@@ -81,7 +83,7 @@ router.delete("/delete/:quesid", checkAuth, (req, res, next) => {
 });
 
 router.get("/getQuestion/:quesid", (req, res, next) => {
-  question.findById(req.params.quesid)
+  Question.findById(req.params.quesid)
     .then(post => {
       if (post) {
         res.status(200).json(post);
@@ -96,29 +98,28 @@ router.get("/getQuestion/:quesid", (req, res, next) => {
     });
 });
 
-router.put("/update/:quesid", checkAuth, (req, res, next) => {
+router.put("/update/:id", checkAuth, (req, res, next) => {
   const question = new Question({
-      //quesid: req.body.quesid,
+      _id: req.params.id,
+      quesid: req.body.quesid,
       questype: req.body.questype,
       quesCat: req.body.quesCat,
       quesSubCat: req.body.quesSubCat,
       question: req.body.question,
       quesFormatted: req.body.quesFormatted,
       answerOptions: req.body.quesAnswers,
-      reason: req.body.reason
+      reason: req.body.quesReason
   });
-    question.updateOne({ quesid: req.params.quesid}, question)
+  console.log(question);
+    Question.updateOne({ _id: req.params.id}, question)
       .then(result => {
         if (result.nModified > 0) {
-          console.log(quesid);
-          res.status(200).json({ message: "Update successful!" });
+          res.status(200).json({ message: "Update successful!"+ result });
         } else {
-          console.log(quesid);
-          res.status(401).json({ message: "Not authorized!" });
+          res.status(401).json({ message: "Not authorized!"+req.params.id });
         }
       })
       .catch(error => {
-        console.log(quesid);
         res.status(500).json({
           message: "Couldn't udpate post!"+error
         });

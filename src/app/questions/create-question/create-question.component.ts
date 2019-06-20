@@ -117,7 +117,7 @@ export class CreateQuestionComponent implements AfterViewInit, OnInit {
       const question = this.oDoc.textContent;
       const answer   = this.aDoc.textContent;
       console.log(quesFormatted);
-      this.questionService.createQuestion('QTN0004', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
+      //this.questionService.createQuestion('QTN0004', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
 
   }
 

@@ -1,6 +1,7 @@
 import {Answer} from './answer.model';
 
 export interface Question {
+  id : string;
   quesid: string;
   questype: string;
   quesCat: string;

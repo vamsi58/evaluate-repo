@@ -83,8 +83,7 @@ export class QuestionCreateComponent implements OnInit {
            isCorrectAnswer: false
         });
     }
-
-     // remove the answer
+        // remove the answer
     public removeAnswer( index: number ) : void {
         this.answers.splice( index, 1 );
         for (var idx = 0;  idx < this.answers.length; idx++)
@@ -110,13 +109,13 @@ export class QuestionCreateComponent implements OnInit {
         return;
       }
       const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
-      const category = this.selectService.getCategory().filter((item) => item.id == form.value.questype)[0].name;
-      const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.questype)[0].name;
+      const category = this.selectService.getCategory().filter((item) => item.id == form.value.quesCat)[0].name;
+      const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.quesSubCat)[0].name;
       var quesFormatted = this.oDoc.innerHTML;
       const question = this.oDoc.textContent;
       const answer   = this.aDoc.textContent;
-      console.log(quesFormatted);
-      this.questionService.createQuestion('QTN0003', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
+      console.log(questionType,category,subcategory);
+      this.questionService.createQuestion('dummyId','QTN0005', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
       // close the modal
       this.closeModal();
   }

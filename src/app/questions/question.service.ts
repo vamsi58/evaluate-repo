@@ -11,28 +11,31 @@ import {
   tap
 } from "rxjs/operators";
 
-import { Question}  from "./question.model";
+import { Question } from "./question.model";
 import { Answer } from './answer.model';
 
 
 
 @Injectable({
-  providedIn: 'root' 
+  providedIn: 'root'
 })
 export class QuestionService {
 
   private authStatusListener = new Subject<boolean>();
   private questions: Question[] = [];
   private questionsUpdated = new Subject<{ questions: Question[]; questionCount: number }>();
-  
+
   constructor(private http: HttpClient, private router: Router) { }
 
   getAuthStatusListener() {
-   return this.authStatusListener.asObservable();
+    return this.authStatusListener.asObservable();
   }
 
-  createQuestion (quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason:string) {
-    const Question: Question = { quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason:quesReason };
+  //Add Question
+  createQuestion(dummyId: string, quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason: string) {
+    const Question: Question = { id: dummyId, quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason: quesReason };
+
+
     this.http
       .post("http://localhost:3000/api/question/add", Question)
       .subscribe(() => {
@@ -42,19 +45,20 @@ export class QuestionService {
       });
   }
 
-  viewQuestion(questionsperpage :number, currentPage: number ){
-  
+  //Get all Questinos
+  viewQuestion(questionsperpage: number, currentPage: number) {
+
     const queryParams = `?pagesize=${questionsperpage}&page=${currentPage}`;
-   return  this.http
+    return this.http
       .get<{ message: string; questions: any; maxQuestions: number }>(
         "http://localhost:3000/api/question/view" + queryParams
       )
       .pipe(
         map(questionData => {
           return {
-            questions: questionData.questions.map (question => {
+            questions: questionData.questions.map(question => {
               return {
-                _id:question.id,
+                id: question._id,
                 quesid: question.quesid,
                 questype: question.questype,
                 quesCat: question.quesCat,
@@ -62,7 +66,7 @@ export class QuestionService {
                 question: question.question,
                 quesFormatted: question.quesFormatted,
                 quesAnswers: question.answerOptions,
-                quesReason:question.reason
+                quesReason: question.reason
               };
             }),
             maxQuestions: questionData.maxQuestions
@@ -76,12 +80,31 @@ export class QuestionService {
           questionCount: transformedQuestionData.maxQuestions
         });
       });
-      
-    }
+
+  }
 
   getQuestionUpdateListener() {
     return this.questionsUpdated.asObservable();
   }
+
+  //Update Question
+  updateQuestion(id: string, quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason: string) {
+    const questionUpdateData: Question = { id: id, quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason: quesReason };
+
+    console.log(questionUpdateData);
+     this.http
+       .put("http://localhost:3000/api/question/update/" + id, questionUpdateData)
+       .subscribe(response => {
+        this.router.navigate(["/questions"]);
+        console.log(response);
+      });
+  }
+
+  //Delete Question
+  deleteQuestion(quesid: string) {
+    return this.http.delete("http://localhost:3000/api/question/delete/" + quesid);
+  }
+
 
   // getQuestion(quesid: string) {
   //   return this.http.get<{
@@ -93,23 +116,11 @@ export class QuestionService {
   //     quesFormatted: string;
   //     quesAnswers: Answer[];
   //     quesReason:string;
-      
+
   //   }>("http://localhost:3000/api/question/update" + quesid);
   // }
-  updateQuestion(quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason:string) {
-    const Question: Question = { quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason:quesReason };
-        this.http
-      .put("http://localhost:3000/api/question/update/" + quesid, Question)
-      .subscribe(response => {
-        this.router.navigate(["/"]);
-      });
-  }
 
-  deleteQuestion(quesid: string) {
-    return this.http.delete("http://localhost:3000/api/question/delete/" + quesid);
-  }
-
-  }
+}
 
 
 
