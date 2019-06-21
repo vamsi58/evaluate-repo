@@ -13,6 +13,11 @@ import { QuestionDeleteComponent } from '../question-delete/question-delete.comp
 import { QuestionEditComponent } from '../question-edit/question-edit.component';
 import { QuestionViewComponent } from '../question-view/question-view.component';
 import { MatDialog } from '@angular/material';
+import { ValueTransformer } from '@angular/compiler/src/util';
+import { MatPaginator} from '@angular/material/paginator';
+import { MultiSelectComponent } from '@syncfusion/ej2-angular-dropdowns';
+import { CheckBoxComponent } from '@syncfusion/ej2-angular-buttons';
+
 
 @Component({
   selector: 'app-questions-list',
@@ -38,6 +43,9 @@ export class QuestionsListComponent implements OnInit {
   pageSizeOptions = [1, 2, 5, 10];
   private questionsSub: Subscription;
   private _filterQuestion: string;
+  private _filterSubCat: string;
+  private filteredSubcat: string;
+
 
   get filterQuestion(): string {
     return this._filterQuestion;
@@ -53,9 +61,11 @@ export class QuestionsListComponent implements OnInit {
       question.question.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
   }
 
-  selectedType: QuestionType = new QuestionType(1, "Objective");
-  selectedCat: Category = new Category(1, "All");
-  selectedSubCat: SubCategory = new SubCategory(1, 1, "All");
+  
+
+  selectedType: QuestionType = new QuestionType(0, "All");
+  selectedCat: Category = new Category(0, "All");
+  selectedSubCat: SubCategory = new SubCategory(0, 0, "All");
 
   constructor( private selectService: SelectService,
               private questionService: QuestionService,
@@ -67,19 +77,33 @@ export class QuestionsListComponent implements OnInit {
     }
 
 
+    //----------------------to be seperated-----
+    // defined the array of data
+    //public data: string[] = ['cricket', 'hockey']; 
+    data: SubCategory[] = [];
+    
+    // set placeholder to MultiSelect input element
+    public placeholder: string = 'Select SubCategory';
+    //set height to popup list
+    public popupHeight:string = '200px';
+    //set width to popup list
+    public popupWidth:string = '250px';
+
+
   ngOnInit() {
     //this.objectiveQuestion = true;
     this.categories = this.selectService.getCategory();
     this.questionTypes = this.selectService.getQuestionType();
     this.onSelect(this.selectedCat.id);
-    this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
-    this.questionsSub = this.questionService
+    this.filteredSubcat = 'All';
+    this.questionService.viewQuestion(this.questionsPerPage, this.currentPage,this.filteredSubcat);  
+        this.questionsSub = this.questionService
       .getQuestionUpdateListener()
       .subscribe((questionData: { questions: Question[];  questionCount: number }) => {
         this.totalQuestions = questionData.questionCount;
         this.questions = questionData.questions;
         this.filteredQuestions = this.questions;
-              //this.answers = questionData.answers;
+                     //this.answers = questionData.answers;
         console.log(questionData);
         //console.log(questionData.answers);
       });
@@ -88,6 +112,14 @@ export class QuestionsListComponent implements OnInit {
 
   onSelect(categoryid) {
     this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == categoryid);
+    this.data = this.subCategories;
+  }
+  onSubCatSelect(value){
+      
+    this.filteredSubcat = (this.selectService.getSubCategory().filter((item) => item.id == value))[0].name;
+    console.log(this.filteredSubcat);
+    this.questionService.viewQuestion(this.questionsPerPage, this.currentPage, this.filteredSubcat);
+    //this.filteredQuestions = this.questions.filter((question) =>question.quesSubCat == filteredSubcat);
   }
 
   // based on question type display subsequent fields
@@ -101,19 +133,13 @@ export class QuestionsListComponent implements OnInit {
   }
 
   onChangedPage(pageData: PageEvent) {
-    this.isLoading = true;
+    //this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.questionsPerPage = pageData.pageSize;
-    this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
+    this.questionService.viewQuestion(this.questionsPerPage, this.currentPage, this.filteredSubcat);
   }
 
-  // private deleteQuestion(quesid: string) {
-  //   //console.log(quesid);
-  //   this.isLoading = true;
-  //   this.questionService.deleteQuestion(quesid).subscribe(() => {
-  //     this.questionService.viewQuestion(this.questionsPerPage, this.currentPage);
-  //   });
-  // }
+  
 
   onDelete(questiondata) {
     //console.log(post.userId);  
@@ -139,8 +165,7 @@ export class QuestionsListComponent implements OnInit {
   // }
 
 
-  //onEdit(form: NgForm, even: Event, question) {
-    onEdit(questiondata) {
+  onEdit(questiondata) {
     //console.log(post.userId);  
     console.log(questiondata);
     //Open MatDialog and load component dynamically  
@@ -165,5 +190,45 @@ export class QuestionsListComponent implements OnInit {
       });
     }
     
+
+
+
+
+
+    //  Multi Drop down
+    
+    //define the data with category
+    public countries: { [key: string]: Object }[] = [
+      { Name: 'Australia', Code: 'AU' },
+      { Name: 'Bermuda', Code: 'BM' },
+      { Name: 'Canada', Code: 'CA' },
+      { Name: 'Cameroon', Code: 'CM' },
+      { Name: 'Denmark', Code: 'DK' },
+      { Name: 'France', Code: 'FR' },
+      { Name: 'Finland', Code: 'FI' },
+      { Name: 'Germany', Code: 'DE' },
+      { Name: 'Greenland', Code: 'GL' },
+      { Name: 'Hong Kong', Code: 'HK' },
+      { Name: 'India', Code: 'IN' },
+      { Name: 'Italy', Code: 'IT' },
+      { Name: 'Japan', Code: 'JP' },
+      { Name: 'Mexico', Code: 'MX' },
+      { Name: 'Norway', Code: 'NO' },
+      { Name: 'Poland', Code: 'PL' },
+      { Name: 'Switzerland', Code: 'CH' },
+      { Name: 'United Kingdom', Code: 'GB' },
+      { Name: 'United States', Code: 'US' }
+  ];
+
+  public reorderObj: CheckBoxComponent;
+  public mode: string;
+  public filterPlaceholder: string;
+
+  // map the groupBy field with category column
+  public checkFields: Object = { text: 'Name', value: 'Code' };
+  // set the placeholder to the MultiSelect input
+  public checkWaterMark: string = 'Select countries';
+  // set the MultiSelect popup height
+  public popHeight: string = '350px';
   
 }

@@ -37,7 +37,18 @@ router.post("/add", (req, res, next) => {
 router.get("/view", (req, res, next ) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const quesQuery = Question.find();
+  const filteredSubCat = req.query.SubCat;
+  var quesQuery ;  
+ console.log(filteredSubCat);
+  if (filteredSubCat !== 'All'){
+    console.log("If Block");
+     quesQuery = Question.find({ quesSubCat: filteredSubCat });
+  }
+  else {
+    console.log("Else Block");
+   quesQuery = Question.find();  
+  }
+
   let fetchedQuestions;
   if (pageSize && currentPage) {
     quesQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
