@@ -10,5 +10,7 @@ export interface Question {
   quesFormatted: string;
   quesAnswers: Answer[];
   quesReason: string;
+  quesAproved: boolean;
+  quesComplex: string;
 }
 

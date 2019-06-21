@@ -32,8 +32,8 @@ export class QuestionService {
   }
 
   //Add Question
-  createQuestion(dummyId: string, quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason: string) {
-    const Question: Question = { id: dummyId, quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason: quesReason };
+  createQuestion(dummyId: string, quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason: string, quesAproved: boolean, quesComplex:string) {
+    const Question: Question = { id: dummyId, quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason: quesReason, quesAproved: quesAproved, quesComplex:quesComplex };
 
 
     this.http
@@ -66,7 +66,9 @@ export class QuestionService {
                 question: question.question,
                 quesFormatted: question.quesFormatted,
                 quesAnswers: question.answerOptions,
-                quesReason: question.reason
+                quesReason: question.reason,
+                quesAproved: question.quesAproved,
+                quesComplex: question.quesComplex
               };
             }),
             maxQuestions: questionData.maxQuestions
@@ -88,8 +90,8 @@ export class QuestionService {
   }
 
   //Update Question
-  updateQuestion(id: string, quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason: string) {
-    const questionUpdateData: Question = { id: id, quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason: quesReason };
+  updateQuestion(id: string, quesid: string, questype: string, quesCat: string, quesSubCat: string, question: string, quesFormatted: string, quesAnswers: Answer[], quesReason: string, quesAproved: boolean, quesComplex: string) {
+    const questionUpdateData: Question = { id: id, quesid: quesid, questype: questype, quesCat: quesCat, quesSubCat: quesSubCat, question: question, quesFormatted: quesFormatted, quesAnswers: quesAnswers, quesReason: quesReason, quesAproved: quesAproved , quesComplex: quesComplex };
 
     console.log(questionUpdateData);
      this.http

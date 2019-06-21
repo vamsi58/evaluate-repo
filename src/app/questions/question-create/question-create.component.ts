@@ -6,6 +6,7 @@ import { SelectService } from '../select.service';
 import {Answer} from '../answer.model';
 import { NgForm } from "@angular/forms";
 import { QuestionService } from "../question.service";
+import { Complexity } from '../question-complex.model';
 
 
 @Component({
@@ -23,12 +24,13 @@ export class QuestionCreateComponent implements OnInit {
   categories: Category[];
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
+  complexities: Complexity[];
 
   answers: Answer[];
   selectedType:QuestionType = new QuestionType(1, "Objective");
   selectedCat:Category = new Category(1, "Technical");  
   selectedSubCat:SubCategory = new SubCategory(1,1, "IBM i");
-
+  selectedComplexity:Complexity = new Complexity(1, "Level 1");
  
   constructor(private selectService: SelectService, private questionService: QuestionService) {
     
@@ -40,6 +42,7 @@ export class QuestionCreateComponent implements OnInit {
     this.categories = this.selectService.getCategory();
     this.questionTypes = this.selectService.getQuestionType();
     this.onSelect(this.selectedCat.id);
+    this.complexities = this.selectService.getComplexity();
   } 
 
  onSelect(categoryid) {
@@ -111,11 +114,13 @@ export class QuestionCreateComponent implements OnInit {
       const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
       const category = this.selectService.getCategory().filter((item) => item.id == form.value.quesCat)[0].name;
       const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.quesSubCat)[0].name;
+      const complexity = this.selectService.getComplexity().filter((item) => item.id == form.value.quesComplex)[0].name;
       var quesFormatted = this.oDoc.innerHTML;
       const question = this.oDoc.textContent;
       const answer   = this.aDoc.textContent;
+      const approved = false;
       console.log(questionType,category,subcategory);
-      this.questionService.createQuestion('dummyId','QTN0005', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
+      this.questionService.createQuestion('dummyId','QTN0005', questionType,  category, subcategory, question, quesFormatted, this.answers, answer, approved, complexity);
       // close the modal
       this.closeModal();
   }

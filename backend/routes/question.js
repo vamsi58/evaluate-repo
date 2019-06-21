@@ -16,7 +16,9 @@ router.post("/add", (req, res, next) => {
         question: req.body.question,
         quesFormatted: req.body.quesFormatted,
         answerOptions: req.body.quesAnswers,
-        reason: req.body.quesReason
+        reason: req.body.quesReason,
+        quesAproved: req.body.quesAproved,
+        quesComplex: req.body.quesComplex
     });
     question
       .save()

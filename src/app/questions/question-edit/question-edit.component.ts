@@ -7,6 +7,7 @@ import {Answer} from '../answer.model';
 import { Question } from '../question.model';
 import { NgForm } from "@angular/forms";
 import { QuestionService } from "../question.service";
+import { Complexity } from '../question-complex.model';
 import {MAT_DIALOG_DATA} from '@angular/material';  
 import { MatDialog } from '@angular/material';
 
@@ -25,6 +26,7 @@ export class QuestionEditComponent implements OnInit {
   categories: Category[];
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
+  Complexities: Complexity[];
   isLoading = false;
   //question = Question;
   
@@ -33,6 +35,7 @@ export class QuestionEditComponent implements OnInit {
   selectedType:QuestionType = new QuestionType(1, "Objective");
   selectedCat:Category = new Category(1, "Technical");  
   selectedSubCat:SubCategory = new SubCategory(1,1, "IBM i");
+  selectedComplexity:Complexity = new Complexity(1, "Level 1");
 
   quesid1 = "QTN0004";
 
@@ -112,6 +115,8 @@ onHlink() {
     const questionType = this.data.question.questype;
     const category = this.data.question.quesCat;
     const subcategory = this.data.question.quesSubCat;
+    const complexity = this.data.question.quesComplex;
+    const approved = false;
     
     
 
@@ -119,7 +124,7 @@ onHlink() {
     const questionName = this.oDoc.textContent;
     const answer   = this.aDoc.textContent;
 
-    this.questionService.updateQuestion(id, quesid, questionType,  category, subcategory, questionName, quesFormatted, this.answers, answer);
+    this.questionService.updateQuestion(id, quesid, questionType,  category, subcategory, questionName, quesFormatted, this.answers, answer, approved, complexity);
    
   
   }
