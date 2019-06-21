@@ -14,6 +14,8 @@ const QuestionSchema = mongoose.Schema({
                     message: 'Answer options should be 4.'}
                   }, 
   reason:         { type: String},
+  quesAproved:    { type: Boolean},
+  quesComplex:    { type: String}, 
   },
 {
   timestamps: true

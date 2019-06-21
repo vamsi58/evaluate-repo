@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Category } from './category.model';
 import { SubCategory } from './sub-category.model';
 import { QuestionType } from './question-type.model';
+import { Complexity } from './question-complex.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,13 @@ export class SelectService {
     ];
   }
 
+  getComplexity() {
+    return [
+      new Complexity(1, 'Level 1' ),
+      new Complexity(2, 'Level 2' ),
+      new Complexity(3, 'Level 3' )
+      ];
+   }
 
 
 }

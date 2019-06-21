@@ -29,7 +29,13 @@
                <option value="0">--Select--</option>
                <option *ngFor="let subcategory of subCategories " value= {{subcategory.id}} >{{subcategory.name}}</option>
             </select>
-
+          </div>
+          <div class="form-group col-lg-4 required">
+            <label class="control-label mr-4">Complexity</label>
+            <select name="quesComplex" [(ngModel)]="selectedComplex.id">
+             <option value="0">--Select--</option>
+             <option *ngFor="let questionComplex of questionComplex" value= {{questionComplex.id}}>{{questionComplex.name}}</option>
+            </select>
           </div>
           <div class="form-group col-lg-6 required">
             <label class="control-label mr-4">Question:</label>
