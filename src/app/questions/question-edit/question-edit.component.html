@@ -14,21 +14,21 @@
         <tr>
           <td>
             <!-- <label class="control-label">Question Type </label> -->
-            <select name="questype" disabled>
+            <select name="questype" class ="custom-select" disabled>
               <option>{{data.question.questype}}</option>
               <!-- <option *ngFor="let questionType of questionTypes" value={{questionType.id}}>{{questionType.name}}</option> -->
             </select>
           </td>
           <td>
             <!-- <label class=" control-label">Category</label> -->
-            <select name="quesCat" disabled>
+            <select name="quesCat" class ="custom-select" disabled>
               <option value="0">{{data.question.quesCat}}</option>
               <!-- <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option> -->
             </select>
           </td>
           <td>
             <!-- <label class="control-label">Sub-category </label> -->
-            <select disabled>
+            <select class ="custom-select" disabled>
               <option value="0">{{data.question.quesSubCat}}</option>
               <!-- <option *ngFor="let subcategory of subCategories " value={{subcategory.id}}>{{subcategory.name}}</option> -->
             </select>

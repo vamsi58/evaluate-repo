@@ -21,10 +21,11 @@ a.btn {
 }
 
 .card-header{
-    background-color: #33b5e5!important;
+    /* background-color: #33b5e5!important; */
 }
 
-/* .header{
+ .table{
 
-    background-color: #53A3BC;
-} */
+    /* background-color: #53A3BC; */
+    background: "../assets/images/homepage.jpg";
+} 

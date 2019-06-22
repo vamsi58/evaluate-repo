@@ -153,8 +153,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
    
-  onView(questiondata) {
-      //console.log(post.userId);  
+  onView(questiondata) {  
       console.log(questiondata);
       //Open MatDialog and load component dynamically  
       const dialogRef = this.dialog.open(QuestionViewComponent, {               //Pass data object as a second parameter  
