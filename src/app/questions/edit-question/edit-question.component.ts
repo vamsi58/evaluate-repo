@@ -68,7 +68,7 @@ onSubmit(form: NgForm, even:Event) {
       const answer   = this.aDoc.textContent;
 
   
-    this.questionService.updateQuestion('QTN0004', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
+    //this.questionService.updateQuestion('QTN0004', questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
   form.reset();
 }
 

@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {
   MatInputModule,
   MatCardModule,
@@ -40,6 +41,12 @@ import { EditQuestionComponent } from './questions/edit-question/edit-question.c
 import { QuestionDeleteComponent } from './questions/question-delete/question-delete.component';
 
 
+import { MultiSelectComponent  } from '@syncfusion/ej2-angular-dropdowns';
+import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
+// import { CheckBoxModule, ButtonModule } from '@syncfusion/ej2-angular-buttons';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,9 +64,9 @@ import { QuestionDeleteComponent } from './questions/question-delete/question-de
     QuestionViewComponent,
     QuestionCreateComponent,
     QuestionEditComponent,
-    QuestionDeleteComponent
-
-  
+    QuestionDeleteComponent,
+    MultiSelectComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +82,9 @@ import { QuestionDeleteComponent } from './questions/question-delete/question-de
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    // ButtonModule,
+    // CheckBoxModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

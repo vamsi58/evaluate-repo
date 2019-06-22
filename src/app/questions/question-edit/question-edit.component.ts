@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Inject, Optional } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Inject, ElementRef } from '@angular/core';
 import { Category } from '../category.model';
 import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
@@ -7,6 +7,7 @@ import {Answer} from '../answer.model';
 import { Question } from '../question.model';
 import { NgForm } from "@angular/forms";
 import { QuestionService } from "../question.service";
+import { Complexity } from '../question-complex.model';
 import {MAT_DIALOG_DATA} from '@angular/material';  
 import { MatDialog } from '@angular/material';
 
@@ -16,7 +17,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./question-edit.component.css']
 })
 export class QuestionEditComponent implements OnInit {
-
+  @ViewChild('closeBtn') closeBtn: ElementRef;
   oDoc;
   aDoc;
   sDefTxt;
@@ -25,6 +26,7 @@ export class QuestionEditComponent implements OnInit {
   categories: Category[];
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
+  Complexities: Complexity[];
   isLoading = false;
   //question = Question;
   
@@ -33,23 +35,29 @@ export class QuestionEditComponent implements OnInit {
   selectedType:QuestionType = new QuestionType(1, "Objective");
   selectedCat:Category = new Category(1, "Technical");  
   selectedSubCat:SubCategory = new SubCategory(1,1, "IBM i");
+  selectedComplexity:Complexity = new Complexity(1, "Level 1");
 
   quesid1 = "QTN0004";
 
   constructor(
-    @Optional() @Inject(MAT_DIALOG_DATA) public data:any,
+     @Inject(MAT_DIALOG_DATA) public data:any,
     private selectService: SelectService, 
     private questionService: QuestionService,
     private dialog: MatDialog
-    ) { }
+    ) { 
+      
+      this.answers = data.question.quesAnswers;
+      this.addAnswer();
+    }
 
   ngOnInit() {
     this.objectiveQuestion = true;
+    console.log(this.data.question);
     }
 
      // add an answer
   public addAnswer() : void {
-    this.answers.push({
+      this.answers.push({
        optionNumber:this.answers.length+1,
        answerBody: " ",
        isCorrectAnswer: false
@@ -67,8 +75,8 @@ public removeAnswer( index: number ) : void {
 }
 
 ngAfterViewInit() {
-  this.oDoc = document.getElementById('questionBox');
-  this.aDoc  = document.getElementById('answerBox');
+  this.oDoc = document.getElementById('questionBoxEdit');
+  this.aDoc  = document.getElementById('answerBoxEdit');
   this.sDefTxt = this.oDoc.innerHTML;
 }
 
@@ -95,32 +103,30 @@ onHlink() {
 }
 
   onSubmit(form: NgForm, even:Event) {
-      console.log("Test");
-    if (form.invalid) {
-      console.log("Invalid Form");
+      
+    if (form.invalid) {   
       return;
     } 
-    
-    console.log(this.aDoc.textContent);
-    //console.log(this.data.quesid);
-  
+     
     event.preventDefault();
-    // const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
-    //     const category = this.selectService.getCategory().filter((item) => item.id == form.value.questype)[0].name;
-    //     const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.questype)[0].name;
-    const questionType = this.data.questionType;
-    const category = this.data.quesCat;
-    const subcategory = this.data.quesSubCat;
-
-        var quesFormatted = this.oDoc.innerHTML;
-        const question = this.oDoc.textContent;
-        const answer   = this.aDoc.textContent;
-        //const quesid1 = form.value.quesid; 
-        //const quesid1 = this.data.quesid;
-  
+ 
+    const id = this.data.question.id;
+    const quesid = this.data.question.quesid;
+    const questionType = this.data.question.questype;
+    const category = this.data.question.quesCat;
+    const subcategory = this.data.question.quesSubCat;
+    const complexity = this.data.question.quesComplex;
+    const approved = false;
     
-      this.questionService.updateQuestion("QTN0004", questionType,  category, subcategory, question, quesFormatted, this.answers, answer);
-    form.reset();
+    
+
+    var quesFormatted = this.oDoc.innerHTML;
+    const questionName = this.oDoc.textContent;
+    const answer   = this.aDoc.textContent;
+
+    this.questionService.updateQuestion(id, quesid, questionType,  category, subcategory, questionName, quesFormatted, this.answers, answer, approved, complexity);
+   
+  
   }
 
 }

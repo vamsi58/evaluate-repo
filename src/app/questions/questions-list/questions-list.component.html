@@ -21,8 +21,8 @@
                             </tr>
                             <tr class="border-0">
                                 <th class="border-0">
-                                    <select (change)="onSelectQuestType($event.target.value)"
-                                        [(ngModel)]="selectedType.id" name="questype">
+                                    <select class= "mdb-select md-form colorful-select dropdown-danger" (change)="onSelectQuestType($event.target.value)"
+                                        [(ngModel)]="selectedType.id" name="questype" >
                                         <option value="0">All</option>
                                         <option *ngFor="let questionType of questionTypes" value={{questionType.id}}>
                                             {{questionType.name}}</option>
@@ -37,11 +37,14 @@
                                     </select>
                                 </th>
                                 <th class="border-0">
-                                    <select name="quesSubCat" [(ngModel)]="selectedSubCat.id">
+                                    <select  name="quesSubCat" (change)= "onSubCatSelect($event.target.value)" [(ngModel)]="selectedSubCat.id">
                                         <option value="0">All</option>
                                         <option *ngFor="let subcategory of subCategories " value={{subcategory.id}}>
                                             {{subcategory.name}}</option>
                                     </select>
+                                </th>
+                                <th>
+                                    <ejs-multiselect id='multiselectelement' [dataSource]='data' [placeholder]='placeholder' ></ejs-multiselect>
                                 </th>
                                 <th class="border-0">
                                     <form class="filter-form" role="search">
@@ -92,7 +95,7 @@
                         </tbody>
                     </table>
                     <mat-paginator [length]="totalQuestions" [pageSize]="questionsPerPage"
-                        [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="questions.length > 0">
+                        [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="filteredQuestions.length > 0">
                     </mat-paginator>
                 </div>
             </div>
@@ -100,6 +103,10 @@
     </div>
 </div>
 
+<!-- <ejs-multiselect id='multiselectelement' [dataSource]='data' [placeholder]='placeholder' ></ejs-multiselect> -->
+
 <!-- <app-question-view></app-question-view> -->
 <app-question-create></app-question-create>
 <!-- <app-question-edit></app-question-edit> -->
+
+    
