@@ -13,27 +13,32 @@ export class SelectService {
 
    getQuestionType() {
     return [
-     new QuestionType(1, 'Objective' ),
-     new QuestionType(2, 'Descriptive' )
+     new QuestionType(1, 'All' ),
+     new QuestionType(2, 'Objective' ),
+     new QuestionType(3, 'Descriptive' )
     ];
   }
 
   getCategory() {
     return [
-     new Category(1, 'Technical' ),
-     new Category(2, 'Functional' )
+     new Category(1, 'All' ), 
+     new Category(2, 'Technical' ),
+     new Category(3, 'Functional' )
     ];
   }
   
   getSubCategory() {
    return [
-     new SubCategory(1, 1, 'IBM i' ),
-     new SubCategory(2, 1, 'Java' ),
-     new SubCategory(3, 1, '.Net'),
-     new SubCategory(4, 1, 'Angular'),
-     new SubCategory(5, 2, 'Supply Chain' ),
-     new SubCategory(6, 2, 'Logistics'),
-     new SubCategory(7, 2, 'Operations' )
+     new SubCategory(1, 1, 'All' ),
+     new SubCategory(2, 2, 'All' ),
+     new SubCategory(3, 2, 'IBM i' ),
+     new SubCategory(4, 2, 'Java' ),
+     new SubCategory(5, 2, '.Net'),
+     new SubCategory(6, 2, 'Angular'),
+     new SubCategory(7, 3, 'All' ),
+     new SubCategory(8, 3, 'Supply Chain' ),
+     new SubCategory(9, 3, 'Logistics'),
+     new SubCategory(8, 3, 'Operations' )
     ];
   }
 

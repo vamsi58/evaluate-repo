@@ -99,7 +99,7 @@ export class QuestionCreateComponent implements OnInit {
     // based on question type display subsequent fields
     onSelectQuestType(optionId:string)
     {  
-      if (optionId == "1"){
+      if (optionId == "2"){
         this.objectiveQuestion = true;
       }
       else{

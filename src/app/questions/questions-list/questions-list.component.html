@@ -1,16 +1,16 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
-            <div class="card-header text-white bg-primary">
+            <div class="card-header text-white bg-primary ">
                 <nav aria-label="breadcrumb">
-                    Questions
+                  <strong>  Questions </strong>
                 </nav>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table">
                         <thead class="bg-light">
-                            <tr class="border-0 bg-info">
+                            <tr class="border-0">
                                 <th>Question Type</th>
                                 <th>Question Category</th>
                                 <th>Question Sub-category</th>
@@ -21,24 +21,24 @@
                             </tr>
                             <tr class="border-0">
                                 <th class="border-0">
-                                    <select class= "mdb-select md-form colorful-select dropdown-danger" (change)="onSelectQuestType($event.target.value)"
+                                    <select (change)="onSelectQuestType($event.target.value)"
                                         [(ngModel)]="selectedType.id" name="questype" >
-                                        <option value="0">All</option>
+                                        <option value="0">--Select--</option>
                                         <option *ngFor="let questionType of questionTypes" value={{questionType.id}}>
                                             {{questionType.name}}</option>
                                     </select>
                                 </th>
                                 <th class="border-0">
-                                    <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCat.id"
+                                    <select (change)="loadSubCategories($event.target.value)" [(ngModel)]="selectedCat.id"
                                         name="quesCat">
-                                        <option value="0">All</option>
+                                        <option value="0">--Select--</option>
                                         <option *ngFor="let category of categories" value={{category.id}}>
                                             {{category.name}}</option>
                                     </select>
                                 </th>
                                 <th class="border-0">
                                     <select  name="quesSubCat" (change)= "onSubCatSelect($event.target.value)" [(ngModel)]="selectedSubCat.id">
-                                        <option value="0">All</option>
+                                        <option value="0">--Select--</option>
                                         <option *ngFor="let subcategory of subCategories " value={{subcategory.id}}>
                                             {{subcategory.name}}</option>
                                     </select>

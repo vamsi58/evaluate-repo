@@ -39,17 +39,39 @@ router.post("/add", (req, res, next) => {
 router.get("/view", (req, res, next ) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
+  const filteredType = req.query.Type;
+  const filteredCat = req.query.Cat;
   const filteredSubCat = req.query.SubCat;
-  var quesQuery ;  
- console.log(filteredSubCat);
-  if (filteredSubCat !== 'All'){
-    console.log("If Block");
-     quesQuery = Question.find({ quesSubCat: filteredSubCat });
-  }
-  else {
-    console.log("Else Block");
-   quesQuery = Question.find();  
-  }
+  var quesQuery ;
+  var whrCondition = {};  
+ //console.log(filteredSubCat);
+ if (filteredType !== ' ' && filteredType !== 'All')
+ {
+  whrCondition["questype"] = filteredType;
+ }
+
+ if (filteredCat !== ' ' && filteredCat !== 'All')
+ {
+  whrCondition["quesCat"] = filteredCat;
+ }
+ if (filteredSubCat !== ' ' && filteredSubCat !== 'All')
+ {
+  whrCondition["quesSubCat"] = filteredSubCat;
+ }
+console.log(whrCondition);
+ quesQuery = Question.find(whrCondition);
+
+  // if (filteredType !== 'All' || filteredCat !== 'All' || filteredSubCat !== 'All'){
+  //   console.log("If Block");
+  //   console.log(filteredType);
+  //   console.log(filteredCat);
+  //   console.log(filteredSubCat);
+  //    quesQuery = Question.find({ questype:filteredType, quesCat:filteredCat, quesSubCat: filteredSubCat });
+  // }
+  // else {
+  //   console.log("Else Block");
+  //  quesQuery = Question.find();  
+  // }
 
   let fetchedQuestions;
   if (pageSize && currentPage) {

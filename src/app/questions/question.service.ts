@@ -46,10 +46,14 @@ export class QuestionService {
   }
 
   //Get all Questinos
-  viewQuestion(questionsperpage: number, currentPage: number, filteredSubCat: string ) {
+  viewQuestion(questionsperpage: number, 
+               currentPage: number, 
+               filteredType: string,
+               filteredCat: string,
+              filteredSubCat: string ) {
 
 console.log(filteredSubCat);
-    const queryParams = `?pagesize=${questionsperpage}&page=${currentPage}&SubCat=${filteredSubCat}`;
+    const queryParams = `?pagesize=${questionsperpage}&page=${currentPage}&Type=${filteredType}&Cat=${filteredCat}&SubCat=${filteredSubCat}`;
     return this.http
       .get<{ message: string; questions: any; maxQuestions: number }>(
         "http://localhost:3000/api/question/view" + queryParams
