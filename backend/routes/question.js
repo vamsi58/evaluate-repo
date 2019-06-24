@@ -143,7 +143,9 @@ router.put("/update/:id", checkAuth, (req, res, next) => {
       question: req.body.question,
       quesFormatted: req.body.quesFormatted,
       answerOptions: req.body.quesAnswers,
-      reason: req.body.quesReason
+      reason: req.body.quesReason,
+      quesAproved: req.body.quesAproved,
+      quesComplex: req.body.quesComplex
   });
   console.log(question);
     Question.updateOne({ _id: req.params.id}, question)

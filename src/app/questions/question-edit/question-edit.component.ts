@@ -53,6 +53,7 @@ export class QuestionEditComponent implements OnInit {
   ngOnInit() {
     this.objectiveQuestion = true;
     console.log(this.data.question);
+    console.log("Test - Initiated Question Edit");
     }
 
      // add an answer

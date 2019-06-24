@@ -27,9 +27,9 @@ export class QuestionCreateComponent implements OnInit {
   complexities: Complexity[];
 
   answers: Answer[];
-  selectedType:QuestionType = new QuestionType(1, "Objective");
-  selectedCat:Category = new Category(1, "Technical");  
-  selectedSubCat:SubCategory = new SubCategory(1,1, "IBM i");
+  selectedType:QuestionType = new QuestionType(2, "Objective");
+  selectedCat:Category = new Category(2, "Technical");  
+  selectedSubCat:SubCategory = new SubCategory(2,2, "IBM i");
   selectedComplexity:Complexity = new Complexity(1, "Level 1");
  
   constructor(private selectService: SelectService, private questionService: QuestionService) {

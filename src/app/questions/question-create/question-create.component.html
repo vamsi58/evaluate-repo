@@ -1,20 +1,23 @@
 <div class="modal fade" id="create-question" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header"> 
         <h5 class="modal-title" id="exampleModalCenterTitle">Create Question</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeBtn>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="modal-body">
         <form class="form-horizontal" (submit)="onSubmit(questionForm, $event)" #questionForm="ngForm" role="form">
           <div class="form-group required table-responsive">
-              <table>
-            <tbody>
-              <tr class="card-body p-0">
-                <td><label class="control-label">Complexity</label></td>
-                <td><label class="control-label">Question Type</label></td>
+          <table class="table1">
+            <tbody >
+              <tr >
+                <td><h6><label class="control-label">Complexity</label></h6></td>
+                <td><h6><label class="control-label">Question Type</label></h6></td>
+                <td><h6><label class="control-label">Category</label></h6></td>
+                <td><h6><label class="control-label">Sub-Category</label></h6></td>
               </tr>
               <tr>
                 <td>
@@ -29,27 +32,25 @@
                   <option *ngFor="let questionType of questionTypes" value={{questionType.id}}>{{questionType.name}}</option>
                   </select>
                 </td>
+                <td>
+                  <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCat.id" name="quesCat">
+                  <option value="0">--Select--</option>
+                  <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
+                  </select>
+                </td>
+                <td>
+                  <select name="quesSubCat" [(ngModel)]="selectedSubCat.id">
+                  <option value="0">--Select--</option>
+                  <option *ngFor="let subcategory of subCategories " value={{subcategory.id}}>{{subcategory.name}}</option>
+                  </select>  
+                </td>
               </tr>  
-              </tbody>
-              </table>
-              </div>
-          <div class="form-group required">
-            <label class=" control-label">Category</label>
-            <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCat.id" name="quesCat">
-              <option value="0">--Select--</option>
-              <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
-            </select>
+            </tbody>
+          </table>
           </div>
+                    
           <div class="form-group required">
-            <label class="control-label">Sub-category </label>
-            <select name="quesSubCat" [(ngModel)]="selectedSubCat.id">
-              <option value="0">--Select--</option>
-              <option *ngFor="let subcategory of subCategories " value={{subcategory.id}}>{{subcategory.name}}</option>
-            </select>
-          </div>
-          
-          <div class="form-group required">
-            <label class="control-label">Question:</label>
+            <h6><label class="control-label">Question:</label></h6>
             <div class="toolBars">
             <div id="toolBar1">
               <select (change)="onSelectedStyle($event, 'formatblock')">
@@ -139,7 +140,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="control-label">Answer:</label>
+            <h6><label class="control-label">Answer:</label></h6>
             <div *ngIf="objectiveQuestion">
               <ng-template ngFor let-answer [ngForOf]="answers" let-index="index" let-isLast="last">
                 <div class="answer">
@@ -156,7 +157,7 @@
               <p class="actions">
                 <a (click)="addAnswer()">Add Another Answer</a>
               </p>
-              <label> Comments</label>
+            <h6><label> Comments</label></h6>
             </div>
             <div id="answerBox" name="answerDesc" contenteditable="true">
               <p> </p>
