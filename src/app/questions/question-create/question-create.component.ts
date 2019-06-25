@@ -19,6 +19,7 @@ export class QuestionCreateComponent implements OnInit {
   oDoc;
   aDoc;
   sDefTxt;
+  invalQues: boolean = false;
   objectiveQuestion = true;
   selectedCategory: Category = new Category(2, 'IBM i');
   categories: Category[];
@@ -29,7 +30,7 @@ export class QuestionCreateComponent implements OnInit {
   answers: Answer[];
   selectedType:QuestionType = new QuestionType(2, "Objective");
   selectedCat:Category = new Category(2, "Technical");  
-  selectedSubCat:SubCategory = new SubCategory(2,2, "IBM i");
+  selectedSubCat:SubCategory = new SubCategory(3,2, "IBM i");
   selectedComplexity:Complexity = new Complexity(1, "Level 1");
  
   constructor(private selectService: SelectService, private questionService: QuestionService) {
@@ -111,6 +112,9 @@ export class QuestionCreateComponent implements OnInit {
       if (form.invalid) {
         return;
       }
+      if (!this.customValid()) {
+        return;
+      }
       const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
       const category = this.selectService.getCategory().filter((item) => item.id == form.value.quesCat)[0].name;
       const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.quesSubCat)[0].name;
@@ -125,8 +129,16 @@ export class QuestionCreateComponent implements OnInit {
       this.closeModal();
   }
 
-  closeModal(): void {
-    this.closeBtn.nativeElement.click();
+  customValid(): boolean {
+    if (this.oDoc.textContent === ''){
+      this.invalQues = true;
+      return false;
+    }
+    return true;
+}
+
+closeModal(): void {
+  this.closeBtn.nativeElement.click();
 }
  
 }

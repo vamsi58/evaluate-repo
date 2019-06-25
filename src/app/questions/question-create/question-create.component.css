@@ -70,3 +70,6 @@ img.intLink {
 	width: 100%;
 
 }
+.is-invalid{
+	color: red;
+}

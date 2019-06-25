@@ -22,26 +22,32 @@
               <tr>
                 <td>
                   <select name="quesComplex" [(ngModel)]="selectedComplexity.id">
-                  <option value="0">--Select--</option>
+                  <!-- <option value="0">--Select--</option> -->
                   <option *ngFor="let complexity of complexities " value={{complexity.id}}>{{complexity.name}}</option>
                   </select>
                 </td>
                 <td>
                   <select (change)="onSelectQuestType($event.target.value)" [(ngModel)]="selectedType.id" name="questype">
-                  <option value="0">--Select--</option>
-                  <option *ngFor="let questionType of questionTypes" value={{questionType.id}}>{{questionType.name}}</option>
+                  <!-- <option value="0">--Select--</option> -->
+                  <ng-container *ngFor="let questionType of questionTypes" >
+                  <option value={{questionType.id}} *ngIf = "questionType.name !=='All'">{{questionType.name}}</option>
+                  </ng-container>
                   </select>
-                </td>
+                  </td>
                 <td>
                   <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCat.id" name="quesCat">
-                  <option value="0">--Select--</option>
-                  <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
+                  <!-- <option value="0">--Select--</option> -->
+                  <ng-container *ngFor="let category of categories" > 
+                  <option value={{category.id}} *ngIf = "category.name !=='All'">{{category.name}} </option>
+                  </ng-container>
                   </select>
                 </td>
                 <td>
                   <select name="quesSubCat" [(ngModel)]="selectedSubCat.id">
-                  <option value="0">--Select--</option>
-                  <option *ngFor="let subcategory of subCategories " value={{subcategory.id}}>{{subcategory.name}}</option>
+                  <!-- <option value="0">--Select--</option> -->
+                  <ng-container *ngFor="let subcategory of subCategories ">
+                  <option value={{subcategory.id}} *ngIf = "subcategory.name !=='All'">{{subcategory.name}}</option>
+                  </ng-container>  
                   </select>  
                 </td>
               </tr>  
@@ -138,6 +144,7 @@
             <div id="questionBox" class="form-control" name="question" contenteditable="true">
               <p> </p>
             </div>
+            <div *ngIf="invalQues" class="is-invalid">Question is required</div>
           </div>
           <div class="form-group required">
             <h6><label class="control-label">Answer:</label></h6>
