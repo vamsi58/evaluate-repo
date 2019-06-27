@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { PageEvent } from "@angular/material";
 import { Subscription } from "rxjs";
@@ -25,7 +26,7 @@ import { Item } from '@syncfusion/ej2-splitbuttons';
   templateUrl: './questions-list.component.html',
   styleUrls: ['./questions-list.component.css']
 })
-export class QuestionsListComponent implements OnInit {
+export class QuestionsListComponent implements OnInit, OnChanges {
   oDoc;
   aDoc;
   sDefTxt;
@@ -48,7 +49,7 @@ export class QuestionsListComponent implements OnInit {
   private filteredCat: string;
   private filteredSubcat: string;
 
-
+  @ViewChild('questionForm') createForm: NgForm;
   get filterQuestion(): string {
     return this._filterQuestion;
   }
@@ -110,6 +111,13 @@ export class QuestionsListComponent implements OnInit {
 
       });
 
+  }
+
+  ngOnChanges() {
+    // if (this.isReset) {
+    console.log('test Anuradha');   
+    this.createForm.reset();
+    // }
   }
 
   loadSubCategories(categoryid) {

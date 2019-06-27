@@ -9,10 +9,7 @@ const QuestionSchema = mongoose.Schema({
   quesSubCat:     { type: String},
   question:       { type: String, minlength: 10, maxlength: 1000, required: true},
   quesFormatted:  { type: String, minlength: 10, maxlength: 1000},
-  answerOptions:  { type: [AnswerOptionSchema], default: undefined,
-                    validate: { validator: function(value) {return value && value.length === 4;},
-                    message: 'Answer options should be 4.'}
-                  }, 
+  answerOptions:  { type: [AnswerOptionSchema], default: undefined,}, 
   reason:         { type: String},
   quesAproved:    { type: Boolean},
   quesComplex:    { type: String}, 
