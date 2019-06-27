@@ -50,10 +50,10 @@ export class QuestionService {
                currentPage: number, 
                filteredType: string,
                filteredCat: string,
-              filteredSubCat: string ) {
+              filteredSubCats: string[] ) {
 
-console.log(filteredSubCat);
-    const queryParams = `?pagesize=${questionsperpage}&page=${currentPage}&Type=${filteredType}&Cat=${filteredCat}&SubCat=${filteredSubCat}`;
+  console.log(filteredSubCats);
+    const queryParams = `?pagesize=${questionsperpage}&page=${currentPage}&Type=${filteredType}&Cat=${filteredCat}&SubCat=${filteredSubCats}`;
     return this.http
       .get<{ message: string; questions: any; maxQuestions: number }>(
         "http://localhost:3000/api/question/view" + queryParams

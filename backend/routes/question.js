@@ -7,71 +7,67 @@ const Question = require("../models/question");
 
 const router = express.Router();
 
+//Insert record
 router.post("/add", (req, res, next) => {
-    const question = new Question({
-        quesid: req.body.quesid,
-        questype: req.body.questype,
-        quesCat: req.body.quesCat,
-        quesSubCat: req.body.quesSubCat,
-        question: req.body.question,
-        quesFormatted: req.body.quesFormatted,
-        answerOptions: req.body.quesAnswers,
-        reason: req.body.quesReason,
-        quesAproved: req.body.quesAproved,
-        quesComplex: req.body.quesComplex
-    });
-    question
-      .save()
-      .then(result => {
-        res.status(201).json({
-          message: "Question created!",
-          result: result
-        });
-      })
-      .catch(err => {
-        res.status(500).json({
-          message: "Invalid Here!"+err
-        });
+  const question = new Question({
+    quesid: req.body.quesid,
+    questype: req.body.questype,
+    quesCat: req.body.quesCat,
+    quesSubCat: req.body.quesSubCat,
+    question: req.body.question,
+    quesFormatted: req.body.quesFormatted,
+    answerOptions: req.body.quesAnswers,
+    reason: req.body.quesReason,
+    quesAproved: req.body.quesAproved,
+    quesComplex: req.body.quesComplex
+  });
+  question
+    .save()
+    .then(result => {
+      res.status(201).json({
+        message: "Question created!",
+        result: result
       });
-  
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Invalid Here!" + err
+      });
+    });
+
 });
 
-router.get("/view", (req, res, next ) => {
+//View all records
+router.get("/view", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const filteredType = req.query.Type;
   const filteredCat = req.query.Cat;
-  const filteredSubCat = req.query.SubCat;
-  var quesQuery ;
-  var whrCondition = {};  
- //console.log(filteredSubCat);
- if (filteredType !== ' ' && filteredType !== 'All')
- {
-  whrCondition["questype"] = filteredType;
- }
+  //const filteredSubCat = req.query.SubCat;
+  var filteredSubCats = req.query.SubCat;
 
- if (filteredCat !== ' ' && filteredCat !== 'All')
- {
-  whrCondition["quesCat"] = filteredCat;
- }
- if (filteredSubCat !== ' ' && filteredSubCat !== 'All')
- {
-  whrCondition["quesSubCat"] = filteredSubCat;
- }
-console.log(whrCondition);
- quesQuery = Question.find(whrCondition);
+  var quesQuery;
+  var whrCondition = {};
 
-  // if (filteredType !== 'All' || filteredCat !== 'All' || filteredSubCat !== 'All'){
-  //   console.log("If Block");
-  //   console.log(filteredType);
-  //   console.log(filteredCat);
-  //   console.log(filteredSubCat);
-  //    quesQuery = Question.find({ questype:filteredType, quesCat:filteredCat, quesSubCat: filteredSubCat });
-  // }
-  // else {
-  //   console.log("Else Block");
+  if (filteredType !== ' ' && filteredType !== 'All') {
+    whrCondition["questype"] = filteredType;
+  }
+
+  if (filteredCat !== ' ' && filteredCat !== 'All') {
+    whrCondition["quesCat"] = filteredCat;
+  }
+  if ((req.query.SubCat).length > 0) {
+
+  if (filteredSubCats !== ' ' && filteredSubCats !== 'All') {
+    whrCondition["quesSubCat"] = {$in: filteredSubCats.split(",")};
+    //q["$and"].push({ learningLanguages: {$in: req.body.learninglanguages.split(",") }});
+  }
+}
+  console.log(whrCondition);
+  quesQuery = Question.find(whrCondition);
+
   //  quesQuery = Question.find();  
-  // }
+
 
   let fetchedQuestions;
   if (pageSize && currentPage) {
@@ -91,11 +87,12 @@ console.log(whrCondition);
     })
     .catch(error => {
       res.status(500).json({
-        message: "Fetching questions failed!" 
+        message: "Fetching questions failed!"
       });
     });
 });
 
+//Delete record
 router.delete("/delete/:quesid", checkAuth, (req, res, next) => {
   Question.deleteOne({ quesid: req.params.quesid })
     .then(result => {
@@ -105,18 +102,19 @@ router.delete("/delete/:quesid", checkAuth, (req, res, next) => {
       } else {
         Console.log(result.error);
         res.status(401).json({ message: "Not authorized!" });
-        
+
       }
     })
     .catch(error => {
       console.log(error);
       res.status(500).json({
         message: "Fetching posts failed!"
-      
+
       });
     });
 });
 
+//View record by Id
 router.get("/getQuestion/:quesid", (req, res, next) => {
   Question.findById(req.params.quesid)
     .then(post => {
@@ -133,33 +131,34 @@ router.get("/getQuestion/:quesid", (req, res, next) => {
     });
 });
 
+//Update record
 router.put("/update/:id", checkAuth, (req, res, next) => {
   const question = new Question({
-      _id: req.params.id,
-      quesid: req.body.quesid,
-      questype: req.body.questype,
-      quesCat: req.body.quesCat,
-      quesSubCat: req.body.quesSubCat,
-      question: req.body.question,
-      quesFormatted: req.body.quesFormatted,
-      answerOptions: req.body.quesAnswers,
-      reason: req.body.quesReason
+    _id: req.params.id,
+    quesid: req.body.quesid,
+    questype: req.body.questype,
+    quesCat: req.body.quesCat,
+    quesSubCat: req.body.quesSubCat,
+    question: req.body.question,
+    quesFormatted: req.body.quesFormatted,
+    answerOptions: req.body.quesAnswers,
+    reason: req.body.quesReason
   });
   console.log(question);
-    Question.updateOne({ _id: req.params.id}, question)
-      .then(result => {
-        if (result.nModified > 0) {
-          res.status(200).json({ message: "Update successful!"+ result });
-        } else {
-          res.status(401).json({ message: "Not authorized!"+req.params.id });
-        }
-      })
-      .catch(error => {
-        res.status(500).json({
-          message: "Couldn't udpate post!"+error
-        });
+  Question.updateOne({ _id: req.params.id }, question)
+    .then(result => {
+      if (result.nModified > 0) {
+        res.status(200).json({ message: "Update successful!" + result });
+      } else {
+        res.status(401).json({ message: "Not authorized!" + req.params.id });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Couldn't udpate post!" + error
       });
-  }
+    });
+}
 );
 
 module.exports = router;

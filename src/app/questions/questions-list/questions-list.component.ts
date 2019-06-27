@@ -15,7 +15,7 @@ import { QuestionViewComponent } from '../question-view/question-view.component'
 import { MatDialog } from '@angular/material';
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { MatPaginator } from '@angular/material/paginator';
-import { MultiSelectComponent } from '@syncfusion/ej2-angular-dropdowns';
+import { AutoCompleteComponent, ChangeEventArgs, MultiSelectChangeEventArgs as DropDownSelectEventArgs, FilteringEventArgs  } from '@syncfusion/ej2-angular-dropdowns';
 import { CheckBoxComponent } from '@syncfusion/ej2-angular-buttons';
 import { Item } from '@syncfusion/ej2-splitbuttons';
 
@@ -47,6 +47,7 @@ export class QuestionsListComponent implements OnInit {
   private filteredType: string;
   private filteredCat: string;
   private filteredSubcat: string;
+  private filteredSubcats: string[];
 
 
   get filterQuestion(): string {
@@ -72,13 +73,16 @@ export class QuestionsListComponent implements OnInit {
     private dialog: MatDialog) {
 
     this.answers = [];
+    this.filteredSubcats = [];
 
   }
 
   //----------------------to be seperated-----
   // defined the array of data
-  //public data: string[] = ['cricket', 'hockey']; 
-  data: SubCategory[] = [];
+  //public data: { id: number, categoryId: number, name: string }[] = [{ id: 3, categoryId:2, name: 'IBMi' }, { id: 4, categoryId:2, name: 'Java' }]; 
+  public data: SubCategory[] = [];
+
+  public subcatfield: Object = { text: 'name', value: 'id' };
 
   // set placeholder to MultiSelect input element
   public placeholder: string = 'Select SubCategory';
@@ -95,12 +99,13 @@ export class QuestionsListComponent implements OnInit {
     this.filteredType = 'All';
     this.filteredCat = 'All';
     this.filteredSubcat = 'All';
+    this.filteredSubcats = [];
     this.questionService.viewQuestion(
-      this.questionsPerPage, 
-      this.currentPage, 
+      this.questionsPerPage,
+      this.currentPage,
       this.filteredType,
       this.filteredCat,
-      this.filteredSubcat);
+      this.filteredSubcats);
     this.questionsSub = this.questionService
       .getQuestionUpdateListener()
       .subscribe((questionData: { questions: Question[]; questionCount: number }) => {
@@ -113,24 +118,34 @@ export class QuestionsListComponent implements OnInit {
   }
 
   loadSubCategories(categoryid) {
-    
-    //this.filteredType = (this.selectService.getQuestionType().filter((item) => item.id == 1))[0].name;
-    //this.filteredType = "Objective";
+
     this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == categoryid);
     this.data = this.subCategories;
+
   }
+
   onSubCatSelect(value) {
     this.filteredCat = (this.selectService.getCategory().filter((item) => item.id == this.selectedCat.id))[0].name;
     this.filteredSubcat = (this.selectService.getSubCategory().filter((item) => item.id == value))[0].name;
-    console.log(this.filteredSubcat);
-    console.log(this.selectedType);
-    console.log(this.filteredCat);
-     this.questionService.viewQuestion(
-      this.questionsPerPage, 
-      this.currentPage, 
-      this.filteredType,
-      this.filteredCat,
-      this.filteredSubcat);
+    //this.questionService.viewQuestion(this.questionsPerPage, this.currentPage, this.filteredType,
+      //this.filteredCat, this.filteredSubcat);
+
+  }
+
+  public replyAllSelect(args: DropDownSelectEventArgs): void {
+    //public replyAllSelect(args: FilteringEventArgs): void {
+    this.filteredSubcats = [];
+    this.filteredCat = (this.selectService.getCategory().filter((item) => item.id == this.selectedCat.id))[0].name;
+    
+    for (let entry of args.value) {
+
+          this.filteredSubcats.push((this.selectService.getSubCategory().filter((item) => item.id == entry))[0].name);
+    }
+
+    this.questionService.viewQuestion(this.questionsPerPage, this.currentPage, this.filteredType,
+      this.filteredCat, this.filteredSubcats);
+    //console.log(this.filteredSubcats);
+
   }
 
   // based on question type display subsequent fields
@@ -148,11 +163,11 @@ export class QuestionsListComponent implements OnInit {
     this.currentPage = pageData.pageIndex + 1;
     this.questionsPerPage = pageData.pageSize;
     this.questionService.viewQuestion(
-      this.questionsPerPage, 
-      this.currentPage, 
+      this.questionsPerPage,
+      this.currentPage,
       this.filteredType,
       this.filteredCat,
-      this.filteredSubcat);
+      this.filteredSubcats);
   }
 
   onDelete(questiondata) {
