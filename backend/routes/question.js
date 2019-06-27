@@ -134,6 +134,7 @@ router.get("/getQuestion/:quesid", (req, res, next) => {
 //Update record
 router.put("/update/:id", checkAuth, (req, res, next) => {
   const question = new Question({
+<<<<<<< HEAD
     _id: req.params.id,
     quesid: req.body.quesid,
     questype: req.body.questype,
@@ -143,6 +144,19 @@ router.put("/update/:id", checkAuth, (req, res, next) => {
     quesFormatted: req.body.quesFormatted,
     answerOptions: req.body.quesAnswers,
     reason: req.body.quesReason
+=======
+      _id: req.params.id,
+      quesid: req.body.quesid,
+      questype: req.body.questype,
+      quesCat: req.body.quesCat,
+      quesSubCat: req.body.quesSubCat,
+      question: req.body.question,
+      quesFormatted: req.body.quesFormatted,
+      answerOptions: req.body.quesAnswers,
+      reason: req.body.quesReason,
+      quesAproved: req.body.quesAproved,
+      quesComplex: req.body.quesComplex
+>>>>>>> ba65bed0e6a319329c4492b96afeb5c8521a2f60
   });
   console.log(question);
   Question.updateOne({ _id: req.params.id }, question)

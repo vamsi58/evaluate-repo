@@ -19,30 +19,31 @@ export class QuestionCreateComponent implements OnInit {
   oDoc;
   aDoc;
   sDefTxt;
-  objectiveQuestion = true;
-  selectedCategory: Category = new Category(2, 'IBM i');
+  objectiveQuestion:boolean = true;
+  invalQues: boolean;
+  invalAnsd: boolean;
+  invalAnso: boolean;
+  invalAnsc: boolean;
+  
   categories: Category[];
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
   complexities: Complexity[];
-
   answers: Answer[];
-  selectedType:QuestionType = new QuestionType(1, "Objective");
-  selectedCat:Category = new Category(1, "Technical");  
-  selectedSubCat:SubCategory = new SubCategory(1,1, "IBM i");
-  selectedComplexity:Complexity = new Complexity(1, "Level 1");
+
+  selectedCategory: Category;
+  selectedType: QuestionType;;
+  selectedCat:Category;  
+  selectedSubCat:SubCategory;
+  selectedComplexity:Complexity;
  
   constructor(private selectService: SelectService, private questionService: QuestionService) {
-    
-      this.answers = [];  
-      this.addAnswer();
+    this.answers = [];  
+    this.addAnswer();
    }
 
   ngOnInit(){
-    this.categories = this.selectService.getCategory();
-    this.questionTypes = this.selectService.getQuestionType();
-    this.onSelect(this.selectedCat.id);
-    this.complexities = this.selectService.getComplexity();
+    this.init();
   } 
 
  onSelect(categoryid) {
@@ -111,6 +112,9 @@ export class QuestionCreateComponent implements OnInit {
       if (form.invalid) {
         return;
       }
+      if (!this.customValid()) {
+        return;
+      }
       const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
       const category = this.selectService.getCategory().filter((item) => item.id == form.value.quesCat)[0].name;
       const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.quesSubCat)[0].name;
@@ -122,11 +126,66 @@ export class QuestionCreateComponent implements OnInit {
       console.log(questionType,category,subcategory);
       this.questionService.createQuestion('dummyId','QTN0005', questionType,  category, subcategory, question, quesFormatted, this.answers, answer, approved, complexity);
       // close the modal
-      this.closeModal();
+      this.closeModal(form);
   }
 
-  closeModal(): void {
-    this.closeBtn.nativeElement.click();
+  customValid(): boolean {
+    this.invalQues = false;
+    this.invalAnsd = false;
+    this.invalAnso = false;
+    this.invalAnsc = false;
+    
+    if (this.oDoc.textContent === ''){                   
+      this.invalQues = true;
+      return false;
+    }
+    if (this.oDoc.textContent.length <= 9){             // question should be minimum 10 characters
+      this.invalQues = true;
+      return false;
+    }
+    if (this.objectiveQuestion == true && this.answers.length !== 4){  // 4 answers needed for objective question
+      this.invalAnso = true;
+      return false;
+    }
+    if (this.objectiveQuestion == true && (this.answers.findIndex(a => a.isCorrectAnswer === true)) < 0 ) {                    // one answer should be correct answer for objective 
+      this.invalAnsc = true;
+      return false;
+    }
+    if (this.objectiveQuestion == false && this.aDoc.textContent === ''){
+      this.invalAnsd = true;
+      return false;
+    }
+    return true;
 }
- 
+
+closeModal(form:NgForm): void {
+  this.closeBtn.nativeElement.click();
+  form.resetForm();
+  this.init();
+}
+
+//To be removed
+init() {
+  console.log("I am init");
+  this.selectedCategory = new Category(2, 'IBM i');
+  this.selectedType = new QuestionType(2, "Objective");
+  this.selectedCat = new Category(2, "Technical");  
+  this.selectedSubCat = new SubCategory(3,2, "IBM i");
+  this.selectedComplexity = new Complexity(1, "Level 1");
+  this.categories = this.selectService.getCategory();
+  this.questionTypes = this.selectService.getQuestionType();
+  this.onSelect(this.selectedCat.id);
+  this.complexities = this.selectService.getComplexity();
+  this.oDoc.innerHTML = '';
+  this.oDoc.textContent = '';
+  this.aDoc.textContent = '';
+  this.invalQues = false;
+  this.invalAnsd = false;
+  this.invalAnso = false;
+  this.invalAnsc = false;
+  this.objectiveQuestion = true;
+  this.answers = [];  
+  this.addAnswer();
+}
+
 }
