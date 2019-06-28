@@ -4,6 +4,7 @@ import { SelectService } from '../select.service';
 import {MAT_DIALOG_DATA} from '@angular/material';  
 import { QuestionEditComponent } from '../question-edit/question-edit.component';
 import { MatDialog } from '@angular/material';
+import {Answer} from '../answer.model';
 
 @Component({
   selector: 'app-question-view',
@@ -12,12 +13,17 @@ import { MatDialog } from '@angular/material';
 })
 export class QuestionViewComponent implements OnInit {
 
+  answers: Answer[];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data:any,
     private selectService: SelectService, 
     private questionService: QuestionService,
     private dialog: MatDialog
-  ) { }
+  ) { 
+
+    this.answers = data.question.quesAnswers;
+  
+  }
 
   ngOnInit() {
   }

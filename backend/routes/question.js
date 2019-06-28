@@ -42,8 +42,9 @@ router.get("/view", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const filteredType = req.query.Type;
-  const filteredCat = req.query.Cat;
+  //const filteredCat = req.query.Cat;
   //const filteredSubCat = req.query.SubCat;
+  var filteredCats = req.query.Cat;
   var filteredSubCats = req.query.SubCat;
 
   var quesQuery;
@@ -52,17 +53,18 @@ router.get("/view", (req, res, next) => {
   if (filteredType !== ' ' && filteredType !== 'All') {
     whrCondition["questype"] = filteredType;
   }
-
-  if (filteredCat !== ' ' && filteredCat !== 'All') {
-    whrCondition["quesCat"] = filteredCat;
+  if ((req.query.Cat).length > 0) {
+    if (filteredCats !== ' ' && filteredCats !== 'All') {
+      whrCondition["quesCat"] = { $in: filteredCats.split(",") };
+    }
   }
+  
   if ((req.query.SubCat).length > 0) {
+    if (filteredSubCats !== ' ' && filteredSubCats !== 'All') {
+      whrCondition["quesSubCat"] = { $in: filteredSubCats.split(",") };
 
-  if (filteredSubCats !== ' ' && filteredSubCats !== 'All') {
-    whrCondition["quesSubCat"] = {$in: filteredSubCats.split(",")};
-    //q["$and"].push({ learningLanguages: {$in: req.body.learninglanguages.split(",") }});
+    }
   }
-}
   console.log(whrCondition);
   quesQuery = Question.find(whrCondition);
 
@@ -134,7 +136,6 @@ router.get("/getQuestion/:quesid", (req, res, next) => {
 //Update record
 router.put("/update/:id", checkAuth, (req, res, next) => {
   const question = new Question({
-<<<<<<< HEAD
     _id: req.params.id,
     quesid: req.body.quesid,
     questype: req.body.questype,
@@ -143,20 +144,9 @@ router.put("/update/:id", checkAuth, (req, res, next) => {
     question: req.body.question,
     quesFormatted: req.body.quesFormatted,
     answerOptions: req.body.quesAnswers,
-    reason: req.body.quesReason
-=======
-      _id: req.params.id,
-      quesid: req.body.quesid,
-      questype: req.body.questype,
-      quesCat: req.body.quesCat,
-      quesSubCat: req.body.quesSubCat,
-      question: req.body.question,
-      quesFormatted: req.body.quesFormatted,
-      answerOptions: req.body.quesAnswers,
-      reason: req.body.quesReason,
-      quesAproved: req.body.quesAproved,
-      quesComplex: req.body.quesComplex
->>>>>>> ba65bed0e6a319329c4492b96afeb5c8521a2f60
+    reason: req.body.quesReason,
+    quesAproved: req.body.quesAproved,
+    quesComplex: req.body.quesComplex
   });
   console.log(question);
   Question.updateOne({ _id: req.params.id }, question)

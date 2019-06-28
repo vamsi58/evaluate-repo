@@ -49,11 +49,11 @@ export class QuestionService {
   viewQuestion(questionsperpage: number, 
                currentPage: number, 
                filteredType: string,
-               filteredCat: string,
+               filteredCats: string[],
               filteredSubCats: string[] ) {
 
-  console.log(filteredSubCats);
-    const queryParams = `?pagesize=${questionsperpage}&page=${currentPage}&Type=${filteredType}&Cat=${filteredCat}&SubCat=${filteredSubCats}`;
+  //console.log(filteredSubCats);
+    const queryParams = `?pagesize=${questionsperpage}&page=${currentPage}&Type=${filteredType}&Cat=${filteredCats}&SubCat=${filteredSubCats}`;
     return this.http
       .get<{ message: string; questions: any; maxQuestions: number }>(
         "http://localhost:3000/api/question/view" + queryParams

@@ -140,7 +140,7 @@
       <label class="control-label">Answer: </label>
       <div>
 
-        <ng-template ngFor let-answer [ngForOf]="answers" let-index="index" let-isLast="last">
+        <ng-template ngFor let-answer [ngForOf]="data.question.quesAnswers" let-index="index" let-isLast="last">
           <div class="answer">
             <input type="text" name="{{ index+1 }}_option" [value]="index+1" class="input-sm optNum" required
               disabled />
@@ -164,13 +164,14 @@
         <p>{{data.question.quesReason}} </p>
       </div>
     </div>
-
+<mat-dialog-actions> 
     <div class="form-group">
       <!-- <button type="submit" mat-raised-button [mat-dialog-close]="true" >Save</button>  
                 <button mat-raised-button [mat-dialog-close]="false">Cancel</button> -->
       <button type="submit" mat-raised-button>Save</button>
       <button type="reset" mat-raised-button [mat-dialog-close]="false">Cancel</button>
     </div>
+  </mat-dialog-actions>
 
   </form>
 
