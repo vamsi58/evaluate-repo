@@ -1,0 +1,17 @@
+<h1 mat-dialog-title> Add Question type here...</h1>
+<mat-dialog-content>
+  <div class="col">
+    <label for="inputQType" class="control-label">
+      Question Type </label>
+
+    <input name="Qtype" class="form-control" id="inputQType" ngModel type="text" placeholder="Last Name"
+      #inputQType="ngModel" required>
+    <small class="text-danger" *ngIf="inputQType.invalid && (inputQType.touched || QtybeAddButton.submitted )">Please enter a
+      valid question type.</small>
+
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="true" (click)="onSubmit(data.question.quesid)" #QtybeAddButton>Add</button>
+  <button mat-raised-button [mat-dialog-close]="false">Back</button>
+</mat-dialog-actions>

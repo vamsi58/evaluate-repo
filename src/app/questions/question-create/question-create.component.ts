@@ -3,10 +3,13 @@ import { Category } from '../category.model';
 import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
 import { SelectService } from '../select.service';
+import { Subscription } from "rxjs";
 import {Answer} from '../answer.model';
 import { NgForm } from "@angular/forms";
 import { QuestionService } from "../question.service";
 import { Complexity } from '../question-complex.model';
+import { MatDialog } from '@angular/material';
+import {QuestionTypeComponent} from '../question-type/question-type.component';
 
 
 @Component({
@@ -36,8 +39,13 @@ export class QuestionCreateComponent implements OnInit {
   selectedCat:Category;  
   selectedSubCat:SubCategory;
   selectedComplexity:Complexity;
+
+  private questiontypesSub: Subscription;
  
-  constructor(private selectService: SelectService, private questionService: QuestionService) {
+  constructor(private selectService: SelectService, 
+    private questionService: QuestionService,
+    private dialog: MatDialog) 
+    {
     this.answers = [];  
     this.addAnswer();
    }
@@ -173,7 +181,7 @@ init() {
   this.selectedSubCat = new SubCategory(3,2, "IBM i");
   this.selectedComplexity = new Complexity(1, "Level 1");
   this.categories = this.selectService.getCategory();
-  this.questionTypes = this.selectService.getQuestionType();
+  //this.questionTypes = this.selectService.getQuestionType();
   this.onSelect(this.selectedCat.id);
   this.complexities = this.selectService.getComplexity();
   this.oDoc.innerHTML = '';
@@ -186,6 +194,18 @@ init() {
   this.objectiveQuestion = true;
   this.answers = [];  
   this.addAnswer();
+  this.selectService.getQuestionType();
+      this.questiontypesSub = this.selectService
+      .getQuestionTypeUpdateListener()
+      .subscribe((questionTypeData: {questiontypes: QuestionType[]; }) => {
+        this.questionTypes = questionTypeData.questiontypes;
+      });
+}
+
+addQuestionType(){
+    //Open MatDialog and load component dynamically  
+    const dialogRef = this.dialog.open(QuestionTypeComponent);
+
 }
 
 }

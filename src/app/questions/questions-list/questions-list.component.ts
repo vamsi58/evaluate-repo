@@ -44,6 +44,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   private questionsSub: Subscription;
+  private questiontypesSub: Subscription;
   private _filterQuestion: string;
   private filteredType: string;
   private filteredCat: string;
@@ -96,7 +97,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.categories = this.selectService.getCategory();
-    this.questionTypes = this.selectService.getQuestionType();
+   // this.questionTypes = this.selectService.getQuestionType();
     //this.loadSubCategories(this.selectedCat.id);
     this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == this.selectedCat.id);
     this.filteredType = 'All';
@@ -119,6 +120,13 @@ export class QuestionsListComponent implements OnInit, OnChanges {
 
       });
 
+      this.selectService.getQuestionType();
+      this.questiontypesSub = this.selectService
+      .getQuestionTypeUpdateListener()
+      .subscribe((questionTypeData: {questiontypes: QuestionType[]; }) => {
+        this.questionTypes = questionTypeData.questiontypes;
+      });
+
   }
 
   ngOnChanges() {
@@ -136,6 +144,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
 
   loadSubCategories(args: DropDownSelectEventArgs): void {
     console.log(args.value);
+    this.subCategories = [];
     for (let categoryId of args.value) {
      
       this.filteredCats.push((this.selectService.getCategory().filter((item) => item.id == categoryId))[0].name);

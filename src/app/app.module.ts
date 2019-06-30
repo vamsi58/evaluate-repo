@@ -43,6 +43,7 @@ import { QuestionDeleteComponent } from './questions/question-delete/question-de
 
 import { MultiSelectComponent  } from '@syncfusion/ej2-angular-dropdowns';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
+import { QuestionTypeComponent } from './questions/question-type/question-type.component';
 // import { CheckBoxModule, ButtonModule } from '@syncfusion/ej2-angular-buttons';
 
 
@@ -66,7 +67,8 @@ import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
     QuestionEditComponent,
     QuestionDeleteComponent,
     MultiSelectComponent,
-    ButtonComponent
+    ButtonComponent,
+    QuestionTypeComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +94,11 @@ import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
   
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorComponent, QuestionDeleteComponent, QuestionEditComponent,QuestionViewComponent]
+  entryComponents: [ErrorComponent, 
+    QuestionDeleteComponent,
+    QuestionEditComponent,
+    QuestionViewComponent,
+    QuestionTypeComponent]
 
 })
 export class AppModule {}

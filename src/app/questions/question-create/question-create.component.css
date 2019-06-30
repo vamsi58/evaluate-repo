@@ -73,3 +73,12 @@ img.intLink {
 .is-invalid{
 	color: red;
 }
+
+a.btn:hover {
+    transform: scale(1.1);
+   
+}
+a.btn {
+    transform: scale(0.8);
+  
+}

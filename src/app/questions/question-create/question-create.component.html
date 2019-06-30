@@ -33,6 +33,9 @@
                   <option value={{questionType.id}} *ngIf = "questionType.name !=='All'">{{questionType.name}}</option>
                   </ng-container>
                   </select>
+                  <a class="btn btn-default a-btn-slide-text" (click)="addQuestionType()">
+                      <i class="fa fa-plus"></i>
+                    </a>
                   </td>
                 <td>
                   <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCat.id" name="quesCat">
