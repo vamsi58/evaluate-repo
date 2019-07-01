@@ -10,6 +10,7 @@ import { SelectService } from '../select.service';
 import { Answer } from '../answer.model';
 import { QuestionService } from "../question.service";
 import { Question } from '../question.model';
+import { QuestionCreateComponent } from '../question-create/question-create.component';
 import { QuestionDeleteComponent } from '../question-delete/question-delete.component';
 import { QuestionEditComponent } from '../question-edit/question-edit.component';
 import { QuestionViewComponent } from '../question-view/question-view.component';
@@ -123,8 +124,8 @@ export class QuestionsListComponent implements OnInit, OnChanges {
       this.selectService.getQuestionType();
       this.questiontypesSub = this.selectService
       .getQuestionTypeUpdateListener()
-      .subscribe((questionTypeData: {questiontypes: QuestionType[]; }) => {
-        this.questionTypes = questionTypeData.questiontypes;
+      .subscribe((questionTypeData: {questionTypes: QuestionType[]; }) => {
+        this.questionTypes = questionTypeData.questionTypes;
       });
 
   }
@@ -175,7 +176,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
 
   // based on question type display subsequent fields
   onSelectQuestType(optionId) {
-    this.filteredType = (this.selectService.getQuestionType().filter((item) => item.id == optionId))[0].name;
+    this.filteredType = (this.questionTypes.filter((item) => item.id == optionId))[0].name;
     if (optionId == 1) {
       this.objectiveQuestion = true;
     }
@@ -195,6 +196,14 @@ export class QuestionsListComponent implements OnInit, OnChanges {
       this.filteredSubcats);
   }
 
+  onAdd() {
+    //Open MatDialog and load component dynamically  
+    const dialogRef = this.dialog.open(QuestionCreateComponent, {               //Pass data object as a second parameter  
+      data: {
+        
+      }
+    });
+  }
   onDelete(questiondata) {
     //Open MatDialog and load component dynamically  
     const dialogRef = this.dialog.open(QuestionDeleteComponent, {               //Pass data object as a second parameter  

@@ -1,5 +1,6 @@
 <h1 mat-dialog-title> Add Question type here...</h1>
 <mat-dialog-content>
+    <form class="form-horizontal"  #questiontypeForm="ngForm" role="form">
   <div class="col">
     <label for="inputQType" class="control-label">
       Question Type </label>
@@ -10,8 +11,9 @@
       valid question type.</small>
 
   </div>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-raised-button [mat-dialog-close]="true" (click)="onSubmit(data.question.quesid)" #QtybeAddButton>Add</button>
+  <button mat-raised-button [mat-dialog-close]="true" (click)="onSubmit(questiontyepForm, $event)" #QtybeAddButton>Add</button>
   <button mat-raised-button [mat-dialog-close]="false">Back</button>
 </mat-dialog-actions>

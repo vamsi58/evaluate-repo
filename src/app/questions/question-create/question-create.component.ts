@@ -108,7 +108,7 @@ export class QuestionCreateComponent implements OnInit {
     // based on question type display subsequent fields
     onSelectQuestType(optionId:string)
     {  
-      if (optionId == "2"){
+      if (optionId == "1"){
         this.objectiveQuestion = true;
       }
       else{
@@ -123,7 +123,7 @@ export class QuestionCreateComponent implements OnInit {
       if (!this.customValid()) {
         return;
       }
-      const questionType = this.selectService.getQuestionType().filter((item) => item.id == form.value.questype)[0].name;
+      const questionType = this.questionTypes.filter((item) => item.id == form.value.questype)[0].name;
       const category = this.selectService.getCategory().filter((item) => item.id == form.value.quesCat)[0].name;
       const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.quesSubCat)[0].name;
       const complexity = this.selectService.getComplexity().filter((item) => item.id == form.value.quesComplex)[0].name;
@@ -176,12 +176,20 @@ closeModal(form:NgForm): void {
 init() {
   console.log("I am init");
   this.selectedCategory = new Category(2, 'IBM i');
-  this.selectedType = new QuestionType(2, "Objective");
+  this.selectedType = new QuestionType(1, "Objective");
   this.selectedCat = new Category(2, "Technical");  
   this.selectedSubCat = new SubCategory(3,2, "IBM i");
   this.selectedComplexity = new Complexity(1, "Level 1");
   this.categories = this.selectService.getCategory();
   //this.questionTypes = this.selectService.getQuestionType();
+  this.selectService.getQuestionType();
+  this.questiontypesSub = this.selectService
+  .getQuestionTypeUpdateListener()
+  .subscribe((questionTypeData: {questionTypes: QuestionType[]; }) => {
+    this.questionTypes = questionTypeData.questionTypes;
+  });
+  console.log(this.questionTypes);
+
   this.onSelect(this.selectedCat.id);
   this.complexities = this.selectService.getComplexity();
   this.oDoc.innerHTML = '';
@@ -194,12 +202,7 @@ init() {
   this.objectiveQuestion = true;
   this.answers = [];  
   this.addAnswer();
-  this.selectService.getQuestionType();
-      this.questiontypesSub = this.selectService
-      .getQuestionTypeUpdateListener()
-      .subscribe((questionTypeData: {questiontypes: QuestionType[]; }) => {
-        this.questionTypes = questionTypeData.questiontypes;
-      });
+ 
 }
 
 addQuestionType(){

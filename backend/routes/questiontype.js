@@ -10,10 +10,13 @@ const router = express.Router();
 //Insert record
 router.post("/add", (req, res, next) => {
   const questiontype = new QuestionType({
-    questionTypeid: QuestionType.find().max(questionTypeid)+1;
+    //questionTypeid: QuestionType.find().max(questionTypeid) + 1 , 
+    questionTypeid: req.body.id,
     questionTypename: req.body.name
-    
+
   });
+  console.log(questiontype);
+
   questiontype
     .save()
     .then(result => {
@@ -32,13 +35,13 @@ router.post("/add", (req, res, next) => {
 
 //View all records
 router.get("/view", (req, res, next) => {
-  
+
   var questypeQuery;
-  questypeQuery = QuestionType.find();  
+  questypeQuery = QuestionType.find();
 
 
   let fetchedQuestionTypes;
-  
+
   questypeQuery
     .then(documents => {
       fetchedQuestionTypes = documents;
@@ -47,13 +50,38 @@ router.get("/view", (req, res, next) => {
     .then(count => {
       res.status(200).json({
         message: "QuestionTypes fetched successfully!",
-        questiontypess: fetchedQuestions
+        questionTypes: fetchedQuestionTypes
         //maxQuestions: count
       });
     })
     .catch(error => {
       res.status(500).json({
-        message: "Fetching questiontypes failed!"
+        message: "Fetching questiontypes failed!" + error
       });
     });
 });
+
+//Get Max record Id
+router.get("/getMaxid", (req, res, next) => {
+  //QuestionType.findById(req.params.quesid)
+  var maxIdquery;
+  maxIdquery = QuestionType.aggregate([{ $group: {_id: null, maxId: { $max: "$questionTypeid" } } }]);
+
+  maxIdquery.then(document => {
+    if (document) {
+      console.log(document);
+      res.status(200).json(document);
+    } else {
+      res.status(404).json({ message: "Max id not found!" });
+    }
+  })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching Max id failed!" + error
+      });
+    });
+  //console.log(maxId);
+});
+
+
+module.exports = router;

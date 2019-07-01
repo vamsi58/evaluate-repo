@@ -22,13 +22,16 @@ export class SelectService {
 
   private authStatusListener = new Subject<boolean>();
   private questionTypes: QuestionType[] = [];
-  private questionTypesUpdated = new Subject<{ questiontypes: QuestionType[] }>();
+  private questionTypesUpdated = new Subject<{ questionTypes: QuestionType[] }>();
+  private maxid: number;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   //Add QuestionType
   addQuestionType(id: number, name: string) {
-    const QuestioType: QuestionType = { id: id, name: name };
+    const QuestionType: QuestionType = { id: id, name: name };
+
+    console.log(QuestionType);
 
     this.http
       .post("http://localhost:3000/api/questiontype/add", QuestionType)
@@ -47,14 +50,16 @@ export class SelectService {
     //]
 
     return this.http
-      .get<{ questionTypes: any; }>("http://localhost:3000/api/questiontype/view")
+      .get<{  message: string; questionTypes: any; }>("http://localhost:3000/api/questiontype/view")
       .pipe(
         map(questionTypeData => {
+          console.log("I am in Select Service");
+          console.log(questionTypeData);  
           return {
             questionTypes: questionTypeData.questionTypes.map(Qtypes => {
               return {
-                id: Qtypes.id,
-                name: Qtypes.name
+                id: Qtypes.questionTypeid,
+                name: Qtypes.questionTypename
               };
             }),
           };
@@ -63,13 +68,19 @@ export class SelectService {
       .subscribe(transformedQuestionTypeData => {
         this.questionTypes = transformedQuestionTypeData.questionTypes;
         this.questionTypesUpdated.next({
-          questiontypes: [...this.questionTypes]
+          questionTypes: [...this.questionTypes]
         });
       });
 
   }
   getQuestionTypeUpdateListener() {
     return this.questionTypesUpdated.asObservable();
+  }
+
+  getQtypeMaxid() {
+    
+    return this.http.get<{_id: string; maxId: number;}>("http://localhost:3000/api/questiontype/getMaxid");
+
   }
 
   getCategory() {

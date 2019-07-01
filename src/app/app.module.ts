@@ -32,12 +32,10 @@ import { ErrorInterceptor } from "./error-interceptor";
 import { ErrorComponent } from "./error/error.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditorComponent } from './editor/editor.component';
-import { CreateQuestionComponent } from './questions/create-question/create-question.component';
 import { QuestionsListComponent } from './questions/questions-list/questions-list.component';
 import { QuestionViewComponent } from './questions/question-view/question-view.component';
 import { QuestionCreateComponent } from './questions/question-create/question-create.component';
 import { QuestionEditComponent } from './questions/question-edit/question-edit.component';
-import { EditQuestionComponent } from './questions/edit-question/edit-question.component';
 import { QuestionDeleteComponent } from './questions/question-delete/question-delete.component';
 
 
@@ -59,8 +57,6 @@ import { QuestionTypeComponent } from './questions/question-type/question-type.c
     ErrorComponent,
     DashboardComponent,
     EditorComponent,
-    CreateQuestionComponent,
-    EditQuestionComponent,
     QuestionsListComponent,
     QuestionViewComponent,
     QuestionCreateComponent,
@@ -95,6 +91,7 @@ import { QuestionTypeComponent } from './questions/question-type/question-type.c
   ],
   bootstrap: [AppComponent],
   entryComponents: [ErrorComponent, 
+    QuestionCreateComponent,
     QuestionDeleteComponent,
     QuestionEditComponent,
     QuestionViewComponent,
