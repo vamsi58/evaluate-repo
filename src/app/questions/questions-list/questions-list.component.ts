@@ -3,9 +3,10 @@ import { ViewChild } from '@angular/core';
 import { NgForm } from "@angular/forms";
 import { PageEvent } from "@angular/material";
 import { Subscription } from "rxjs";
-import { Category } from '../category.model';
+//import { Category } from '../category.model';
 import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
+import { CompetenceArea } from '../competence-area.model';  // Category is replaced with CompetenceArea
 import { SelectService } from '../select.service';
 import { Answer } from '../answer.model';
 import { QuestionService } from "../question.service";
@@ -32,10 +33,11 @@ export class QuestionsListComponent implements OnInit, OnChanges {
   aDoc;
   sDefTxt;
   objectiveQuestion = true;
-  categories: Category[];
+  //categories: Category[];
+  competenceAreas: CompetenceArea[]
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
-  selectedCategory: Category = new Category(1, 'All');
+  //selectedCategory: Category = new Category(1, 'All');
   questions: Question[] = [];
   answers: Answer[];
   filteredQuestions: Question[] = [];
@@ -46,6 +48,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
   pageSizeOptions = [1, 2, 5, 10];
   private questionsSub: Subscription;
   private questiontypesSub: Subscription;
+  private competenceAreasSub: Subscription;
   private _filterQuestion: string;
   private filteredType: string;
   private filteredCat: string;
@@ -69,7 +72,8 @@ export class QuestionsListComponent implements OnInit, OnChanges {
   }
 
   selectedType: QuestionType = new QuestionType(0, "All");
-  selectedCat: Category = new Category(0, "All");
+  //selectedCat: Category = new Category(0, "All");
+  selectedCompetence: CompetenceArea = new CompetenceArea(0, "All");
   selectedSubCat: SubCategory = new SubCategory(0, 0, "All");
 
   constructor(private selectService: SelectService,
@@ -97,10 +101,17 @@ export class QuestionsListComponent implements OnInit, OnChanges {
 
 
   ngOnInit() {
-    this.categories = this.selectService.getCategory();
+    //this.categories = this.selectService.getCategory(); 
    // this.questionTypes = this.selectService.getQuestionType();
     //this.loadSubCategories(this.selectedCat.id);
-    this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == this.selectedCat.id);
+    this.selectService.getCompetenceArea();
+      this.competenceAreasSub = this.selectService
+      .getCompetenceAreaUpdateListener()
+      .subscribe((competenceAreaData: {competenceAreas: CompetenceArea[]; }) => {
+        this.competenceAreas = competenceAreaData.competenceAreas;
+      });
+
+    this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == this.selectedCompetence.id);
     this.filteredType = 'All';
     this.filteredCat = 'All';
     this.filteredSubcat = 'All';
@@ -128,6 +139,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
         this.questionTypes = questionTypeData.questionTypes;
       });
 
+      
   }
 
   ngOnChanges() {
@@ -146,10 +158,10 @@ export class QuestionsListComponent implements OnInit, OnChanges {
   loadSubCategories(args: DropDownSelectEventArgs): void {
     console.log(args.value);
     this.subCategories = [];
-    for (let categoryId of args.value) {
+    for (let competenceid of args.value) {
      
-      this.filteredCats.push((this.selectService.getCategory().filter((item) => item.id == categoryId))[0].name);
-      this.subCategories = this.subCategories.concat(this.selectService.getSubCategory().filter((item) => item.categoryId == categoryId));
+      this.filteredCats.push((this.competenceAreas.filter((item) => item.id == competenceid))[0].name);
+      this.subCategories = this.subCategories.concat(this.selectService.getSubCategory().filter((item) => item.categoryId == competenceid));
       
     }
 

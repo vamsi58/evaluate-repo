@@ -1,0 +1,30 @@
+<h1 mat-dialog-title> Add Competence Area here...</h1>
+<mat-dialog-content>
+    <form class="form-horizontal"  (submit)="onSubmit(competenceForm, $event)" #competenceForm="ngForm" role="form">
+  <div class="col">
+    <label for="inputCarea" class="control-label">
+      Competence Area </label>
+
+    <input name="Carea" class="form-control" id="inputCarea" ngModel type="text" placeholder="Competence Area" on-touch="false"
+      #inputCarea="ngModel" required>
+    <small class="text-danger" *ngIf="inputCarea.invalid && (inputCarea.touched || competenceForm.submitted )">Please enter a
+      valid Competence area name.</small>
+
+  </div>
+<mat-dialog-actions>
+ 
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary  btn-sm mr-3">Add</button>
+    <button type="reset" mat-raised-button [mat-dialog-close]="false">Back</button> 
+    
+  </div>
+</mat-dialog-actions>
+
+  </form>
+</mat-dialog-content>
+
+
+<mat-dialog-actions>
+  <!-- <button mat-raised-button  (click)="onSubmit(competenceForm, $event)" #QtybeAddButton>Add</button> -->
+  <!-- <button mat-raised-button [mat-dialog-close]="false">Back</button> -->
+</mat-dialog-actions>

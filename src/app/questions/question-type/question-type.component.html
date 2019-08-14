@@ -1,19 +1,30 @@
 <h1 mat-dialog-title> Add Question type here...</h1>
 <mat-dialog-content>
-    <form class="form-horizontal"  #questiontypeForm="ngForm" role="form">
+    <form class="form-horizontal"  (submit)="onSubmit(questiontypeForm, $event)" #questiontypeForm="ngForm" role="form">
   <div class="col">
     <label for="inputQType" class="control-label">
       Question Type </label>
 
-    <input name="Qtype" class="form-control" id="inputQType" ngModel type="text" placeholder="Last Name"
+    <input name="Qtype" class="form-control" id="inputQType" ngModel type="text" placeholder="Question Type" on-touch="false"
       #inputQType="ngModel" required>
-    <small class="text-danger" *ngIf="inputQType.invalid && (inputQType.touched || QtybeAddButton.submitted )">Please enter a
+    <small class="text-danger" *ngIf="inputQType.invalid && (inputQType.touched || questiontypeForm.submitted )">Please enter a
       valid question type.</small>
 
   </div>
+<mat-dialog-actions>
+ 
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary  btn-sm mr-3">Add</button>
+    <button type="reset" mat-raised-button [mat-dialog-close]="false">Back</button> 
+    
+  </div>
+</mat-dialog-actions>
+
   </form>
 </mat-dialog-content>
+
+
 <mat-dialog-actions>
-  <button mat-raised-button [mat-dialog-close]="true" (click)="onSubmit(questiontyepForm, $event)" #QtybeAddButton>Add</button>
-  <button mat-raised-button [mat-dialog-close]="false">Back</button>
+  <!-- <button mat-raised-button  (click)="onSubmit(questiontyepForm, $event)" #QtybeAddButton>Add</button> -->
+  <!-- <button mat-raised-button [mat-dialog-close]="false">Back</button> -->
 </mat-dialog-actions>

@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild,ElementRef  } from '@angula
 import { Category } from '../category.model';
 import { SubCategory } from '../sub-category.model';
 import { QuestionType } from '../question-type.model';
+import { CompetenceArea } from '../competence-area.model';
 import { SelectService } from '../select.service';
 import { Subscription } from "rxjs";
 import {Answer} from '../answer.model';
@@ -10,6 +11,7 @@ import { QuestionService } from "../question.service";
 import { Complexity } from '../question-complex.model';
 import { MatDialog } from '@angular/material';
 import {QuestionTypeComponent} from '../question-type/question-type.component';
+import {CompetenceareaComponent} from '../competencearea/competencearea.component';
 
 
 @Component({
@@ -29,18 +31,21 @@ export class QuestionCreateComponent implements OnInit {
   invalAnsc: boolean;
   
   categories: Category[];
+  competenceAreas: CompetenceArea[];
   subCategories: SubCategory[];
   questionTypes: QuestionType[];
   complexities: Complexity[];
   answers: Answer[];
 
-  selectedCategory: Category;
+  //selectedCategory: Category;
+  selectedCompetence: CompetenceArea;
   selectedType: QuestionType;;
-  selectedCat:Category;  
+  //selectedCat:Category;  
   selectedSubCat:SubCategory;
   selectedComplexity:Complexity;
 
   private questiontypesSub: Subscription;
+  private competenceareasSub: Subscription;
  
   constructor(private selectService: SelectService, 
     private questionService: QuestionService,
@@ -124,15 +129,16 @@ export class QuestionCreateComponent implements OnInit {
         return;
       }
       const questionType = this.questionTypes.filter((item) => item.id == form.value.questype)[0].name;
-      const category = this.selectService.getCategory().filter((item) => item.id == form.value.quesCat)[0].name;
+      //const category = this.selectService.getCategory().filter((item) => item.id == form.value.quesCat)[0].name;
+      const competence = this.competenceAreas.filter((item) => item.id == form.value.quesCat)[0].name;
       const subcategory = this.selectService.getSubCategory().filter((item) => item.id == form.value.quesSubCat)[0].name;
       const complexity = this.selectService.getComplexity().filter((item) => item.id == form.value.quesComplex)[0].name;
       var quesFormatted = this.oDoc.innerHTML;
       const question = this.oDoc.textContent;
       const answer   = this.aDoc.textContent;
       const approved = false;
-      console.log(questionType,category,subcategory);
-      this.questionService.createQuestion('dummyId','QTN0005', questionType,  category, subcategory, question, quesFormatted, this.answers, answer, approved, complexity);
+      console.log(questionType,competence,subcategory);
+      this.questionService.createQuestion('dummyId','QTN0005', questionType,  competence, subcategory, question, quesFormatted, this.answers, answer, approved, complexity);
       // close the modal
       this.closeModal(form);
   }
@@ -175,12 +181,13 @@ closeModal(form:NgForm): void {
 //To be removed
 init() {
   console.log("I am init");
-  this.selectedCategory = new Category(2, 'IBM i');
-  this.selectedType = new QuestionType(1, "Objective");
-  this.selectedCat = new Category(2, "Technical");  
+  //this.selectedCategory = new Category(2, 'IBM i');
+    this.selectedType = new QuestionType(1, "Objective");
+  //this.selectedCat = new Category(2, "Technical");  
+  this.selectedCompetence = new CompetenceArea(2, "Technical");
   this.selectedSubCat = new SubCategory(3,2, "IBM i");
   this.selectedComplexity = new Complexity(1, "Level 1");
-  this.categories = this.selectService.getCategory();
+  //this.categories = this.selectService.getCategory();
   //this.questionTypes = this.selectService.getQuestionType();
   this.selectService.getQuestionType();
   this.questiontypesSub = this.selectService
@@ -190,7 +197,17 @@ init() {
   });
   console.log(this.questionTypes);
 
-  this.onSelect(this.selectedCat.id);
+  this.selectService.getCompetenceArea();
+  this.competenceareasSub = this.selectService
+  .getCompetenceAreaUpdateListener()
+  .subscribe((competenceAreaData: {competenceAreas: CompetenceArea[]; }) => {
+    this.competenceAreas = competenceAreaData.competenceAreas;
+  });
+
+  console.log(this.competenceAreas);
+
+  //this.onSelect(this.selectedCat.id);
+  this.onSelect(this.selectedCompetence.id);
   this.complexities = this.selectService.getComplexity();
   this.oDoc.innerHTML = '';
   this.oDoc.textContent = '';
@@ -208,6 +225,12 @@ init() {
 addQuestionType(){
     //Open MatDialog and load component dynamically  
     const dialogRef = this.dialog.open(QuestionTypeComponent);
+
+}
+
+addCompetenceArea(){
+  //Open MatDialog and load component dynamically  
+  const dialogRef = this.dialog.open(CompetenceareaComponent);
 
 }
 
