@@ -3,25 +3,26 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const checkAuth = require("../middleware/check-auth");
-const CompetenceArea = require("../models/competencearea");
+const Course = require("../models/course");
 
 const router = express.Router();
 
 //Insert record
 router.post("/add", (req, res, next) => {
-  const competencearea = new CompetenceArea({
-    
-    competenceid: req.body.id,
-    competencename: req.body.name
+  console.log(req.body.competenceid, req.body.id, req.body.name);
+  const course = new Course({
+    competenceid: req.body.competenceid,
+    courseid: req.body.id,
+    coursename: req.body.name
 
   });
-  console.log(competencearea);
+  console.log(course);
 
-  competencearea
+  course
     .save()
     .then(result => {
       res.status(201).json({
-        message: "Competence Area created!",
+        message: "Course created!",
         result: result
       });
     })
@@ -34,29 +35,31 @@ router.post("/add", (req, res, next) => {
 });
 
 //View all records
-router.get("/view", (req, res, next) => {
+router.get("/view", (req, res, next) => {a
 
-  var competenceQuery;
-  competenceQuery = CompetenceArea.find();
+  var compid= req.query.compid; 
+  //console.log(req.query);
+  var courseQuery;
+  courseQuery = Course.find({"competenceid":compid});
 
 
-  let fetchedCompetences;
+  let fetchedCourses;
 
-  competenceQuery
+  courseQuery
     .then(documents => {
-        fetchedCompetences = documents;
-      return CompetenceArea.count();
+        fetchedCourses = documents;
+      return Course.count();
     })
     .then(count => {
       res.status(200).json({
-        message: "Competence Area fetched successfully!",
-        competenceAreas: fetchedCompetences
+        message: "Courses fetched successfully!",
+        courses: fetchedCourses
         
       });
     })
     .catch(error => {
       res.status(500).json({
-        message: "Fetching Competences failed!" + error
+        message: "Fetching courses failed!" + error
       });
     });
 });
@@ -65,7 +68,7 @@ router.get("/view", (req, res, next) => {
 router.get("/getMaxid", (req, res, next) => {
  
   var maxIdquery;
-  maxIdquery = CompetenceArea.aggregate([{ $group: {_id: null, maxId: { $max: "$competenceid" } } }]);
+  maxIdquery = Course.aggregate([{ $group: {_id: null, maxId: { $max: "$courseid" } } }]);
 
   maxIdquery.then(document => {
     if (document) {

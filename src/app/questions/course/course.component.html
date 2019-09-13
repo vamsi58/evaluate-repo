@@ -1,0 +1,41 @@
+<h1 mat-dialog-title> Add Course here...</h1>
+<mat-dialog-content>
+  <form class="form-horizontal" (submit)="onSubmit(courseForm, $event)" #courseForm="ngForm" role="form">
+    <div class="col">
+
+      <label for ="SelectCarea" class="control-label">Select Competence Area</label>
+
+      <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCompetence.id" name="competenceArea" id="SelectCarea" class="form-control">
+        <option value="0">--Select--</option>
+        <ng-container *ngFor="let competenceArea of competenceAreas">
+          <option value={{competenceArea.id}} *ngIf="competenceArea.name !=='All'">{{competenceArea.name}} </option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div class="col">
+      <label for="inputcourse" class="control-label">Course </label>
+
+      <input name="Course" class="form-control" id="inputCourse" ngModel type="text" placeholder="Course Title" on-touch="false"
+        #inputCourse="ngModel" required>
+      <small class="text-danger" *ngIf="inputCourse.invalid && (inputCourse.touched || courseForm.submitted )">Please enter a valid Course name.</small>
+    </div>
+
+
+    <mat-dialog-actions>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary  btn-sm mr-3">Add</button>
+        <button type="reset" mat-raised-button [mat-dialog-close]="false">Back</button>
+
+      </div>
+    </mat-dialog-actions>
+
+  </form>
+</mat-dialog-content>
+
+
+<mat-dialog-actions>
+  <!-- <button mat-raised-button  (click)="onSubmit(competenceForm, $event)" #QtybeAddButton>Add</button> -->
+  <!-- <button mat-raised-button [mat-dialog-close]="false">Back</button> -->
+</mat-dialog-actions>

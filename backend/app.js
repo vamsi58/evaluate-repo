@@ -8,6 +8,7 @@ const userRoutes = require("./routes/user");
 const questionRoutes = require("./routes/question");
 const questiontypeRoutes = require("./routes/questiontype");
 const competenceareaRoutes = require("./routes/competencearea");
+const courseRoutes = require("./routes/course");
 
 const server = 'localhost:27017'; // Localhost:Default Port
 const database = 'test-db';       // Test Database Name 
@@ -47,5 +48,6 @@ app.use("/api/user", userRoutes);
 app.use("/api/question", questionRoutes);
 app.use("/api/questiontype", questiontypeRoutes);
 app.use("/api/competencearea", competenceareaRoutes);
+app.use("/api/course", courseRoutes);
 
 module.exports = app;

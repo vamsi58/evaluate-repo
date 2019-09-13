@@ -33,8 +33,8 @@
                                         <option *ngFor="let category of categories" value={{category.id}}>
                                             {{category.name}}</option>
                                     </select> -->
-                                    <ejs-multiselect id='multiselectCat' [dataSource]='categories' [fields]='multiselectfield' [placeholder]='placeholder' 
-                                    (change)='loadSubCategories($event)'></ejs-multiselect>
+                                    <ejs-multiselect id='multiselectCat' [dataSource]='competenceAreas' [fields]='multiselectfield' [placeholder]='placeholder' 
+                                    (change)='loadCourses($event)'></ejs-multiselect>
                                 </th>
                                 <!-- <th class="border-0">
                                     <select name="quesSubCat" (change)="onSubCatSelect($event.target.value)" [(ngModel)]="selectedSubCat.id">
@@ -44,7 +44,7 @@
                                     </select>
                                 </th> -->
                                 <th class="border-0">
-                                    <ejs-multiselect id='multiselectSubCat' [dataSource]='subCategories' [fields]='multiselectfield' [placeholder]='placeholder' (change)='onSubCatSelect($event)'></ejs-multiselect>
+                                    <ejs-multiselect id='multiselectSubCat' [dataSource]='courses' [fields]='multiselectfield' [placeholder]='placeholder' (change)='onCourseSelect($event)'></ejs-multiselect>
                                 </th>
                                 <th class="border-0">
                                     <form class="filter-form" role="search">

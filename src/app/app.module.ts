@@ -43,6 +43,7 @@ import { MultiSelectComponent  } from '@syncfusion/ej2-angular-dropdowns';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import { QuestionTypeComponent } from './questions/question-type/question-type.component';
 import { CompetenceareaComponent } from './questions/competencearea/competencearea.component';
+import { CourseComponent } from './questions/course/course.component';
 // import { CheckBoxModule, ButtonModule } from '@syncfusion/ej2-angular-buttons';
 
 
@@ -66,7 +67,8 @@ import { CompetenceareaComponent } from './questions/competencearea/competencear
     MultiSelectComponent,
     ButtonComponent,
     QuestionTypeComponent,
-    CompetenceareaComponent
+    CompetenceareaComponent,
+    CourseComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +100,8 @@ import { CompetenceareaComponent } from './questions/competencearea/competencear
     QuestionEditComponent,
     QuestionViewComponent,
     QuestionTypeComponent,
-    CompetenceareaComponent]
+    CompetenceareaComponent,
+    CourseComponent]
 
 })
 export class AppModule {}

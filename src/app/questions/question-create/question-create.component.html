@@ -248,8 +248,8 @@
               </a>
             </td>
             <td>
-              <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCompetence.id" name="quesCat">
-                <!-- <option value="0">--Select--</option> -->
+              <select (change)="onSelect($event.target.value)" [(ngModel)]="selectedCompetence.id" name="competenceArea">
+                <option value="0">--Select--</option>
                 <ng-container *ngFor="let competenceArea of competenceAreas">
                   <option value={{competenceArea.id}} *ngIf="competenceArea.name !=='All'">{{competenceArea.name}} </option>
                 </ng-container>
@@ -259,12 +259,15 @@
               </a>
             </td>
             <td>
-              <select name="quesSubCat" [(ngModel)]="selectedSubCat.id">
+              <select name="Course" [(ngModel)]="selectedCourse.id">
                 <!-- <option value="0">--Select--</option> -->
-                <ng-container *ngFor="let subcategory of subCategories ">
-                  <option value={{subcategory.id}} *ngIf="subcategory.name !=='All'">{{subcategory.name}}</option>
+                <ng-container *ngFor="let course of courses ">
+                  <option value={{course.id}} *ngIf="course.name !=='All'">{{course.name}}</option>
                 </ng-container>
               </select>
+              <a class="btn btn-default a-btn-slide-text" (click)="addCourse()">
+                <i class="fa fa-plus"></i>
+              </a>
             </td>
           </tr>
         </tbody>

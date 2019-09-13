@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Category } from './category.model';
-import { SubCategory } from './sub-category.model';
+import { Course } from './course.model';
 import { QuestionType } from './question-type.model';
 import { Complexity } from './question-complex.model';
 import { CompetenceArea } from './competence-area.model';
@@ -26,6 +26,8 @@ export class SelectService {
   private questionTypesUpdated = new Subject<{ questionTypes: QuestionType[] }>();
   private competenceAreas: CompetenceArea[] = [];
   private competenceAreasUpdated = new Subject<{ competenceAreas: CompetenceArea[] }>();
+  private courses: Course[] = [];
+  private coursesUpdated = new Subject<{ courses: Course[] }>();
   private maxid: number;
 
 
@@ -60,6 +62,7 @@ export class SelectService {
         map(questionTypeData => {
           //console.log("I am in Select Service");
           console.log(questionTypeData);  
+          
           return {
             questionTypes: questionTypeData.questionTypes.map(Qtypes => {
               return {
@@ -121,6 +124,7 @@ export class SelectService {
               return {
                 id: Careas.competenceid,
                 name: Careas.competencename
+              
               };
             }),
           };
@@ -153,20 +157,79 @@ export class SelectService {
   //   ];
   // }
 
-  getSubCategory() {
-    return [
-      new SubCategory(1, 1, 'All'),
-      new SubCategory(2, 2, 'All'),
-      new SubCategory(3, 2, 'IBM i'),
-      new SubCategory(4, 2, 'Java'),
-      new SubCategory(5, 2, '.Net'),
-      new SubCategory(6, 2, 'Angular'),
-      new SubCategory(7, 3, 'All'),
-      new SubCategory(8, 3, 'Supply Chain'),
-      new SubCategory(9, 3, 'Logistics'),
-      new SubCategory(8, 3, 'Operations')
-    ];
+  //Add Course
+  addCourse(competenceid:number, id: number, name: string) {
+    const Course: Course = { competenceid:competenceid, id: id, name: name };
+
+     console.log("I am in Select Service-Course Add");
+
+    console.log(Course);
+
+    this.http
+      .post("http://localhost:3000/api/course/add", Course)
+      .subscribe(() => {
+        this.router.navigate(["/questions"]);
+      }, error => {
+        this.authStatusListener.next(false);
+      });
   }
+
+  //Get Competence areas/Categories 
+
+  getCourse(competenceid) {
+    
+    const queryparams = `?compid=${competenceid}`;
+    console.log("GetCourse" + queryparams);
+    return this.http
+      .get<{  message: string; courses: any; }>("http://localhost:3000/api/course/view" + queryparams) 
+      .pipe(
+        map(courseData => {
+          console.log("I am in Select Service to get course");
+          console.log(courseData);  
+          return {
+            courses: courseData.courses.map(Courses => {
+              return {
+                competenceid: Courses.competenceid,
+                id: Courses.courseid,
+                name: Courses.coursename
+              
+              };
+            }),
+          };
+        })
+      )
+      .subscribe(transformedCourseData => {
+        this.courses = transformedCourseData.courses;
+        this.coursesUpdated.next({
+          courses: [...this.courses]
+        });
+      });
+
+  }
+  getCourseUpdateListener() {
+    return this.coursesUpdated.asObservable();
+  }
+
+  getCourseMaxid() {
+    
+    return this.http.get<{_id: string; maxId: number;}>("http://localhost:3000/api/course/getMaxid");
+
+  }
+
+  // getSubCategory() {
+  //   return [
+  //     //new SubCategory(1, 1, 'All'),
+  //     new SubCategory(2, 1, 'All'),
+  //     new SubCategory(3, 1, 'IBM i'),
+  //     new SubCategory(4, 1, 'Java'),
+  //     new SubCategory(5, 1, '.Net'),
+  //     new SubCategory(6, 1, 'Angular'),
+  //     new SubCategory(7, 2, 'All'),
+  //     new SubCategory(8, 2, 'Supply Chain'),
+  //     new SubCategory(9, 2, 'Logistics'),
+  //     new SubCategory(8, 2, 'Operations')
+  //   ];
+  // }
 
   getComplexity() {
     return [

@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Inject, ElementRef } from '@angular/core';
 import { Category } from '../category.model';
-import { SubCategory } from '../sub-category.model';
+import { Course } from '../course.model';
 import { QuestionType } from '../question-type.model';
 import { SelectService } from '../select.service';
 import {Answer} from '../answer.model';
@@ -24,7 +24,7 @@ export class QuestionEditComponent implements OnInit {
   objectiveQuestion = true;
   selectedCategory: Category = new Category(2, 'IBM i');
   categories: Category[];
-  subCategories: SubCategory[];
+  //subCategories: SubCategory[];
   questionTypes: QuestionType[];
   Complexities: Complexity[];
   isLoading = false;
@@ -34,7 +34,7 @@ export class QuestionEditComponent implements OnInit {
   answers: Answer[];
   selectedType:QuestionType = new QuestionType(1, "Objective");
   selectedCat:Category = new Category(1, "Technical");  
-  selectedSubCat:SubCategory = new SubCategory(1,1, "IBM i");
+  //selectedSubCat:SubCategory = new SubCategory(1,1, "IBM i");
   selectedComplexity:Complexity = new Complexity(1, "Level 1");
 
   quesid1 = "QTN0004";

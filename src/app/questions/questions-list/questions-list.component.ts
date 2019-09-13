@@ -4,7 +4,8 @@ import { NgForm } from "@angular/forms";
 import { PageEvent } from "@angular/material";
 import { Subscription } from "rxjs";
 //import { Category } from '../category.model';
-import { SubCategory } from '../sub-category.model';
+//import { SubCategory } from '../sub-category.model';
+import { Course } from '../course.model';
 import { QuestionType } from '../question-type.model';
 import { CompetenceArea } from '../competence-area.model';  // Category is replaced with CompetenceArea
 import { SelectService } from '../select.service';
@@ -35,9 +36,11 @@ export class QuestionsListComponent implements OnInit, OnChanges {
   objectiveQuestion = true;
   //categories: Category[];
   competenceAreas: CompetenceArea[]
-  subCategories: SubCategory[];
+  //subCategories: SubCategory[];
+  courses: Course[];
   questionTypes: QuestionType[];
   //selectedCategory: Category = new Category(1, 'All');
+  selectedCompetence: CompetenceArea = new CompetenceArea(1, 'All');
   questions: Question[] = [];
   answers: Answer[];
   filteredQuestions: Question[] = [];
@@ -49,6 +52,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
   private questionsSub: Subscription;
   private questiontypesSub: Subscription;
   private competenceAreasSub: Subscription;
+  private coursesSub: Subscription;
   private _filterQuestion: string;
   private filteredType: string;
   private filteredCat: string;
@@ -73,8 +77,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
 
   selectedType: QuestionType = new QuestionType(0, "All");
   //selectedCat: Category = new Category(0, "All");
-  selectedCompetence: CompetenceArea = new CompetenceArea(0, "All");
-  selectedSubCat: SubCategory = new SubCategory(0, 0, "All");
+  //selectedSubCat: SubCategory = new SubCategory(0, 0, "All");
 
   constructor(private selectService: SelectService,
     private questionService: QuestionService,
@@ -93,7 +96,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
   public multiselectfield: Object = { text: 'name', value: 'id' };
 
   // set placeholder to MultiSelect input element
-  public placeholder: string = 'Select SubCategory';
+  public placeholder: string = 'Select Course';
   //set height to popup list
   public popupHeight: string = '200px';
   //set width to popup list
@@ -102,16 +105,16 @@ export class QuestionsListComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     //this.categories = this.selectService.getCategory(); 
-   // this.questionTypes = this.selectService.getQuestionType();
+    // this.questionTypes = this.selectService.getQuestionType();
     //this.loadSubCategories(this.selectedCat.id);
     this.selectService.getCompetenceArea();
-      this.competenceAreasSub = this.selectService
+    this.competenceAreasSub = this.selectService
       .getCompetenceAreaUpdateListener()
-      .subscribe((competenceAreaData: {competenceAreas: CompetenceArea[]; }) => {
+      .subscribe((competenceAreaData: { competenceAreas: CompetenceArea[]; }) => {
         this.competenceAreas = competenceAreaData.competenceAreas;
       });
 
-    this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == this.selectedCompetence.id);
+    //this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == this.selectedCompetence.id);
     this.filteredType = 'All';
     this.filteredCat = 'All';
     this.filteredSubcat = 'All';
@@ -132,14 +135,14 @@ export class QuestionsListComponent implements OnInit, OnChanges {
 
       });
 
-      this.selectService.getQuestionType();
-      this.questiontypesSub = this.selectService
+    this.selectService.getQuestionType();
+    this.questiontypesSub = this.selectService
       .getQuestionTypeUpdateListener()
-      .subscribe((questionTypeData: {questionTypes: QuestionType[]; }) => {
+      .subscribe((questionTypeData: { questionTypes: QuestionType[]; }) => {
         this.questionTypes = questionTypeData.questionTypes;
       });
 
-      
+
   }
 
   ngOnChanges() {
@@ -151,41 +154,56 @@ export class QuestionsListComponent implements OnInit, OnChanges {
 
   // loadSubCategories(categoryid) {
 
-  //   this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == categoryid);
+  // this.subCategories = this.selectService.getSubCategory().filter((item) => item.categoryId == categoryid);
 
   // }
 
-  loadSubCategories(args: DropDownSelectEventArgs): void {
+  loadCourses(args: DropDownSelectEventArgs): void {
     console.log(args.value);
-    this.subCategories = [];
+    //this.subCategories = [];
     for (let competenceid of args.value) {
-     
+
       this.filteredCats.push((this.competenceAreas.filter((item) => item.id == competenceid))[0].name);
-      this.subCategories = this.subCategories.concat(this.selectService.getSubCategory().filter((item) => item.categoryId == competenceid));
-      
+      //this.subCategories = this.subCategories.concat(this.selectService.getSubCategory().filter((item) => item.categoryId == competenceid));
+      //this.courses = this.courses.concat(this.selectService.getCourse(competenceid).filter((item)=> item.categoryId==competenceid));
+      if (competenceid > 0) {
+        this.selectService.getCourse(competenceid);
+        this.coursesSub = this.selectService
+          .getCourseUpdateListener()
+          .subscribe((courseData: { courses: Course[]; }) => {
+            this.courses = courseData.courses;
+            
+                   });
+      }
+
     }
+
+    console.log(this.courses);
+  }
+
+  public onCourseSelect(args: DropDownSelectEventArgs): void {
+    console.log(args.value);
+    for (let courseid of args.value) {
+
+      //this.filteredSubcats.push((this.selectService.getSubCategory().filter((item) => item.id == subcatId))[0].name);
+      this.filteredSubcats.push((this.courses.filter((item) => item.id == courseid))[0].name);
+
+    }
+
+    this.questionService.viewQuestion(this.questionsPerPage, this.currentPage, this.filteredType,
+      this.filteredCats, this.filteredSubcats);
+
+
 
   }
 
-  // onSubCatSelect(value) {  Old code, -----need to be deleted-----
+  //onSubCatSelect(value) {  Old code, -----need to be deleted-----
   //   this.filteredCat = (this.selectService.getCategory().filter((item) => item.id == this.selectedCat.id))[0].name;
   //   this.filteredSubcat = (this.selectService.getSubCategory().filter((item) => item.id == value))[0].name;
   //   //this.questionService.viewQuestion(this.questionsPerPage, this.currentPage, this.filteredType,
   //     //this.filteredCat, this.filteredSubcat);
 
   // }
-
-  public onSubCatSelect(args: DropDownSelectEventArgs): void {
-    console.log(args.value);
-    for (let subcatId of args.value) {
-      
-      this.filteredSubcats.push((this.selectService.getSubCategory().filter((item) => item.id == subcatId))[0].name);
-    }
-
-    this.questionService.viewQuestion(this.questionsPerPage, this.currentPage, this.filteredType,
-                                      this.filteredCats, this.filteredSubcats);
-  }
-
   // based on question type display subsequent fields
   onSelectQuestType(optionId) {
     this.filteredType = (this.questionTypes.filter((item) => item.id == optionId))[0].name;
@@ -212,7 +230,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
     //Open MatDialog and load component dynamically  
     const dialogRef = this.dialog.open(QuestionCreateComponent, {               //Pass data object as a second parameter  
       data: {
-        
+
       }
     });
   }
