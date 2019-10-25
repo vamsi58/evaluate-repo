@@ -1,140 +1,45 @@
-<!-- <mat-card>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <form (submit)="onSignup(signupForm)" #signupForm="ngForm" *ngIf="!isLoading">
-    <mat-form-field>
-      <input matInput name="email" ngModel type="email" placeholder="E-Mail" #emailInput="ngModel" required email>
-      <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required>
-      <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
-    </mat-form-field>
-    <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Signup</button>
-  </form>
-</mat-card> -->
+<div class="signup-div">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        SIGN UP
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="formGroup" (ngSubmit)="onLogin(formGroup.value)" class="form">
+        <mat-form-field floatLabel="never" class="form-element">
+          <input name = "email" type="text" matInput placeholder="Username" formControlName="email">
+          <mat-error *ngIf="formGroup.controls['email'].invalid">
+            {{getError('user')}}
+          </mat-error>
+        </mat-form-field>
 
+        <mat-form-field floatLabel="never" class="form-element">
+          <input type="password" matInput placeholder="Password" formControlName="password">
+          <mat-error *ngIf="!formGroup.controls['password'].valid">
+            {{getError('pass')}}
+          </mat-error>
+        </mat-form-field>
 
-
-<!-- <div class="row">
-  <div class="column">
-    <img src="../assets/background6.jpg" alt="Logo" style="width:100%">
-  </div>
-  <div class="column align-middle">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <p class="text-xl-center font-weight-bold">Register</p>
-      </div>
-      <div class="panel-body">
-        <form class="form-horizontal" (submit)="onSignup(signupForm)" #signupForm="ngForm" role="form">
-          <div class="form-group">
-            <div class="form-row">
-
-              <div class="col">
-                <label for="inputFName" class="col-sm-3 control-label">
-                  First Name </label>
-                <div class="col-sm-9">
-                  <input name="fname" class="form-control" id="inputFname" ngModel type="text" placeholder="First Name" #fnameInput="ngModel"
-                    required>
-                  <small class="text-danger" *ngIf="fnameInput.invalid && fnameInput.touched">Please enter a valid first name.</small>
-                </div>
-              </div>
-
-
-              <div class="col">
-                <label for="inputLName" class="col-sm-3 control-label">
-                  Last Name</label>
-                <div class="col-sm-9">
-                  <input name="lname" class="form-control" id="inputLname" ngModel type="text" placeholder="Last Name" #lnameInput="ngModel"
-                    required>
-                  <small class="text-danger" *ngIf="lnameInput.invalid && lnameInput.touched">Please enter a valid last name.</small>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="form-row">
-
-              <div class="col">
-                <label for="inputDOB" class="col-sm-5 control-label">
-                  Date of Birth</label>
-                <div class="col-sm-9 input-group date" id="datetimepicker2">
-                  <input name="dob" class="form-control" id="inputdob" ngModel type="date" placeholder="Date of Birth" #dobInput="ngModel"
-                    required>
-
-                  <small class="text-danger" *ngIf="dobInput.invalid && dobInput.touched">Please enter a valid date of birth.</small>
-                </div>
-              </div>
-
-              <div class="col">
-                <label class="col-sm-3 control-label">
-                  Gender</label>
-                <br>
-                <div class="custom-control custom-radio custom-control-inline">
-               
-                  <div class="custom-control custom-radio" *ngFor="let gndr of genders">
-                    <input type="radio" class="custom-control-input" id="{{gndr}}" ngModel name="gendergroup" [value] = gndr>
-                    <label class="custom-control-label" for="{{gndr}}">{{gndr}}</label>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-3 control-label">
-              Email</label>
-            <div class="col-sm-9">
-              <input name="email" class="form-control" id="inputEmail3" ngModel type="email" placeholder="E-Mail" #emailInput="ngModel"
-                required email>
-              <small class="text-danger" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email.</small>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-3 control-label">
-              Password</label>
-            <div class="col-sm-9">
-              <input type="password" name="password" ngModel class="form-control" #passwordInput="ngModel" id="inputPassword3" placeholder="Password"
-                required="">
-              <small class="text-danger" *ngIf="passwordInput.invalid && passwordInput.touched">Please enter a valid password.</small>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox"> Remember me
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group last">
-            <div class="col-sm-offset-3 col-sm-9">
-              <button type="submit" class="btn btn-success btn-sm">
-                Sign up</button>
-              <button type="reset" class="btn btn-default btn-sm">
-                Reset</button>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="panel-footer">
-        Already Registered?
-        <a href="#" routerLink="/login">Signin here</a>
-      </div>
-    </div>
-  </div>
-</div> -->
+        <div class="form-element">
+          <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Sign Up</button>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+        Already a member?
+        <a href="#" routerLink="/login">Sign in here</a>
+    </mat-card-actions>
+  </mat-card>
+</div>
 
 
 
 
 
-<div class="row">
+
+
+<!--<div class="row">
   <div class="col-sm-6">
     <div class="card m-0 p-0">
       <img src="../assets/images/background6.png" alt="Logo" class="left-panel-img" style="width:100%">
@@ -255,4 +160,4 @@
 </div>
 </div>
 </div>
-</div>
+</div>-->

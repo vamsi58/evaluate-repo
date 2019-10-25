@@ -1,25 +1,10 @@
-
-.row .col-sm-6, left-panel-img { 
+.signup-div{
   height: 100vh;
-  overflow: auto; 
-  /* overflow-y: scroll; overflow-x:hidden; */
-   }
- 
- .left-panel-img, .card{
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-element {
   width: 100%;
-  padding: 0;
-  margin: 0;
- }
- .card-header{
-   background-color: #76D7C4;
-   
-   /* #4caaad; */
-   color: white;
- }
-
- .signup-title{
-   font-size: 30px;
- }
-
- 
+}

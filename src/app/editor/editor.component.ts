@@ -8,7 +8,7 @@ import { Component, OnInit, AfterViewInit, ViewChild  } from '@angular/core';
 export class EditorComponent implements AfterViewInit  {
   oDoc;
   sDefTxt;
-  @ViewChild('switchMode') private checkInput;
+  @ViewChild('switchMode',{static: false}) private checkInput;
   constructor() { }
 
   ngAfterViewInit(){

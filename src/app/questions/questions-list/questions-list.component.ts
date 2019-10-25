@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { NgForm } from "@angular/forms";
-import { PageEvent } from "@angular/material";
+import { PageEvent } from "@angular/material/paginator";
 import { Subscription } from "rxjs";
 //import { Category } from '../category.model';
 //import { SubCategory } from '../sub-category.model';
@@ -16,7 +16,7 @@ import { QuestionCreateComponent } from '../question-create/question-create.comp
 import { QuestionDeleteComponent } from '../question-delete/question-delete.component';
 import { QuestionEditComponent } from '../question-edit/question-edit.component';
 import { QuestionViewComponent } from '../question-view/question-view.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { MatPaginator } from '@angular/material/paginator';
 import { AutoCompleteComponent, ChangeEventArgs, MultiSelectChangeEventArgs as DropDownSelectEventArgs, FilteringEventArgs } from '@syncfusion/ej2-angular-dropdowns';
@@ -60,7 +60,7 @@ export class QuestionsListComponent implements OnInit, OnChanges {
   private filteredCats: string[];
   private filteredSubcats: string[];
 
-  @ViewChild('questionForm') createForm: NgForm;
+  @ViewChild('questionForm',{static: false}) createForm: NgForm;
   get filterQuestion(): string {
     return this._filterQuestion;
   }

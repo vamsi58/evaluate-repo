@@ -8,8 +8,8 @@ import { Question } from '../question.model';
 import { NgForm } from "@angular/forms";
 import { QuestionService } from "../question.service";
 import { Complexity } from '../question-complex.model';
-import {MAT_DIALOG_DATA} from '@angular/material';  
-import { MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';  
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-question-edit',
@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./question-edit.component.css']
 })
 export class QuestionEditComponent implements OnInit {
-  @ViewChild('closeBtn') closeBtn: ElementRef;
+  @ViewChild('closeBtn',{static: false}) closeBtn: ElementRef;
   oDoc;
   aDoc;
   sDefTxt;

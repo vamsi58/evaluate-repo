@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { QuestionService } from "../question.service";
 import { SelectService } from '../select.service';
-import {MAT_DIALOG_DATA} from '@angular/material';  
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';  
 import { QuestionEditComponent } from '../question-edit/question-edit.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {Answer} from '../answer.model';
 
 @Component({

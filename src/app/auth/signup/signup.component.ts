@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthService } from "../auth.service";
 
@@ -12,8 +13,9 @@ export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
   private authStatusSub: Subscription;
   genders = ["Male", "Female"];
+  formGroup: FormGroup;
 
-  constructor(public authService: AuthService) {}
+  constructor(private formBuilder: FormBuilder,public authService: AuthService) {}
 
   ngOnInit() {
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(

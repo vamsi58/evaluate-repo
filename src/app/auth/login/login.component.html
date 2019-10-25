@@ -1,46 +1,34 @@
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card m-0 p-0">
-    <img src="../assets/images/background6.png" alt="Logo" class="left-panel-img" style="width:100%">
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card m-0 p-0">
-      <div class="card-header text-center">
-        <p class="text-xl-center font-weight-bold login-title">Sign In</p>
-      </div>
-      <div class="card-body">
-      <form class="form-horizontal" (submit)="onLogin(loginForm)" #loginForm="ngForm" role="form">
-        <div class="form-group pt-5">
-          <input name="email" class="form-control" id="inputEmail3" ngModel type="email" placeholder="E-Mail" #emailInput="ngModel" required email>
-          <small class="text-danger" *ngIf="emailInput.invalid && (emailInput.touched || loginForm.submitted)">Please enter a valid email.</small>
-        </div>
-        <div class="form-group pt-3">
-          <input type="password" name="password" ngModel class="form-control" #passwordInput="ngModel" id="inputPassword3" placeholder="Password" required="">
-          <small class="text-danger" *ngIf="passwordInput.invalid && (passwordInput.touched || loginForm.submitted)">Please enter a valid password.</small>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-3 col-sm-9">
-            <div class="checkbox">
-              <label> 
-                <input type="checkbox"> Remember me
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-success btn-block btn-sm">Sign in</button>
-          <button type="reset" class="btn btn-secondary btn-sm btn-block">Reset</button>
-        </div>
-        <div class="form-group">
-          Not Registered?
-          <a routerLink="/signup">Register here</a>
+<div class="signin-div">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        SIGN IN
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="formGroup" (ngSubmit)="onLogin(formGroup.value)" class="form">
+        <mat-form-field floatLabel="never" class="form-element">
+          <input name = "email" type="text" matInput placeholder="Username" formControlName="email">
+          <mat-error *ngIf="formGroup.controls['email'].invalid">
+            {{getError('username')}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field floatLabel="never" class="form-element">
+          <input type="password" matInput placeholder="Password" formControlName="password">
+          <mat-error *ngIf="!formGroup.controls['password'].valid">
+            {{getError('password')}}
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-element">
+          <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Sign In</button>
         </div>
       </form>
-    </div>
-    <div class="card-footer">
-     
-    </div>
-    </div>
-    </div>
-  </div>
+    </mat-card-content>
+    <mat-card-actions>
+       Not a member?
+          <a routerLink="/signup">Sign up now</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -9,7 +9,7 @@ import {Answer} from '../answer.model';
 import { NgForm } from "@angular/forms";
 import { QuestionService } from "../question.service";
 import { Complexity } from '../question-complex.model';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {QuestionTypeComponent} from '../question-type/question-type.component';
 import {CompetenceareaComponent} from '../competencearea/competencearea.component';
 import { CourseComponent } from '../course/course.component';
@@ -21,7 +21,7 @@ import { CourseComponent } from '../course/course.component';
   styleUrls: ['./question-create.component.css']
 })
 export class QuestionCreateComponent implements OnInit {
-  @ViewChild('closeBtn') closeBtn: ElementRef;
+  @ViewChild('closeBtn',{static: false}) closeBtn: ElementRef;
   oDoc;
   aDoc;
   sDefTxt;

@@ -1,78 +1,10 @@
-/* 
- .container  {
-  
-    
-    padding-top: 10%;
-    padding-left: 8%;
-   
-  background-size: cover;
-  background-repeat: no-repeat;
+.signin-div{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-  }
-
-  .column {
-    float: left;
-    width: 50%;
-    padding: 5px;
-    background-color: beige;
-  }
-
-.panel{
-  height: 370px;
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 400px;
-
-  border-color: #0ea5e6;
-  border-style: solid; 
-
-  
-  background-color: rgba(256, 256, 256 ) !important;
-
-  }
-
-  .panel-heading{
-    font-size: 30px;
-    text-align: center;
-
-  }
-
-
-
- .form-group.last {
-  margin-bottom:0px;
- }
- */
-
-
- .row .col-sm-6, left-panel-img { 
-  height: 100vh;
-  overflow: auto; 
-   }
- 
- .left-panel-img, .card{
-  height: 100%;
+.form-element {
   width: 100%;
-  padding: 0;
-  margin: 0;
- }
- .card-header{
-   background-color:#76D7C4;
-   
-   color: white;
- }
-
- .login-title{
-   font-size: 30px;
- }
- input {
-  border: 0;
-  outline: 0;
-  background: transparent;
-  border-bottom: 1px solid #76D7C4;
 }
