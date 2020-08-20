@@ -30,7 +30,7 @@
     "@syncfusion/ej2-buttons": "^17.1.50",
     "@syncfusion/ej2-dropdowns": "^17.1.49",
     "angular-bootstrap-md": "^7.5.4",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "core-js": "^3.0.1",
     "express": "^4.16.4",
